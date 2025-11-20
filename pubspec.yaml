@@ -15,6 +15,7 @@ dependencies:
 
   # Icons
   cupertino_icons: ^1.0.8
+  solar_icon_pack: ^0.2.1
   flutter_screenutil: ^5.9.0
   get_it: ^9.0.5
   hive: ^2.2.3
@@ -79,3 +80,7 @@ flutter:
 
         - asset: assets/fonts/Poppins-Bold.ttf
           weight: 800
+
+    - family: Soultrip
+      fonts:
+        - asset: assets/icons/fonts/Soultrip.ttf
