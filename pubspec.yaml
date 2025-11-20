@@ -16,6 +16,20 @@ dependencies:
   # Icons
   cupertino_icons: ^1.0.8
   flutter_screenutil: ^5.9.0
+  get_it: ^9.0.5
+  hive_flutter: ^1.1.0
+  shared_preferences: ^2.5.3
+  easy_localization: ^3.0.8
+  connectivity_plus: ^7.0.0
+  flutter_bloc: ^9.1.1
+  http: ^1.6.0
+  go_router: ^17.0.0
+  flutter_easyloading: ^3.0.5
+  motion_toast: ^2.14.0
+  animated_text_kit: ^4.3.0
+  cached_network_image: ^3.4.1
+  flutter_cache_manager: ^3.4.1
+  animate_do: ^4.2.0
 
 
 #--------------------------- ./ Packages END -------------------------------#

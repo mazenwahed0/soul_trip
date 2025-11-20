@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-class ColorTheme{
+
+class ColorTheme {
   ColorTheme._();
   static final ColorTheme _instance = ColorTheme._();
   factory ColorTheme() => _instance;
@@ -16,4 +17,10 @@ class ColorTheme{
   final Color grayMedium = const Color(0xFF898989);
   final Color grayVeryLight = const Color(0xFFE4E1E1);
   final Color grayDark = const Color(0xFF585858);
+
+  // White Shades
+  final Color whiteColor = const Color(0xFFFFFFFF);
+
+  // Error Colors
+  final Color errorColor = const Color(0xFFD32F2F);
 }
