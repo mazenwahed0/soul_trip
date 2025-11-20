@@ -84,4 +84,4 @@ flutter:
 
     - family: Soultrip
       fonts:
-        - asset: assets/icons/fonts/Soultrip.ttf
+        - asset: assets/icons/Soultrip.ttf
