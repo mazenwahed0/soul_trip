@@ -23,4 +23,6 @@ class ColorTheme {
 
   // Error Colors
   final Color errorColor = const Color(0xFFD32F2F);
+
+  final Color blackColor = const Color(0xFF000814);
 }
