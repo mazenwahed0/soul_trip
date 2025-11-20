@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "279104476962",
+    "project_id": "soul-trip-48208",
+    "storage_bucket": "soul-trip-48208.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:279104476962:android:4404de4ef7d63a7b1fb77b",
+        "android_client_info": {
+          "package_name": "com.example.soul_trip"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzMGgSMPnDVuo8CL-hCTATWACS9l0vgYY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
