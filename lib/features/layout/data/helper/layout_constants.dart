@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:solar_icon_pack/solar_icon_pack.dart';
 import 'package:soul_trip/core/routing/routes.dart';
 import 'package:soul_trip/core/theme/soultrip_icons.dart';
 import 'package:soul_trip/features/layout/data/models/navigation_item_model.dart';
@@ -26,7 +28,7 @@ abstract class LayoutConstants {
       route: Routes.homeView,
     ),
     NavigationItemModel(
-      icon: Soultrip.customersupport,
+      icon: SolarBoldIcons.medicalKit,
       label: 'Experts',
       route: Routes.expertsView,
     ),
@@ -36,7 +38,7 @@ abstract class LayoutConstants {
       route: Routes.wishlistView,
     ),
     NavigationItemModel(
-      icon: Soultrip.star,
+      icon: CupertinoIcons.ellipses_bubble_fill,
       label: 'Reviews',
       route: Routes.reviewsView,
     ),
