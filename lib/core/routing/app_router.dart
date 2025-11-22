@@ -7,6 +7,7 @@ import 'package:soul_trip/features/layout/ui/screen/layout_screen.dart';
 import 'package:soul_trip/features/profile/ui/screen/profile_screen.dart';
 import 'package:soul_trip/features/reviews/ui/screen/reviews_screen.dart';
 import 'package:soul_trip/features/wishlist/ui/screen/wishlist_screen.dart';
+import 'package:soul_trip/features/trip_details/screen/trip_details_screen.dart';
 
 abstract class AppRouter {
   static final router = GoRouter(
@@ -56,6 +57,10 @@ abstract class AppRouter {
                 fadeTransitionPage(const ProfileScreen()),
           ),
         ],
+      ),
+      GoRoute(path:Routes.tripDetailsScreen,
+        pageBuilder: (context, state) =>
+            fadeTransitionPage(const TripDetailsScreen()),
       ),
     ],
   );
