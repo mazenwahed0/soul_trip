@@ -29,7 +29,7 @@ class HomeHeaderWidget extends StatelessWidget {
           ),
           child: Center(
             child: Icon(
-              Icons.person,
+              Soultrip.profile,
               size: 32.sp,
               color: ColorTheme().primaryBlue,
             ),
