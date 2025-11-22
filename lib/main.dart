@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:soul_trip/core/routing/app_router.dart';
 import 'package:soul_trip/core/theme/app_theme.dart';
 import 'firebase_options.dart';
@@ -15,10 +16,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      theme: themeDataFunc(),
-      routerConfig: AppRouter.router,
+    return ScreenUtilInit(
+      designSize: const Size(375, 812), // iPhone X size as reference
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          theme: themeDataFunc(),
+          routerConfig: AppRouter.router,
+        );
+      },
     );
   }
 }
