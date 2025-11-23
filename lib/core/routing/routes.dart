@@ -33,6 +33,7 @@ class Routes {
   static const String favoritesView = '/favorites';
   static const String editInfoView = '/edit-info';
   static const String splashView = '/splash';
+  static const String onboardingView = '/onboarding';
   static const String drawerSubCategoryContent = '/drawerSubCategoryContent';
   static const String aboutUsView = '/about-us';
   static const String privacyPolicyView = '/privacy-policy';

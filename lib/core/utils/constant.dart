@@ -25,4 +25,10 @@ class ConstantVariable {
   // -- Status Dialog
   static const String yellowVerfiy = 'assets/images/yellow-verify.png';
   static const String redVerfiy = 'assets/images/red-mark.png';
+
+  // -- Authentication Images
+  // Icons
+  static const String google = 'assets/icons/google_icon.png';
+  static const String facebook = 'assets/icons/facebook_icon.png';
+  static const String instagram = 'assets/icons/instagram_icon.png';
 }

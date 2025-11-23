@@ -18,7 +18,7 @@ class UserHiveHelper {
     await Hive.initFlutter();
     // تسجيل Adapter لـ UserModel
     if (!Hive.isAdapterRegistered(0)) {
-      //Hive.registerAdapter(UserModelAdapter());
+      Hive.registerAdapter(UserModelAdapter());
     }
     // فتح الصندوق (Box)
     await Hive.openBox<UserModel>(ConstantVariable.userBox);

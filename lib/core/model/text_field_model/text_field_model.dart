@@ -18,6 +18,7 @@ class TextFieldModel {
   final String? errorText;
   final bool ischangeColor;
   final bool readOnly;
+  final TextInputAction? textInputAction;
 
   TextFieldModel({
     required this.controller,
@@ -37,5 +38,6 @@ class TextFieldModel {
     this.maxLines = 1,
     this.ischangeColor = false,
     this.readOnly = false,
+    this.textInputAction,
   });
 }
