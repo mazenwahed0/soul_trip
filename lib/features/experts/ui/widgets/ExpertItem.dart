@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:go_router/go_router.dart';
 import 'package:soul_trip/core/routing/routes.dart';
 import 'package:soul_trip/core/theme/colors.dart';
-import 'package:soul_trip/core/theme/soultrip_icons.dart';
+
 import 'package:soul_trip/core/theme/text_style.dart';
 import 'package:soul_trip/core/widgets/custom_button.dart';
 import 'package:soul_trip/features/experts/ui/widgets/widthspace_and%20_heigthspace%20_widget.dart';
@@ -15,8 +15,7 @@ class ExpertItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-      GoRouter.of(context).push(Routes.expertsDetailsView);
-
+        GoRouter.of(context).push(Routes.expertsDetailsView);
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -37,7 +36,7 @@ class ExpertItem extends StatelessWidget {
                       radius: 50,
                       backgroundImage: AssetImage("assets/images/doctor.png"),
                     ),
-                    heightSpace(12.h),
+                    heightSpace(12),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,14 +47,14 @@ class ExpertItem extends StatelessWidget {
                               color: ColorTheme().blackColor,
                             ),
                           ),
-                  heightSpace(4.h),
+                          heightSpace(4),
                           Text(
                             "Luxor",
                             style: AppTextStyles.regular12().copyWith(
                               color: ColorTheme().grayMedium,
                             ),
                           ),
-                     heightSpace(4.h),
+                          heightSpace(4),
                           Text(
                             "Price: \$100",
                             style: AppTextStyles.semiBold20(),
@@ -63,11 +62,11 @@ class ExpertItem extends StatelessWidget {
                         ],
                       ),
                     ),
-                    widthSpace(8.w),
+                    widthSpace(8),
                     StarsWidget(),
                   ],
                 ),
-                heightSpace(12.h),
+                heightSpace(12),
                 Row(
                   spacing: 8,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
