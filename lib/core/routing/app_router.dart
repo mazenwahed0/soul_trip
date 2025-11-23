@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:soul_trip/core/routing/page_transitions.dart';
 import 'package:soul_trip/core/routing/routes.dart';
+import 'package:soul_trip/features/experts/ui/screen/details_screen.dart';
 import 'package:soul_trip/features/experts/ui/screen/experts_screen.dart';
 import 'package:soul_trip/features/home/ui/screen/home_screen.dart';
 import 'package:soul_trip/features/layout/ui/screen/layout_screen.dart';
@@ -40,6 +41,7 @@ abstract class AppRouter {
             pageBuilder: (context, state) =>
                 fadeTransitionPage(const ExpertsScreen()),
           ),
+         
           GoRoute(
             path: Routes.wishlistView,
             pageBuilder: (context, state) =>
@@ -57,6 +59,11 @@ abstract class AppRouter {
           ),
         ],
       ),
+       GoRoute(
+            path: Routes.expertsDetailsView,
+            pageBuilder: (context, state) =>
+                fadeTransitionPage(const DetailsScreen()),
+          ),
     ],
   );
 }

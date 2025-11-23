@@ -11,4 +11,5 @@ class ConstantVariable {
   static const String isLogin = 'isLogin';
   static const String users = 'Users';
   static const String userBox = 'userBox';
+  
 }

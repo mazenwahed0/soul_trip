@@ -98,6 +98,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         focusedBorder: _customOutlineInputBorder(
           isDarkMode ? ColorTheme().whiteColor : ColorTheme().primaryBlue,
         ),
+        
         enabledBorder: _customOutlineInputBorder(borderColor),
         errorBorder: _customOutlineInputBorder(ColorTheme().errorColor),
         focusedErrorBorder: _customOutlineInputBorder(ColorTheme().errorColor),
