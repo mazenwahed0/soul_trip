@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:soul_trip/core/routing/routes.dart';
 import 'package:soul_trip/core/theme/colors.dart';
+import 'package:soul_trip/features/categories_trips/data/repositories/categories_trips_repository.dart';
+import 'package:soul_trip/features/categories_trips/manager/categories_trips_cubit/categories_trips_cubit.dart';
 import 'package:soul_trip/features/home/data/repositories/banner_repository.dart';
 import 'package:soul_trip/features/home/data/repositories/home_trips_repository.dart';
 import 'package:soul_trip/features/home/manager/banner_cubit/banner_cubit.dart';
@@ -31,6 +33,11 @@ class HomeScreen extends StatelessWidget {
         BlocProvider(
           create: (context) =>
               HomeTripsCubit(HomeTripsRepository())..streamMostPopularTrips(),
+        ),
+        BlocProvider(
+          create: (context) =>
+              CategoriesTripsCubit(CategoriesTripsRepository())
+                ..streamCategories(),
         ),
       ],
       child: Scaffold(

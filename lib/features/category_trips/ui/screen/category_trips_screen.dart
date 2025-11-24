@@ -43,7 +43,7 @@ class CategoryTripsScreen extends StatelessWidget {
                         child: const Icon(Icons.arrow_back),
                       ),
                     ),
-                    SizedBox(width: 12.w), // لإعطاء فاصل بين الأيقونة والنص
+                    SizedBox(width: 12.w),
                     Expanded(
                       child: Text(
                         categoryName,
