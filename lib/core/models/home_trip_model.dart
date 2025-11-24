@@ -7,6 +7,9 @@ class HomeTripModel {
   final String? category;
   final String? image;
   final num off;
+  final num price;
+  final num rate;
+  final num? date;
   final bool isMostPopular;
 
   HomeTripModel({
@@ -16,6 +19,9 @@ class HomeTripModel {
     this.category,
     this.image,
     required this.off,
+    required this.price,
+    required this.rate,
+    this.date,
     required this.isMostPopular,
   });
 
@@ -31,6 +37,9 @@ class HomeTripModel {
       off: (data['off'] ?? 0) is int
           ? data['off'] as int
           : (data['off'] as num?)?.toInt() ?? 0,
+      price: (data['price'] ?? 0) as num,
+      rate: (data['rate'] ?? 0) as num,
+      date: data['date'] as num?,
       isMostPopular: data['isMostPopular'] as bool? ?? false,
     );
   }
@@ -42,6 +51,9 @@ class HomeTripModel {
       'category': category,
       'image': image,
       'off': off,
+      'price': price,
+      'rate': rate,
+      'date': date,
       'isMostPopular': isMostPopular,
     };
   }

@@ -7,12 +7,9 @@ class HomeTripsRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final String _collection = 'HomeTrips';
 
-  Future<Either<Failure, List<HomeTripModel>>> fetchMostPopularTrips() async {
+  Future<Either<Failure, List<HomeTripModel>>> fetchTrips() async {
     try {
-      final snapshot = await _firestore
-          .collection(_collection)
-          .where('isMostPopular', isEqualTo: true)
-          .get();
+      final snapshot = await _firestore.collection(_collection).get();
 
       final trips = snapshot.docs
           .map((doc) => HomeTripModel.fromFirestore(doc))
@@ -26,24 +23,20 @@ class HomeTripsRepository {
     }
   }
 
-  Stream<Either<Failure, List<HomeTripModel>>> streamMostPopularTrips() {
+  Stream<Either<Failure, List<HomeTripModel>>> streamTrips() {
     try {
-      return _firestore
-          .collection(_collection)
-          .where('isMostPopular', isEqualTo: true)
-          .snapshots()
-          .map((snapshot) {
-            try {
-              final trips = snapshot.docs
-                  .map((doc) => HomeTripModel.fromFirestore(doc))
-                  .toList();
-              return Right<Failure, List<HomeTripModel>>(trips);
-            } catch (e) {
-              return Left<Failure, List<HomeTripModel>>(
-                UnknownFailure('Error parsing home trips: $e'),
-              );
-            }
-          });
+      return _firestore.collection(_collection).snapshots().map((snapshot) {
+        try {
+          final trips = snapshot.docs
+              .map((doc) => HomeTripModel.fromFirestore(doc))
+              .toList();
+          return Right<Failure, List<HomeTripModel>>(trips);
+        } catch (e) {
+          return Left<Failure, List<HomeTripModel>>(
+            UnknownFailure('Error parsing home trips: $e'),
+          );
+        }
+      });
     } catch (e) {
       return Stream.value(
         Left<Failure, List<HomeTripModel>>(

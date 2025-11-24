@@ -10,7 +10,7 @@ class HomeTripsCubit extends Cubit<HomeTripsState> {
   Future<void> fetchMostPopularTrips() async {
     emit(const HomeTripsLoading());
 
-    final result = await _repository.fetchMostPopularTrips();
+    final result = await _repository.fetchTrips();
 
     result.fold(
       (failure) => emit(HomeTripsError(failure.message)),
@@ -21,7 +21,7 @@ class HomeTripsCubit extends Cubit<HomeTripsState> {
   void streamMostPopularTrips() {
     emit(const HomeTripsLoading());
 
-    _repository.streamMostPopularTrips().listen(
+    _repository.streamTrips().listen(
       (either) {
         either.fold(
           (failure) => emit(HomeTripsError(failure.message)),

@@ -49,7 +49,9 @@ class HomeTripsListWidget extends StatelessWidget {
               }
 
               if (state is HomeTripsLoaded) {
-                final trips = state.trips;
+                final trips = state.trips
+                    .where((t) => t.isMostPopular)
+                    .toList();
 
                 if (trips.isEmpty) {
                   return Center(

@@ -11,6 +11,7 @@ import 'package:soul_trip/features/home/ui/widgets/categories_list_widget.dart';
 import 'package:soul_trip/features/home/ui/widgets/home_header_widget.dart';
 import 'package:soul_trip/features/home/ui/widgets/home_search_widget.dart';
 import 'package:soul_trip/features/home/ui/widgets/home_trips/home_trips_list_widget.dart';
+import 'package:soul_trip/features/home/ui/widgets/home_trips/home_trips_by_category_widget.dart';
 import 'package:soul_trip/features/home/ui/widgets/section_header_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -90,6 +91,11 @@ class HomeScreen extends StatelessWidget {
 
                         // Most Popular Trips
                         const HomeTripsListWidget(),
+
+                        SizedBox(height: 24.h),
+
+                        // Trips by Category
+                        const HomeTripsByCategoryWidget(),
                       ],
                     ),
                   ),
