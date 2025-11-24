@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:soul_trip/core/routing/routes.dart';
 import 'package:soul_trip/core/theme/colors.dart';
 import 'package:soul_trip/features/home/data/repositories/banner_repository.dart';
 import 'package:soul_trip/features/home/data/repositories/home_trips_repository.dart';
@@ -69,7 +71,7 @@ class HomeScreen extends StatelessWidget {
                           child: SectionHeaderWidget(
                             title: 'Categories',
                             onSeeAll: () {
-                              // TODO: Navigate to all categories
+                              context.push(Routes.categoriesTripsView);
                             },
                           ),
                         ),

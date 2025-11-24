@@ -7,11 +7,17 @@ import 'package:soul_trip/features/layout/ui/screen/layout_screen.dart';
 import 'package:soul_trip/features/profile/ui/screen/profile_screen.dart';
 import 'package:soul_trip/features/reviews/ui/screen/reviews_screen.dart';
 import 'package:soul_trip/features/wishlist/ui/screen/wishlist_screen.dart';
+import 'package:soul_trip/features/categories_trips/ui/screen/categories_trips_screen.dart';
 
 abstract class AppRouter {
   static final router = GoRouter(
     initialLocation: Routes.homeView,
     routes: [
+      GoRoute(
+        path: Routes.categoriesTripsView,
+        pageBuilder: (context, state) =>
+            fadeTransitionPage(const CategoriesTripsScreen()),
+      ),
       // Shell Route with Bottom Navigation
       ShellRoute(
         pageBuilder: (context, state, child) {
