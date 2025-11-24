@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:soul_trip/core/routing/routes.dart';
 import 'package:soul_trip/core/theme/colors.dart';
 import 'package:soul_trip/core/theme/text_style.dart';
 import 'package:soul_trip/core/widgets/error_state_widget.dart';
@@ -53,7 +55,13 @@ class CategoriesTripsListWidget extends StatelessWidget {
               itemCount: categories.length,
               itemBuilder: (context, index) {
                 final category = categories[index];
-                return CategoryTripCardWidget(category: category);
+                return CategoryTripCardWidget(
+                  category: category,
+                  onTap: () {
+                    final name = Uri.encodeComponent(category.categoryName);
+                    context.push('${Routes.categoryTripsView}/$name');
+                  },
+                );
               },
             ),
           );

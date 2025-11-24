@@ -8,6 +8,7 @@ import 'package:soul_trip/features/profile/ui/screen/profile_screen.dart';
 import 'package:soul_trip/features/reviews/ui/screen/reviews_screen.dart';
 import 'package:soul_trip/features/wishlist/ui/screen/wishlist_screen.dart';
 import 'package:soul_trip/features/categories_trips/ui/screen/categories_trips_screen.dart';
+import 'package:soul_trip/features/category_trips/ui/screen/category_trips_screen.dart';
 
 abstract class AppRouter {
   static final router = GoRouter(
@@ -17,6 +18,15 @@ abstract class AppRouter {
         path: Routes.categoriesTripsView,
         pageBuilder: (context, state) =>
             fadeTransitionPage(const CategoriesTripsScreen()),
+      ),
+      GoRoute(
+        path: '${Routes.categoryTripsView}/:categoryName',
+        pageBuilder: (context, state) {
+          final categoryName = state.pathParameters['categoryName'] ?? '';
+          return fadeTransitionPage(
+            CategoryTripsScreen(categoryName: categoryName),
+          );
+        },
       ),
       // Shell Route with Bottom Navigation
       ShellRoute(

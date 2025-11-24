@@ -44,4 +44,5 @@ class Routes {
   static const String authorProfileView = '/author-profile';
   static const String galleriesArticlesWidget = '/galleries-articles-widget';
   static const String categoriesTripsView = '/categories-trips';
+  static const String categoryTripsView = '/category-trips';
 }
