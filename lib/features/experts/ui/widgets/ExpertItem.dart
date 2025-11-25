@@ -48,7 +48,6 @@ class ExpertItem extends StatelessWidget {
                         ),
                       ),
                     ),
-
                     heightSpace(10),
                     Expanded(
                       child: Column(

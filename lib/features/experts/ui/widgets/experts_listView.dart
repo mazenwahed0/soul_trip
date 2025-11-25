@@ -4,7 +4,6 @@ import 'package:soul_trip/features/experts/logic/read_expert_data/expert_cubit.d
 import 'package:soul_trip/features/experts/logic/read_expert_data/expert_state.dart';
 import 'package:soul_trip/features/experts/ui/widgets/ExpertItem.dart';
 
-
 class ExpertsListview extends StatelessWidget {
   const ExpertsListview({super.key});
 
