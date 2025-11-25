@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
+
 import 'package:soul_trip/core/model/text_field_model/text_field_model.dart';
 import 'package:soul_trip/core/theme/colors.dart';
 import 'package:soul_trip/core/theme/soultrip_icons.dart';
 import 'package:soul_trip/core/widgets/custom_text_form_field.dart';
 
-import 'package:soul_trip/features/experts/ui/widgets/widthspace_and%20_heigthspace%20_widget.dart';
 
 class SearchBarWidget extends StatelessWidget {
   SearchBarWidget({super.key});
@@ -55,3 +54,6 @@ class SearchBarWidget extends StatelessWidget {
     );
   }
 }
+
+
+

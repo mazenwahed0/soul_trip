@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:soul_trip/features/experts/ui/widgets/experts_listView.dart';
 import 'package:soul_trip/features/experts/ui/widgets/SearchBarWidget.dart';
 
@@ -8,10 +9,10 @@ class Expertbody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-        children: [
-          SearchBarWidget(),
-          Expanded(child: ExpertsListview()),
-        ],
-      );
+      children: [
+        SearchBarWidget(),
+        Expanded(child: ExpertsListview()),
+      ],
+    );
   }
 }

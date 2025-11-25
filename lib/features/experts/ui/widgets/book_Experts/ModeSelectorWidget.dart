@@ -6,9 +6,10 @@ import 'package:soul_trip/features/experts/ui/widgets/book_Experts/Expertdetails
 class ModeSelectorWidget extends StatelessWidget {
   final Mode? selectedMode;
   final ValueChanged<Mode?> onChanged;
-
-  const ModeSelectorWidget({
+  int price;
+  ModeSelectorWidget({
     super.key,
+    required this.price,
     required this.selectedMode,
     required this.onChanged,
   });
@@ -50,7 +51,7 @@ class ModeSelectorWidget extends StatelessWidget {
             Text("Session Price", style: AppTextStyles.medium16()),
             const SizedBox(height: 4),
             Text(
-              "100 LE",
+              "\$${price}",
               style: AppTextStyles.medium16().copyWith(
                 fontWeight: FontWeight.w600,
                 color: ColorTheme().primaryBlue,

@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
+
 import 'package:soul_trip/core/routing/routes.dart';
 import 'package:soul_trip/core/theme/colors.dart';
 
 import 'package:soul_trip/core/theme/text_style.dart';
-import 'package:soul_trip/core/widgets/custom_button.dart';
+import 'package:soul_trip/core/widgets/common/buttons/primary_shadow_button.dart';
+import 'package:soul_trip/features/experts/data/models/Expert_model.dart';
+
 import 'package:soul_trip/features/experts/ui/widgets/widthspace_and%20_heigthspace%20_widget.dart';
 import 'package:soul_trip/features/experts/ui/widgets/stars_widget.dart';
 
 class ExpertItem extends StatelessWidget {
-  const ExpertItem({super.key});
+  ExpertItem({super.key, required this.expertModel});
+  final ExpertModel expertModel;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        GoRouter.of(context).push(Routes.expertsDetailsView);
+        GoRouter.of(
+          context,
+        ).push('${Routes.expertsDetailsView}?id=${expertModel.id}');
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -32,38 +38,45 @@ class ExpertItem extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CircleAvatar(
-                      radius: 50,
-                      backgroundImage: AssetImage("assets/images/doctor.png"),
+                    ClipOval(
+                      child: SizedBox(
+                        width: 60,
+                        height: 60,
+                        child: FittedBox(
+                          fit: BoxFit.cover,
+                          child: Image.network(expertModel.image),
+                        ),
+                      ),
                     ),
-                    heightSpace(12),
+
+                    heightSpace(10),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Doctor Sarah Yousef",
+                            expertModel.name,
                             style: AppTextStyles.medium16().copyWith(
                               color: ColorTheme().blackColor,
                             ),
                           ),
-                          heightSpace(4),
+
                           Text(
-                            "Luxor",
+                            expertModel.location,
                             style: AppTextStyles.regular12().copyWith(
                               color: ColorTheme().grayMedium,
                             ),
                           ),
                           heightSpace(4),
                           Text(
-                            "Price: \$100",
+                            "${expertModel.price.toString()} \$/ hr",
                             style: AppTextStyles.semiBold20(),
                           ),
                         ],
                       ),
                     ),
                     widthSpace(8),
-                    StarsWidget(),
+                    StarsWidget(rating: expertModel.rating.toString()),
                   ],
                 ),
                 heightSpace(12),
@@ -81,13 +94,22 @@ class ExpertItem extends StatelessWidget {
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Text(
-                        "Yoga instructor",
+                        expertModel.specialization,
                         style: AppTextStyles.medium12().copyWith(
                           color: ColorTheme().whiteColor,
                         ),
                       ),
                     ),
-                    Expanded(child: CustomButton(text: "Meditation")),
+                    Expanded(
+                      child: PrimaryShadowButton(
+                        text: "Book Now",
+                        onPressed: () {
+                          GoRouter.of(context).push(
+                            '${Routes.expertsDetailsView}?id=${expertModel.id}',
+                          );
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ],

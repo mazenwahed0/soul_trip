@@ -1,67 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:soul_trip/core/theme/colors.dart';
+
 import 'package:soul_trip/core/theme/text_style.dart';
 
 class ExperienceReview extends StatelessWidget {
-  const ExperienceReview({super.key});
+  final int years;
+  final int reviews;
+  final num fees;
+
+  const ExperienceReview({
+    super.key,
+    required this.years,
+    required this.reviews,
+    required this.fees,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
+      padding: const EdgeInsets.symmetric(vertical: 16),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          color: ColorTheme().whiteColor.withOpacity(0.5),
+          color: Colors.white.withOpacity(0.5),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  "+4y",
-                  style: AppTextStyles.medium16().copyWith(
-                    color: ColorTheme().blackColor,
-                  ),
-                ),
-                Text(
-                  "Experience",
-                  style: AppTextStyles.regular12().copyWith(
-                    color: ColorTheme().grayMedium,
-                  ),
-                ),
-              ],
-            ),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text("+20", style: AppTextStyles.medium16()),
-                Text(
-                  "Fees",
-                  style: AppTextStyles.regular12().copyWith(
-                    color: ColorTheme().grayMedium,
-                  ),
-                ),
-              ],
-            ),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text("+100", style: AppTextStyles.medium16()),
-                Text(
-                  "Reviews",
-                  style: AppTextStyles.regular12().copyWith(
-                    color: ColorTheme().grayMedium,
-                  ),
-                ),
-              ],
-            ),
+            _item("+${years}y", "Experience"),
+            _item("+$fees", "Fees"),
+            _item("+$reviews", "Reviews"),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _item(String val, String label) {
+    return Column(
+      children: [
+        Text(val, style: AppTextStyles.medium16()),
+        Text(label, style: AppTextStyles.regular12()),
+      ],
     );
   }
 }

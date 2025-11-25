@@ -59,11 +59,21 @@ abstract class AppRouter {
           ),
         ],
       ),
-       GoRoute(
-            path: Routes.expertsDetailsView,
-            pageBuilder: (context, state) =>
-                fadeTransitionPage(const DetailsScreen()),
-          ),
+      //  GoRoute(
+      //       path: Routes.expertsDetailsView,
+      //       pageBuilder: (context, state) =>
+      //           fadeTransitionPage(const DetailsScreen()),
+      //     ),
+      GoRoute(
+  path: Routes.expertsDetailsView,
+  pageBuilder: (context, state) {
+    final id = state.uri.queryParameters['id']!;
+    return fadeTransitionPage(
+      DetailsScreen(expertId: id),
+    );
+  },
+),
+
     ],
   );
 }
