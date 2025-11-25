@@ -9,11 +9,35 @@ import 'package:soul_trip/features/reviews/ui/screen/reviews_screen.dart';
 import 'package:soul_trip/features/wishlist/ui/screen/wishlist_screen.dart';
 import 'package:soul_trip/features/categories_trips/ui/screen/categories_trips_screen.dart';
 import 'package:soul_trip/features/category_trips/ui/screen/category_trips_screen.dart';
+import 'package:soul_trip/features/search/ui/screen/search_filter_screen.dart';
+import 'package:soul_trip/features/search/ui/screen/search_results_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:soul_trip/features/search/manager/search_cubit/search_cubit.dart';
 
 abstract class AppRouter {
   static final router = GoRouter(
     initialLocation: Routes.homeView,
     routes: [
+      GoRoute(
+        path: Routes.searchView,
+        pageBuilder: (context, state) =>
+            fadeTransitionPage(const SearchFilterScreen()),
+      ),
+      GoRoute(
+        path: Routes.searchCategoryView,
+        pageBuilder: (context, state) {
+          final extra = state.extra;
+          if (extra is SearchCubit) {
+            return fadeTransitionPage(
+              BlocProvider.value(
+                value: extra,
+                child: const SearchResultsScreen(),
+              ),
+            );
+          }
+          return fadeTransitionPage(const SearchResultsScreen());
+        },
+      ),
       GoRoute(
         path: Routes.categoriesTripsView,
         pageBuilder: (context, state) =>

@@ -67,7 +67,15 @@ class HomeScreen extends StatelessWidget {
                         // Search Bar
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: const HomeSearchBarWidget(),
+                          child: GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () {
+                              context.push(Routes.searchView);
+                            },
+                            child: const AbsorbPointer(
+                              child: HomeSearchBarWidget(),
+                            ),
+                          ),
                         ),
 
                         SizedBox(height: 24.h),
