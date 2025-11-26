@@ -114,7 +114,25 @@ class SearchCubit extends Cubit<SearchState> {
       final matchBudget =
           price >= filters.budget.start && price <= filters.budget.end;
 
-      return matchLocation && matchCategory && matchBudget;
+      final matchDate = () {
+        if (filters.date == null) return true;
+        if (trip.date == null) return false;
+
+        final filterDay = DateTime(
+          filters.date!.year,
+          filters.date!.month,
+          filters.date!.day,
+        );
+        final tripDay = DateTime(
+          trip.date!.year,
+          trip.date!.month,
+          trip.date!.day,
+        );
+
+        return !tripDay.isBefore(filterDay);
+      }();
+
+      return matchLocation && matchCategory && matchBudget && matchDate;
     }).toList();
   }
 }

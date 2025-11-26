@@ -71,13 +71,18 @@ class _CategoriesListWidgetState extends State<CategoriesListWidget> {
                   child: CategoryItemWidget(
                     category: uiModel,
                     isSelected: _selectedCategoryIndex == uiIndex,
-                    onTap: () {
+                    onTap: () async {
                       setState(() {
                         _selectedCategoryIndex = uiIndex;
                       });
 
                       final name = Uri.encodeComponent(uiModel.name);
-                      context.push('${Routes.categoryTripsView}/$name');
+                      await context.push('${Routes.categoryTripsView}/$name');
+
+                      if (!mounted) return;
+                      setState(() {
+                        _selectedCategoryIndex = 0;
+                      });
                     },
                   ),
                 ),

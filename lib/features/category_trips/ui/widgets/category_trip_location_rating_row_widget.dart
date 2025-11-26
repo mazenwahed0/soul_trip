@@ -37,7 +37,7 @@ class CategoryTripLocationRatingRowWidget extends StatelessWidget {
                 ),
                 SizedBox(width: 4.w),
                 Text(
-                  '${trip.date?.toInt() ?? 0} days',
+                  '${trip.daysFromToday ?? 0} days',
                   style: AppTextStyles.regular12().copyWith(
                     color: colors.grayMedium,
                   ),

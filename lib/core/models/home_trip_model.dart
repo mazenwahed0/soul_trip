@@ -9,7 +9,7 @@ class HomeTripModel {
   final num off;
   final num price;
   final num rate;
-  final num? date;
+  final DateTime? date;
   final bool isMostPopular;
 
   HomeTripModel({
@@ -39,7 +39,9 @@ class HomeTripModel {
           : (data['off'] as num?)?.toInt() ?? 0,
       price: (data['price'] ?? 0) as num,
       rate: (data['rate'] ?? 0) as num,
-      date: data['date'] as num?,
+      date: (data['date'] is Timestamp)
+          ? (data['date'] as Timestamp).toDate()
+          : null,
       isMostPopular: data['isMostPopular'] as bool? ?? false,
     );
   }
@@ -56,5 +58,15 @@ class HomeTripModel {
       'date': date,
       'isMostPopular': isMostPopular,
     };
+  }
+
+  int? get daysFromToday {
+    if (date == null) return null;
+
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final tripDay = DateTime(date!.year, date!.month, date!.day);
+
+    return today.difference(tripDay).inDays;
   }
 }

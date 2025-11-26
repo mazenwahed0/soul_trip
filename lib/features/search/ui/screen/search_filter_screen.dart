@@ -4,7 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:soul_trip/core/routing/routes.dart';
 import 'package:soul_trip/core/theme/colors.dart';
+import 'package:soul_trip/core/theme/soultrip_icons.dart';
 import 'package:soul_trip/core/theme/text_style.dart';
+import 'package:soul_trip/core/models/category_model.dart';
+import 'package:soul_trip/features/home/data/home_constants.dart';
 import 'package:soul_trip/features/home/data/repositories/home_trips_repository.dart';
 import 'package:soul_trip/features/categories_trips/data/repositories/categories_trips_repository.dart';
 import 'package:soul_trip/features/search/data/repositories/search_repository.dart';
@@ -144,52 +147,80 @@ class SearchFilterScreen extends StatelessWidget {
                               spacing: 8.w,
                               runSpacing: 8.h,
                               children: [
-                                for (final cat in loaded.categories)
-                                  GestureDetector(
-                                    onTap: () {
-                                      context
-                                          .read<SearchCubit>()
-                                          .toggleCategory(cat.categoryName);
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 16.w,
-                                        vertical: 8.h,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                          24.r,
-                                        ),
-                                        color:
-                                            loaded.filters.categories.contains(
-                                              cat.categoryName,
-                                            )
-                                            ? colors.primaryBlue
-                                            : colors.grayVeryLight.withValues(
-                                                alpha: 0.3,
-                                              ),
-                                        border: Border.all(
-                                          color:
-                                              loaded.filters.categories
-                                                  .contains(cat.categoryName)
-                                              ? colors.primaryBlue
-                                              : colors.grayVeryLight,
-                                        ),
-                                      ),
-                                      child: Text(
-                                        cat.categoryName,
-                                        style: AppTextStyles.semiBold14()
-                                            .copyWith(
-                                              color:
-                                                  loaded.filters.categories
-                                                      .contains(
-                                                        cat.categoryName,
-                                                      )
-                                                  ? colors.backgroundWhite
-                                                  : colors.blackColor,
+                                for (
+                                  var i = 0;
+                                  i < loaded.categories.length;
+                                  i++
+                                )
+                                  Builder(
+                                    builder: (context) {
+                                      final cat = loaded.categories[i];
+                                      // استخدم نفس ترتيب الأيقونات زي home (بعد أول أيقونة Home)
+                                      final otherIcons =
+                                          HomeConstants.categories.length > 1
+                                          ? HomeConstants.categories.sublist(1)
+                                          : <CategoryModel>[];
+
+                                      final iconData = i < otherIcons.length
+                                          ? otherIcons[i].icon
+                                          : HomeConstants.categories.first.icon;
+
+                                      final isSelected = loaded
+                                          .filters
+                                          .categories
+                                          .contains(cat.categoryName);
+
+                                      return GestureDetector(
+                                        onTap: () {
+                                          context
+                                              .read<SearchCubit>()
+                                              .toggleCategory(cat.categoryName);
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 16.w,
+                                            vertical: 8.h,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                              24.r,
                                             ),
-                                      ),
-                                    ),
+                                            color: isSelected
+                                                ? colors.primaryBlue
+                                                : colors.grayVeryLight
+                                                      .withValues(alpha: 0.3),
+                                            border: Border.all(
+                                              color: isSelected
+                                                  ? colors.primaryBlue
+                                                  : colors.grayVeryLight,
+                                            ),
+                                          ),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Icon(
+                                                iconData,
+                                                size: 20.sp,
+                                                color: isSelected
+                                                    ? colors.backgroundWhite
+                                                    : colors.primaryBlue,
+                                              ),
+                                              SizedBox(width: 6.w),
+                                              Text(
+                                                cat.categoryName,
+                                                style: AppTextStyles.regular12()
+                                                    .copyWith(
+                                                      color: isSelected
+                                                          ? colors
+                                                                .backgroundWhite
+                                                          : colors.blackColor,
+                                                    ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
                                   ),
                               ],
                             ),
@@ -244,44 +275,75 @@ class SearchFilterScreen extends StatelessWidget {
                             // Date & Travellers cards
                             Column(
                               children: [
-                                Container(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 16.w,
-                                    vertical: 14.h,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: colors.backgroundWhite,
-                                    borderRadius: BorderRadius.circular(16.r),
-                                    border: Border.all(
-                                      color: colors.grayVeryLight,
+                                GestureDetector(
+                                  onTap: () async {
+                                    final now = DateTime.now();
+                                    final initial = loaded.filters.date ?? now;
+
+                                    final picked = await showDatePicker(
+                                      context: context,
+                                      initialDate: initial.isAfter(now)
+                                          ? now
+                                          : initial,
+                                      firstDate: DateTime(2000),
+                                      lastDate: DateTime(
+                                        now.year,
+                                        now.month,
+                                        now.day,
+                                      ),
+                                    );
+
+                                    if (picked != null) {
+                                      context.read<SearchCubit>().updateDate(
+                                        picked,
+                                      );
+                                    }
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 16.w,
+                                      vertical: 14.h,
                                     ),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.calendar_today_outlined,
-                                        color: colors.primaryBlue,
-                                        size: 18.sp,
+                                    decoration: BoxDecoration(
+                                      color: colors.backgroundWhite,
+                                      borderRadius: BorderRadius.circular(16.r),
+                                      border: Border.all(
+                                        color: colors.grayVeryLight,
                                       ),
-                                      SizedBox(width: 12.w),
-                                      Text(
-                                        'Date',
-                                        style: AppTextStyles.semiBold14()
-                                            .copyWith(color: colors.blackColor),
-                                      ),
-                                      const Spacer(),
-                                      Text(
-                                        'Select date',
-                                        style: AppTextStyles.regular12()
-                                            .copyWith(color: colors.grayMedium),
-                                      ),
-                                      SizedBox(width: 8.w),
-                                      Icon(
-                                        Icons.arrow_forward_ios,
-                                        size: 14.sp,
-                                        color: colors.grayMedium,
-                                      ),
-                                    ],
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Soultrip.calendarBold,
+                                          color: colors.primaryBlue,
+                                          size: 22.sp,
+                                        ),
+                                        SizedBox(width: 12.w),
+                                        Text(
+                                          'Date',
+                                          style: AppTextStyles.semiBold14()
+                                              .copyWith(
+                                                color: colors.blackColor,
+                                              ),
+                                        ),
+                                        const Spacer(),
+                                        Text(
+                                          loaded.filters.date != null
+                                              ? '${loaded.filters.date!.day}/${loaded.filters.date!.month}/${loaded.filters.date!.year}'
+                                              : 'Select date',
+                                          style: AppTextStyles.regular12()
+                                              .copyWith(
+                                                color: colors.grayMedium,
+                                              ),
+                                        ),
+                                        SizedBox(width: 8.w),
+                                        Icon(
+                                          Icons.arrow_forward_ios,
+                                          size: 14.sp,
+                                          color: colors.grayMedium,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 SizedBox(height: 12.h),
@@ -300,9 +362,9 @@ class SearchFilterScreen extends StatelessWidget {
                                   child: Row(
                                     children: [
                                       Icon(
-                                        Icons.person_outline,
+                                        Soultrip.profile,
                                         color: colors.primaryBlue,
-                                        size: 18.sp,
+                                        size: 22.sp,
                                       ),
                                       SizedBox(width: 12.w),
                                       Text(
