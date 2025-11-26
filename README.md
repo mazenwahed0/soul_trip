@@ -113,10 +113,49 @@ lib/
 | 2025-11-20 | Mina Yasser   | Setup Firebase & Layout View                              |
 | 2025-11-21 | Mazen Wahed   | Update V0.1 (Added Assets & Reusable Widgets)             |
 | 2025-11-23 | Mazen Wahed   | Update V0.1.1 (Authentication Firebase + Added New Files) |
+| 2025-11-26 | Mazen Wahed   | Update V0.1.2 (Profile, Race Condition Fix, Dev Tools)    |
 
 ---
 
 ### 2. Version History (Changelog)
+
+#### V0.1.2 (Profile, Settings & Stability Improvements)
+
+This update brings significant improvements to user profile management, completes the authentication suite, and adds essential developer utilities.
+
+**Architecture & Critical Fixes:**
+
+- **Race Condition Resolution:** Implemented a **"Gatekeeper" pattern** in `UserRepository` (`ensureUserRecordExists`). The app now guarantees that user data exists in Firestore _before_ navigating to Home, fixing the "Empty Profile" bug on fresh Social Logins.
+- **Separation of Concerns:** Refactored `SocialAuthCubit` to handle _only_ the sign-in action, delegating user creation and data fetching to the global `AuthCubit`.
+- **Reactive Data Sync:** Removed redundant manual data refresh calls in UI listeners. The app now relies entirely on `AuthCubit` streams to keep the UI in sync with Firebase.
+
+**Profile & Account Management:**
+
+- **Account Info Screen:** Added a new screen for updating personal details, fully integrated with Firestore.
+- **"Save & Snap" Logic:** Implemented UI logic to immediately format phone numbers (e.g., `+20 10...`) upon saving, ensuring the UI reflects the exact data stored in the database.
+- **Input Validation:** Extended `TextFieldModel` to support `TextInputFormatter`, strictly restricting phone fields to numeric inputs only.
+- **Smart Profile Picture Upload:** Refactored image logic to automatically **delete the old profile picture** from Cloudinary before uploading a new one.
+- **Logout Experience:** Added a dedicated **LogoutStatusSheet** with a Red Warning UI for a safer exit flow.
+
+**Authentication Enhancements:**
+
+- **"Remember Me":** Added local credential persistence using `SharedPrefHelper`. Users can save email/password for faster logins.
+- **Forgot Password:** Implemented full password reset flow via Firebase Authentication.
+- **Reactive Navigation:** Integrated `GoRouterRefreshStream` to instantly handle redirects (e.g., auto-logout) based on auth state changes.
+
+**Developer Tools (Data Seeding):**
+
+- **Load Data Screen:** Added a hidden developer tool to upload static assets (like Onboarding images) to **Cloudinary**.
+- **Upload Architecture:** Created `DataUploadRepository` to handle asset conversion and bulk uploading to Firestore.
+
+**UI/UX & Refactoring:**
+
+- **Advanced Snackbars (`Loaders`):** Replaced generic toasts with a custom **Loaders** class (Success, Error, Warning) featuring animated pulsing icons.
+- **Phone Formatting Utility:** Added `formatEgyptianPhoneNumber` to standardize phone number display app-wide.
+- **Widget Refactoring:**
+  - **StatusBottomSheet:** Streamlined for generic success messages.
+  - **CustomAppBar:** Created a versatile, reusable app bar.
+  - **CustomBackButton:** Standardized navigation buttons.
 
 #### V0.1.1 (Major Refactor & Feature Expansion)
 

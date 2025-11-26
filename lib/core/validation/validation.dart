@@ -2,42 +2,52 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class Validation {
+  /// Empty Text Validation
+  static String? validateEmptyText(String? fieldname, String? value) {
+    if (value == null || value.isEmpty) {
+      return '$fieldname is required.';
+    }
+    return null;
+  }
+
   static String? emailValidation(value) {
     if (value == null || value.isEmpty) {
-      return 'please_enter_your_email'.tr();
+      return 'Email is required.';
     }
     if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-      return 'please_enter_a_valid_email'.tr();
+      return 'Invalid email address.';
     }
     return null;
   }
 
   static String? validatePassword(value) {
     if (value == null || value.isEmpty) {
-      return 'password_is_required'.tr();
+      return 'Password is required.';
     }
+
+    // Check for minimum password length
     if (value.length < 8) {
-      return 'password_must_be_at_least_8_characters'.tr();
+      return 'Password must be at least 8 characters long.';
     }
 
     // Check for uppercase letter
     if (!RegExp(r'[A-Z]').hasMatch(value)) {
-      return 'password_must_contain_uppercase'.tr();
+      return 'Password must contain at least one uppercase letter.';
     }
 
     // Check for lowercase letter
     if (!RegExp(r'[a-z]').hasMatch(value)) {
-      return 'password_must_contain_lowercase'.tr();
+      return 'Password must contain at least one lowercase letter.';
     }
 
     // Check for digit
     if (!RegExp(r'[0-9]').hasMatch(value)) {
-      return 'password_must_contain_number'.tr();
+      return 'Password must contain at least one number.';
     }
 
     // Check for special character
     if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
-      return 'password_must_contain_special_character'.tr();
+      return 'Password must contain at least one special character.';
     }
 
     return null;
@@ -66,20 +76,20 @@ class Validation {
 
   static String? validateFullName(String? value) {
     if (value == null || value.isEmpty) {
-      return 'please_enter_your_full_name'.tr();
+      return 'Enter your full name.';
     }
 
     // Remove extra spaces and split by spaces
     final nameParts = value.trim().split(RegExp(r'\s+'));
 
-    if (nameParts.length < 3) {
-      return 'please_enter_first_middle_last'.tr();
+    if (nameParts.length < 2) {
+      return 'Enter your first and last name.';
     }
 
     // Check if each name part has at least 2 characters
     for (var part in nameParts) {
       if (part.length < 3) {
-        return 'each_name_must_be_at_least_2_characters'.tr();
+        return 'Name must be at least 2 characters.';
       }
     }
 
@@ -91,11 +101,36 @@ class Validation {
     TextEditingController passwordController,
   ) {
     if (value == null || value.isEmpty) {
-      return 'please_confirm_your_password'.tr();
+      return 'Confirm Password is required.';
     }
     if (value != passwordController.text) {
-      return 'passwords_do_not_match'.tr();
+      return 'Passwords do not match.';
     }
+    return null;
+  }
+
+  static String? validateEgyptianPhone(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Phone number is required';
+    }
+
+    // Standardize input for validation logic (Remove spaces, dashes, +)
+    final cleaned = value.replaceAll(RegExp(r'[\s\-\+]'), '');
+
+    // Regex Explanation:
+    // ^              : Start
+    // (20)?          : Optional Country Code '20'
+    // (0)?           : Optional leading '0'
+    // 1              : Must start with '1' (after prefix)
+    // [0125]         : Next digit must be 0, 1, 2, or 5 (Vodafone, Etisalat, Orange, WE)
+    // \d{8}          : Exactly 8 digits follow
+    // $              : End
+    final regex = RegExp(r'^(20)?(0)?1[0125]\d{8}$');
+
+    if (!regex.hasMatch(cleaned)) {
+      return 'Enter a valid Egyptian phone number (e.g. 010...)';
+    }
+
     return null;
   }
 }

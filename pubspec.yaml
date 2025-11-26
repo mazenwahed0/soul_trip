@@ -43,6 +43,7 @@ dependencies:
   flutter_native_splash: ^2.4.7
   dio: ^5.9.0
   image_picker: ^1.2.1
+  shimmer: ^3.0.0
 
 #--------------------------- ./ Packages END -------------------------------#
 dev_dependencies:

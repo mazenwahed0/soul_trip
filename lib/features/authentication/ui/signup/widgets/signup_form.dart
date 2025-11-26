@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/model/text_field_model/text_field_model.dart';
 import '../../../../../core/theme/colors.dart';
 import '../../../../../core/theme/text_style.dart';
-import '../../../../../core/validation/validatoin.dart';
+import '../../../../../core/validation/validation.dart';
 import '../../../logic/signup/signup_cubit.dart';
 import '../../../../../core/widgets/common/text_field/custom_text_field.dart';
 

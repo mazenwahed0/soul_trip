@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +6,7 @@ import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/text_style.dart';
 import '../../data/onboarding_model.dart';
 import '../../logic/onboarding_cubit.dart';
+import '../../logic/onboarding_state.dart';
 
 class OnboardingSlider extends StatelessWidget {
   const OnboardingSlider({
@@ -32,16 +34,27 @@ class OnboardingSlider extends StatelessWidget {
             cubit.updatePage(index);
           },
           itemBuilder: (context, index) {
+            // -- Check if image is network or asset
+            final imagePath = list[index].imageUrl;
+            final isNetwork = imagePath.startsWith('http');
+
             return Transform.scale(
-              scale: 1.1, // 110% size
-              alignment: Alignment.bottomCenter, // Zoom to bottom
-              child: Image.asset(
-                list[index].image,
-                fit: BoxFit.cover,
-                alignment: Alignment.bottomCenter, // Image to bottom
-                width: double.infinity,
-                height: double.infinity,
-              ),
+              scale: 1.1,
+              alignment: Alignment.bottomCenter,
+              child: isNetwork
+                  ? CachedNetworkImage(
+                      imageUrl: imagePath,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: double.infinity,
+                    )
+                  : Image.asset(
+                      imagePath,
+                      fit: BoxFit.cover,
+                      alignment: Alignment.bottomCenter,
+                      width: double.infinity,
+                      height: double.infinity,
+                    ),
             );
           },
         ),
@@ -74,9 +87,9 @@ class OnboardingSlider extends StatelessWidget {
         Positioned(
           top: 50.h,
           right: 20.w,
-          child: BlocBuilder<OnboardingCubit, int>(
-            builder: (context, currentIndex) {
-              if (currentIndex == OnboardingModel.list.length - 1) {
+          child: BlocBuilder<OnboardingCubit, OnboardingState>(
+            builder: (context, state) {
+              if (state.currentIndex == list.length - 1) {
                 return const SizedBox.shrink();
               }
               return TextButton(

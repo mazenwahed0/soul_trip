@@ -18,9 +18,9 @@ class ConstantVariable {
   static const String splashText = 'assets/logos/Soul Trip.png';
 
   // -- Onboarding Screen
-  static const String onboarding1 = 'assets/images/2150624951 1.png';
-  static const String onboarding2 = 'assets/images/2149026922 1.png';
-  static const String onboarding3 = 'assets/images/45529 1.png';
+  static const String onboarding1 = 'assets/images/onBoarding1.png';
+  static const String onboarding2 = 'assets/images/onBoarding2.png';
+  static const String onboarding3 = 'assets/images/onBoarding3.png';
 
   // -- Status Dialog
   static const String yellowVerfiy = 'assets/images/yellow-verify.png';

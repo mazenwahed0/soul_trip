@@ -24,6 +24,7 @@ class Keys {
 
   static const String categoryFolder = 'Category/Pictures';
   static const String bannersFolder = 'Banners/Images';
+  static const String onBoardingFolder = 'OnBoarding/Images';
   static const String tripsFolder = 'Trips/Images';
   static const String expertsFolder = 'Experts/Images';
 

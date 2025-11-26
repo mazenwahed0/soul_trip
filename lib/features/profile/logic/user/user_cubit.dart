@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../core/model/user_model/user_model.dart';
-import '../../../core/repositories/keys.dart';
-import '../../../core/repositories/storage/cloudinary_service.dart';
-import '../data/user_repository.dart';
+import '../../../../core/model/user_model/user_model.dart';
+import '../../../../core/repositories/keys.dart';
+import '../../../../core/repositories/storage/cloudinary_service.dart';
+import '../../data/user/user_repository.dart';
 import 'user_state.dart';
 
 class UserCubit extends Cubit<UserState> {
@@ -70,6 +70,34 @@ class UserCubit extends Cubit<UserState> {
     emit(UserLoading());
 
     final result = await _userRepo.updateSingleField(json);
+
+    result.fold(
+      (failure) => emit(UserFailure(failure.message)),
+      (_) => emit(const UserSuccess("Profile updated successfully!")),
+    );
+  }
+
+  /// [SaveAccountInfo] Send New Account Data to Firestore
+  Future<void> updateBasicInfo({
+    required String fullName,
+    required String phoneNumber,
+  }) async {
+    emit(UserLoading());
+
+    // -- Split Name
+    final nameParts = UserModel.nameParts(fullName.trim());
+    final firstName = nameParts[0];
+    final lastName = nameParts.length > 1 ? nameParts.sublist(1).join(' ') : "";
+
+    // -- Prepare JSON
+    final Map<String, dynamic> data = {
+      'firstName': firstName,
+      'lastName': lastName,
+      'phoneNumber': phoneNumber.trim(),
+    };
+
+    // -- Call Repo
+    final result = await _userRepo.updateSingleField(data);
 
     result.fold(
       (failure) => emit(UserFailure(failure.message)),

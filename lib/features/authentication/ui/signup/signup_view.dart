@@ -8,7 +8,7 @@ import '../../../../core/routing/routes.dart';
 import '../../../../core/utils/snackbars/loaders.dart';
 import '../../../../core/widgets/common/buttons/primary_shadow_button.dart';
 import '../../../../core/widgets/common/status_sheet/status_bottom_sheet.dart';
-import '../../../profile/data/user_repository.dart';
+import '../../../profile/data/user/user_repository.dart';
 import '../../data/authentication_repository.dart';
 import '../../logic/signup/signup_cubit.dart';
 import '../../logic/signup/signup_state.dart';

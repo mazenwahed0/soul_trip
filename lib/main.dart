@@ -12,7 +12,7 @@ import 'core/utils/constant.dart';
 import 'core/widgets/no_internet_screen.dart';
 import 'features/authentication/data/authentication_repository.dart';
 import 'features/authentication/logic/auth/auth_cubit.dart';
-import 'features/profile/data/user_repository.dart';
+import 'features/profile/data/user/user_repository.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -22,7 +22,7 @@ void main() async {
   // -- Initialize Firebase & Initialize Authentication
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // -- Initialize Hive & Helpers
+  // -- Initialize Hive
   await UserHiveHelper.init();
 
   // -- Initialize SharedPreferences

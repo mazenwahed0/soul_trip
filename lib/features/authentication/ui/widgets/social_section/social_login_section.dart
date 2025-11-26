@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../../core/dependency_injection/set_up_dependencies.dart';
 import '../../../../../core/theme/colors.dart';
 import '../../../../../core/theme/text_style.dart';
 import '../../../../../core/utils/constant.dart';
 import '../../../../../core/utils/snackbars/loaders.dart';
-import '../../../../profile/data/user_repository.dart';
 import '../../../data/authentication_repository.dart';
 import '../../../logic/social_auth/social_auth_cubit.dart';
 import '../../../logic/social_auth/social_auth_state.dart';
@@ -22,10 +20,7 @@ class SocialLoginSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => SocialAuthCubit(
-        getIt<AuthenticationRepository>(),
-        getIt<UserRepository>(),
-      ),
+      create: (context) => SocialAuthCubit(getIt<AuthenticationRepository>()),
       child: BlocConsumer<SocialAuthCubit, SocialAuthState>(
         listener: (context, state) {
           if (state is SocialAuthFailure) {
@@ -36,11 +31,6 @@ class SocialLoginSection extends StatelessWidget {
               title: "Success",
               message: "Logged in with Google",
             );
-
-            // Note: The global AuthCubit in app.dart will detect the new user
-            // But Force GoRouter to run the AppRouteGuard again
-            // Since the user is now logged in, and the AppRouteGuard will redirect them to Home
-            GoRouter.of(context).refresh();
           }
         },
         builder: (context, state) {

@@ -3,7 +3,9 @@ import 'package:soul_trip/core/routing/routes.dart';
 import 'package:soul_trip/features/experts/ui/screen/experts_screen.dart';
 import 'package:soul_trip/features/home/ui/screen/home_screen.dart';
 import 'package:soul_trip/features/layout/ui/screen/layout_screen.dart';
-import 'package:soul_trip/features/profile/ui/screen/profile_screen.dart';
+import 'package:soul_trip/features/profile/ui/screen/account_info/account_info_screen.dart';
+import 'package:soul_trip/features/profile/ui/screen/load_data/load_data_screen.dart';
+import 'package:soul_trip/features/profile/ui/screen/profile/profile_screen.dart';
 import 'package:soul_trip/features/reviews/ui/screen/reviews_screen.dart';
 import 'package:soul_trip/features/wishlist/ui/screen/wishlist_screen.dart';
 
@@ -57,6 +59,22 @@ abstract class AppRouter {
         path: Routes.forgotPasswordView,
         pageBuilder: (context, state) => slideTransitionPage(
           child: const ForgetPasswordView(),
+          key: state.pageKey,
+        ),
+      ),
+
+      GoRoute(
+        path: Routes.loadDataView,
+        pageBuilder: (context, state) => slideTransitionPage(
+          child: const LoadDataScreen(),
+          key: state.pageKey,
+        ),
+      ),
+
+      GoRoute(
+        path: Routes.accountInfoView,
+        pageBuilder: (context, state) => slideTransitionPage(
+          child: const AccountInfoScreen(),
           key: state.pageKey,
         ),
       ),

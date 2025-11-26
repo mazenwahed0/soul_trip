@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 
-import '../../../core/dependency_injection/set_up_dependencies.dart';
-import '../../../core/errors/exceptions/exports.dart';
-import '../../../core/errors/failures.dart';
-import '../../../core/model/user_model/user_model.dart';
-import '../../authentication/data/authentication_repository.dart';
+import '../../../../core/dependency_injection/set_up_dependencies.dart';
+import '../../../../core/errors/exceptions/exports.dart';
+import '../../../../core/errors/failures.dart';
+import '../../../../core/model/user_model/user_model.dart';
+import '../../../authentication/data/authentication_repository.dart';
 
 class UserRepository {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -54,7 +55,7 @@ class UserRepository {
     });
   }
 
-  /// Fetch user details
+  /// Fetch User Details
   Future<Either<Failure, UserModel>> fetchUserDetails() async {
     return _guard(() async {
       final uid = _authRepo.currentUser?.uid;
@@ -66,6 +67,36 @@ class UserRepository {
         return UserModel.fromSnapshot(documentSnapshot);
       } else {
         return UserModel.empty();
+      }
+    });
+  }
+
+  /// [EnsureUserRecordExists] - Checks if doc exists, if not creates it (For Social Auth)
+  Future<Either<Failure, UserModel>> checkUserRecordExists(
+    User firebaseUser,
+  ) async {
+    return _guard(() async {
+      final docRef = _db.collection("Users").doc(firebaseUser.uid);
+      final snapshot = await docRef.get();
+
+      if (snapshot.exists) {
+        // User exists, return data
+        return UserModel.fromSnapshot(snapshot);
+      } else {
+        // User doesn't exist (First time Social Login), Create now!
+        final nameParts = UserModel.nameParts(firebaseUser.displayName ?? '');
+
+        final newUser = UserModel(
+          id: firebaseUser.uid,
+          firstName: nameParts[0],
+          lastName: nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '',
+          email: firebaseUser.email ?? '',
+          phoneNumber: firebaseUser.phoneNumber ?? '',
+          profilePicture: firebaseUser.photoURL ?? '',
+        );
+
+        await docRef.set(newUser.toJson());
+        return newUser;
       }
     });
   }

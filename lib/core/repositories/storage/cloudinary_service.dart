@@ -17,20 +17,25 @@ class CloudinaryService {
     try {
       String api = ApiUrls.uploadApi(Keys.cloudName);
 
-      final formData = dio.FormData.fromMap({
+      final Map<String, dynamic> data = {
         'upload_preset': Keys.uploadPreset,
         'folder': folderName,
-        'public_id': publicId,
         'file': await dio.MultipartFile.fromFile(
           image.path,
           filename: image.path.split('/').last,
         ),
-      });
+      };
+
+      if (publicId.isNotEmpty) {
+        data['public_id'] = publicId;
+      }
+
+      final formData = dio.FormData.fromMap(data);
 
       dio.Response response = await _dio.post(api, data: formData);
       return response;
     } catch (e) {
-      throw 'Failed to upload profile picture. Please try again';
+      throw 'Upload Failed: $e';
     }
   }
 

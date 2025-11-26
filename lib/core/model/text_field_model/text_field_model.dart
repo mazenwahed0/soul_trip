@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TextFieldModel {
   final TextEditingController controller;
@@ -19,6 +20,7 @@ class TextFieldModel {
   final bool ischangeColor;
   final bool readOnly;
   final TextInputAction? textInputAction;
+  final List<TextInputFormatter>? inputFormatters;
 
   TextFieldModel({
     required this.controller,
@@ -39,5 +41,6 @@ class TextFieldModel {
     this.ischangeColor = false,
     this.readOnly = false,
     this.textInputAction,
+    this.inputFormatters,
   });
 }

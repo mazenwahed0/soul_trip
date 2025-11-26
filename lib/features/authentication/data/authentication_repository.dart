@@ -23,9 +23,7 @@ class AuthenticationRepository {
     } on FirebaseException catch (e) {
       return Left(ServerFailure(CFirebaseException(e.code).message));
     } on FormatException catch (_) {
-      return Left(
-        const AuthFailure('Invalid format. Please check your input.'),
-      );
+      return Left(AuthFailure(const CFormatException().message));
     } on PlatformException catch (e) {
       return Left(AuthFailure(CPlatformException(e.code).message));
     } catch (e) {
@@ -59,13 +57,6 @@ class AuthenticationRepository {
     });
   }
 
-  /// [EmailAuthentication] - Send Email Verification
-  Future<Either<Failure, void>> sendEmailVerification() async {
-    return _guard(() async {
-      await _auth.currentUser?.sendEmailVerification();
-    });
-  }
-
   /// [GoogleAuthentication] - GOOGLE
   Future<Either<Failure, UserCredential>> signInWithGoogle() async {
     try {
@@ -94,6 +85,21 @@ class AuthenticationRepository {
     }
   }
 
+  /// [EmailAuthentication] - Send Email Verification
+  Future<Either<Failure, void>> sendEmailVerification() async {
+    return _guard(() async {
+      await _auth.currentUser?.sendEmailVerification();
+    });
+  }
+
+  /// [EmailAuthentication] - Forgot Password
+  Future<Either<Failure, void>> sendPasswordResetEmail(String email) async {
+    return _guard(() async {
+      await _auth.sendPasswordResetEmail(email: email);
+    });
+  }
+
+  /// [Logout] - Email/Password & Google Logout
   Future<Either<Failure, void>> logout() async {
     return _guard(() async {
       await GoogleSignIn().signOut();

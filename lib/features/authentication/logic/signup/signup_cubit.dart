@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/model/user_model/user_model.dart';
-import '../../../profile/data/user_repository.dart';
+import '../../../profile/data/user/user_repository.dart';
 import '../../data/authentication_repository.dart';
 import 'signup_state.dart';
 

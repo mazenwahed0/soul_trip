@@ -38,8 +38,13 @@ class _CustomTextFormFieldState extends State<CustomTextField> {
     final Color blue = colorTheme.primaryBlue;
     final Color grayText = colorTheme.grayMedium;
     final Color errorColor = colorTheme.errorColor;
-    final Color fieldBackground = const Color(0xFFFBFBFB);
     final Color shadowColor = const Color(0xFF000000).withValues(alpha: 0.25);
+
+    // Check ReadOnly for Background Color
+    final bool isReadOnly = widget.textFieldModel.readOnly;
+    final Color fieldBackground = isReadOnly
+        ? const Color(0xFFF3F3F3) // Darker grey for read-only
+        : const Color(0xFFFBFBFB); // Default light
 
     // Using FormField to handle validation state while keeping custom UI
     return FormField<String>(
@@ -53,17 +58,19 @@ class _CustomTextFormFieldState extends State<CustomTextField> {
         // Error -> Red
         // Focused -> Blue
         // Default -> Transparent
+        // Only turn Blue if focused AND NOT read-only
         Color borderColor = Colors.transparent;
         if (hasError) {
           borderColor = errorColor;
-        } else if (_isFocused) {
+        } else if (_isFocused && !isReadOnly) {
           borderColor = blue;
         }
 
         // -- Icon Color Logic:
         // Focused -> Blue
         // Default -> Gray
-        Color iconColor = _isFocused ? blue : grayText;
+        // Only turn Icon Blue if focused AND NOT read-only
+        Color iconColor = (_isFocused && !isReadOnly) ? blue : grayText;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,16 +92,18 @@ class _CustomTextFormFieldState extends State<CustomTextField> {
               ),
               child: TextField(
                 controller: widget.textFieldModel.controller,
+                inputFormatters: widget.textFieldModel.inputFormatters,
                 focusNode: _focusNode,
                 keyboardType: widget.textFieldModel.keyboardType,
                 textInputAction: widget.textFieldModel.textInputAction,
                 obscureText: isObscured,
+                readOnly: isReadOnly,
                 onChanged: (value) {
                   state.didChange(value);
                   widget.textFieldModel.onChanged?.call(value);
                 },
                 style: AppTextStyles.regular14().copyWith(
-                  color: blue,
+                  color: isReadOnly ? colorTheme.grayDark : blue,
                   height: 1.0,
                 ),
                 decoration: InputDecoration(
@@ -105,7 +114,6 @@ class _CustomTextFormFieldState extends State<CustomTextField> {
                   ),
                   border: InputBorder.none,
                   errorStyle: const TextStyle(height: 0),
-
                   hintText: widget.textFieldModel.hintText,
                   hintStyle: AppTextStyles.regular14().copyWith(
                     color: grayText,
@@ -129,6 +137,8 @@ class _CustomTextFormFieldState extends State<CustomTextField> {
                   suffixIcon: widget.textFieldModel.obscureText
                       ? GestureDetector(
                           onTap: () {
+                            if (isReadOnly)
+                              return; // Prevent toggle if read only
                             setState(() {
                               isObscured = !isObscured;
                             });
@@ -137,8 +147,8 @@ class _CustomTextFormFieldState extends State<CustomTextField> {
                             padding: const EdgeInsets.only(right: 16),
                             child: Icon(
                               isObscured
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
                               color: iconColor,
                               size: 24,
                             ),
