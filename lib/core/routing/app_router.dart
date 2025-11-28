@@ -1,10 +1,13 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:soul_trip/core/routing/page_transitions.dart';
 import 'package:soul_trip/core/routing/routes.dart';
 import 'package:soul_trip/features/experts/ui/screen/experts_screen.dart';
 import 'package:soul_trip/features/home/ui/screen/home_screen.dart';
 import 'package:soul_trip/features/layout/ui/screen/layout_screen.dart';
-import 'package:soul_trip/features/profile/ui/screen/profile_screen.dart';
+import 'package:soul_trip/features/notification/ui/notification_screen.dart';
+import 'package:soul_trip/features/profile/ui/screen/account_info/account_info_screen.dart';
+import 'package:soul_trip/features/profile/ui/screen/load_data/load_data_screen.dart';
+import 'package:soul_trip/features/profile/ui/screen/profile/profile_screen.dart';
 import 'package:soul_trip/features/reviews/ui/screen/reviews_screen.dart';
 import 'package:soul_trip/features/wishlist/ui/screen/wishlist_screen.dart';
 import 'package:soul_trip/features/categories_trips/ui/screen/categories_trips_screen.dart';
@@ -14,44 +17,136 @@ import 'package:soul_trip/features/search/ui/screen/search_results_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:soul_trip/features/search/manager/search_cubit/search_cubit.dart';
 
+import '../../features/authentication/data/authentication_repository.dart';
+import '../../features/authentication/ui/forget_password/forget_password_view.dart';
+import '../../features/authentication/ui/login/login_view.dart';
+import '../../features/authentication/ui/signup/signup_view.dart';
+import '../../features/categories_trips/ui/screen/categories_trips_screen.dart';
+import '../../features/category_trips/ui/screen/category_trips_screen.dart';
+import '../../features/onboarding/ui/onboarding_view.dart';
+import '../../features/search/manager/search_cubit/search_cubit.dart';
+import '../../features/search/ui/screen/search_filter_screen.dart';
+import '../../features/search/ui/screen/search_results_screen.dart';
+import '../../features/splash/ui/splash_view.dart';
+import '../dependency_injection/set_up_dependencies.dart';
+import 'animation_route.dart';
+import 'app_route_guard.dart';
+import 'go_router_refresh_stream.dart';
+
 abstract class AppRouter {
   static final router = GoRouter(
-    initialLocation: Routes.homeView,
+    initialLocation: Routes.splashView,
+    redirect: AppRouteGuard.guard,
+    refreshListenable: GoRouterRefreshStream(
+      getIt<AuthenticationRepository>().authStateChanges,
+    ),
     routes: [
+      // -- Splash View
+      GoRoute(
+        path: Routes.splashView,
+        builder: (context, state) => const SplashView(),
+      ),
+
+      // -- OnBoarding View
+      GoRoute(
+        path: Routes.onboardingView,
+        builder: (context, state) => OnboardingView(),
+      ),
+
+      // -- Sign Up View
+      GoRoute(
+        path: Routes.registerView,
+        pageBuilder: (context, state) =>
+            slideTransitionPage(child: const SignupView(), key: state.pageKey),
+      ),
+
+      // -- Login View
+      GoRoute(
+        path: Routes.loginView,
+        pageBuilder: (context, state) =>
+            slideTransitionPage(child: const LoginView(), key: state.pageKey),
+      ),
+
+      // -- Forget Password View
+      GoRoute(
+        path: Routes.forgotPasswordView,
+        pageBuilder: (context, state) => slideTransitionPage(
+          child: const ForgetPasswordView(),
+          key: state.pageKey,
+        ),
+      ),
+
+      // -- Load Data View
+      GoRoute(
+        path: Routes.loadDataView,
+        pageBuilder: (context, state) => slideTransitionPage(
+          child: const LoadDataScreen(),
+          key: state.pageKey,
+        ),
+      ),
+
+      // -- Account Info View
+      GoRoute(
+        path: Routes.accountInfoView,
+        pageBuilder: (context, state) => slideTransitionPage(
+          child: const AccountInfoScreen(),
+          key: state.pageKey,
+        ),
+      ),
+
+      // -- Home View
       GoRoute(
         path: Routes.searchView,
-        pageBuilder: (context, state) =>
-            fadeTransitionPage(const SearchFilterScreen()),
+        pageBuilder: (context, state) => slideTransitionPage(
+          child: const SearchFilterScreen(),
+          key: state.pageKey,
+        ),
       ),
       GoRoute(
         path: Routes.searchCategoryView,
         pageBuilder: (context, state) {
           final extra = state.extra;
           if (extra is SearchCubit) {
-            return fadeTransitionPage(
-              BlocProvider.value(
+            return slideTransitionPage(
+              child: BlocProvider.value(
                 value: extra,
                 child: const SearchResultsScreen(),
               ),
+              key: state.pageKey,
             );
           }
-          return fadeTransitionPage(const SearchResultsScreen());
+          return slideTransitionPage(
+            child: const SearchResultsScreen(),
+            key: state.pageKey,
+          );
         },
       ),
       GoRoute(
         path: Routes.categoriesTripsView,
-        pageBuilder: (context, state) =>
-            fadeTransitionPage(const CategoriesTripsScreen()),
+        pageBuilder: (context, state) => slideTransitionPage(
+          child: const CategoriesTripsScreen(),
+          key: state.pageKey,
+        ),
       ),
       GoRoute(
         path: '${Routes.categoryTripsView}/:categoryName',
         pageBuilder: (context, state) {
           final categoryName = state.pathParameters['categoryName'] ?? '';
-          return fadeTransitionPage(
-            CategoryTripsScreen(categoryName: categoryName),
+          return slideTransitionPage(
+            child: CategoryTripsScreen(categoryName: categoryName),
+            key: state.pageKey,
           );
         },
       ),
+      // -- Notifications Screen
+      GoRoute(
+        path: Routes.notificationView,
+        pageBuilder: (context, state) => slideTransitionPage(
+          child: const NotificationScreen(),
+          key: state.pageKey,
+        ),
+      ),
+
       // Shell Route with Bottom Navigation
       ShellRoute(
         pageBuilder: (context, state, child) {

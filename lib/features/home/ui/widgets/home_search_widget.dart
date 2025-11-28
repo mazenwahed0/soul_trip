@@ -1,51 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:soul_trip/core/theme/colors.dart';
-import 'package:soul_trip/core/theme/soultrip_icons.dart' show Soultrip;
+import 'package:soul_trip/core/theme/soultrip_icons.dart';
 import 'package:soul_trip/core/theme/text_style.dart';
 
-class HomeSearchBarWidget extends StatefulWidget {
+class HomeSearchBarWidget extends StatelessWidget {
+  final VoidCallback? onTap;
+  final VoidCallback? onFilterTap;
+  final TextEditingController? controller;
+  final Function(String)? onChanged;
   final String hintText;
-  final void Function(String)? onChanged;
-  final VoidCallback? onFilterPressed;
 
   const HomeSearchBarWidget({
     super.key,
-    this.hintText = 'Search',
+    this.onTap,
+    this.onFilterTap,
+    this.controller,
     this.onChanged,
-    this.onFilterPressed,
+    this.hintText = "Search",
   });
 
   @override
-  State<HomeSearchBarWidget> createState() => _HomeSearchBarWidgetState();
-}
-
-class _HomeSearchBarWidgetState extends State<HomeSearchBarWidget> {
-  late final TextEditingController _searchController;
-  final ColorTheme _colors = ColorTheme();
-
-  @override
-  void initState() {
-    super.initState();
-    _searchController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final colors = ColorTheme();
+
     return Container(
-      height: 50.h,
+      width: 343.w,
+      height: 48.h,
       decoration: BoxDecoration(
-        color: _colors.backgroundWhite,
-        borderRadius: BorderRadius.circular(22.r),
+        color: colors.offWhite, // Main background (Off-White)
+        borderRadius: BorderRadius.circular(30.r), // Pill Shape
         boxShadow: [
           BoxShadow(
-            color: _colors.grayLight.withValues(alpha: 0.1),
+            color: Colors.black.withValues(alpha: 0.08), // Shadow
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -53,46 +40,75 @@ class _HomeSearchBarWidgetState extends State<HomeSearchBarWidget> {
       ),
       child: Row(
         children: [
-          SizedBox(width: 12.w),
-
-          // Search Icon
-          Icon(Soultrip.search, color: _colors.grayMedium, size: 22.sp),
-
-          SizedBox(width: 10.w),
-
-          // Search TextField
+          // MARK:- Left Side: Search Icon & Text
           Expanded(
-            child: TextField(
-              controller: _searchController,
-              onChanged: widget.onChanged,
-              style: AppTextStyles.regular14().copyWith(
-                color: _colors.blackColor,
-              ),
-              decoration: InputDecoration(
-                hintText: widget.hintText,
-                hintStyle: AppTextStyles.regular14().copyWith(
-                  color: _colors.grayMedium,
-                ),
-                border: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                contentPadding: EdgeInsets.zero,
+            child: GestureDetector(
+              onTap: onTap, // Navigation if needed
+              behavior: HitTestBehavior.opaque,
+              child: Row(
+                children: [
+                  SizedBox(width: 16.w),
+                  Icon(
+                    Soultrip.search,
+                    color: colors.grayMedium, // Grey Icon
+                    size: 22.sp,
+                  ),
+                  SizedBox(width: 16.w),
+                  Expanded(
+                    // IgnorePointer allows the GestureDetector to handle taps
+                    // prevents keyboard from opening if we just want to navigate
+                    child: IgnorePointer(
+                      ignoring: onTap != null,
+                      child: TextField(
+                        controller: controller,
+                        onChanged: onChanged,
+                        // If we are navigating (onTap exists), disable direct editing
+                        enabled: onTap == null,
+                        style: AppTextStyles.regular16().copyWith(
+                          color: colors.blackColor,
+                          height: 1.2,
+                        ),
+                        decoration: InputDecoration(
+                          hintText: hintText,
+                          hintStyle: AppTextStyles.regular16().copyWith(
+                            color: colors.grayMedium, // Grey Text
+                            height: 1.2,
+                          ),
+                          border: InputBorder.none,
+                          isDense: true,
+                          contentPadding: EdgeInsets.zero,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
-
-          SizedBox(width: 10.w),
-          Container(width: 1, color: _colors.grayVeryLight),
-          // Filter Icon Button
+          // MARK:- Right Side: Filter Button
           GestureDetector(
-            onTap: widget.onFilterPressed,
+            // Use specific filter callback or default to main tap
+            onTap: onFilterTap ?? onTap,
             child: Container(
-              margin: EdgeInsets.only(right: 8.w),
-              padding: EdgeInsets.symmetric(horizontal: 15.w),
+              width: 56.w,
+              height: double.infinity,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.r),
+                color: colors.whiteColor,
+                border: const Border(
+                  left: BorderSide(color: Color(0xFFE5E5E5), width: 1),
+                ),
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(30.r),
+                  bottomRight: Radius.circular(30.r),
+                ),
               ),
-              child: Icon(Icons.tune, color: _colors.primaryBlue, size: 20.sp),
+              child: Center(
+                child: Icon(
+                  Soultrip.filter,
+                  color: colors.primaryBlue,
+                  size: 22.sp,
+                ),
+              ),
             ),
           ),
         ],

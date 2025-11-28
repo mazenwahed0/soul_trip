@@ -12,11 +12,13 @@ import 'package:soul_trip/features/home/manager/banner_cubit/banner_cubit.dart';
 import 'package:soul_trip/features/home/manager/home_trips_cubit/home_trips_cubit.dart';
 import 'package:soul_trip/features/home/ui/widgets/banners_list_widget.dart';
 import 'package:soul_trip/features/home/ui/widgets/categories_list_widget.dart';
-import 'package:soul_trip/features/home/ui/widgets/home_header_widget.dart';
+import 'package:soul_trip/core/widgets/common/header/home_header_widget.dart';
 import 'package:soul_trip/features/home/ui/widgets/home_search_widget.dart';
 import 'package:soul_trip/features/home/ui/widgets/home_trips/home_trips_list_widget.dart';
 import 'package:soul_trip/features/home/ui/widgets/home_trips/home_trips_by_category_widget.dart';
 import 'package:soul_trip/features/home/ui/widgets/section_header_widget.dart';
+
+import '../../../../core/dependency_injection/set_up_dependencies.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -28,15 +30,17 @@ class HomeScreen extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => BannerCubit(BannerRepository())..streamBanners(),
+          create: (context) =>
+              BannerCubit(getIt<BannerRepository>())..streamBanners(),
         ),
         BlocProvider(
           create: (context) =>
-              HomeTripsCubit(HomeTripsRepository())..streamMostPopularTrips(),
+              HomeTripsCubit(getIt<HomeTripsRepository>())
+                ..streamMostPopularTrips(),
         ),
         BlocProvider(
           create: (context) =>
-              CategoriesTripsCubit(CategoriesTripsRepository())
+              CategoriesTripsCubit(getIt<CategoriesTripsRepository>())
                 ..streamCategories(),
         ),
       ],
@@ -59,22 +63,20 @@ class HomeScreen extends StatelessWidget {
                         // Header Section
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: const HomeHeaderWidget(),
+                          child: HomeHeaderWidget(
+                            onTap: () => context.push(Routes.notificationView),
+                          ),
                         ),
 
                         SizedBox(height: 20.h),
 
                         // Search Bar
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: GestureDetector(
-                            behavior: HitTestBehavior.opaque,
+                          padding: EdgeInsets.symmetric(horizontal: 16.w),
+                          child: HomeSearchBarWidget(
                             onTap: () {
                               context.push(Routes.searchView);
                             },
-                            child: const AbsorbPointer(
-                              child: HomeSearchBarWidget(),
-                            ),
                           ),
                         ),
 

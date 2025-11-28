@@ -30,9 +30,11 @@ class Routes {
   static const String alThawraArchiveView = '/al-thawra-archive';
   static const String archivePdfView = '/search-pdf';
   static const String profileView = '/profile';
+  static const String loadDataView = '/load-data';
   static const String favoritesView = '/favorites';
-  static const String editInfoView = '/edit-info';
+  static const String accountInfoView = '/account-info';
   static const String splashView = '/splash';
+  static const String onboardingView = '/onboarding';
   static const String drawerSubCategoryContent = '/drawerSubCategoryContent';
   static const String aboutUsView = '/about-us';
   static const String privacyPolicyView = '/privacy-policy';
@@ -45,4 +47,5 @@ class Routes {
   static const String galleriesArticlesWidget = '/galleries-articles-widget';
   static const String categoriesTripsView = '/categories-trips';
   static const String categoryTripsView = '/category-trips';
+  static const String notificationView = '/notifications';
 }

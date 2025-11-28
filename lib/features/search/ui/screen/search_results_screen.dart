@@ -9,6 +9,8 @@ import 'package:soul_trip/features/home/ui/widgets/home_search_widget.dart';
 import 'package:soul_trip/features/search/manager/search_cubit/search_cubit.dart';
 import 'package:soul_trip/features/search/manager/search_cubit/search_state.dart';
 
+import '../../../../core/widgets/common/buttons/custom_back_button.dart';
+
 class SearchResultsScreen extends StatelessWidget {
   const SearchResultsScreen({super.key});
 
@@ -20,7 +22,7 @@ class SearchResultsScreen extends StatelessWidget {
       backgroundColor: colors.backgroundWhite,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Column(
             children: [
               BlocBuilder<SearchCubit, SearchState>(
@@ -32,20 +34,14 @@ class SearchResultsScreen extends StatelessWidget {
 
                   return Row(
                     children: [
-                      GestureDetector(
-                        onTap: () => context.pop(),
-                        child: Container(
-                          width: 36.w,
-                          height: 36.w,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: colors.grayVeryLight,
-                          ),
-                          child: const Icon(Icons.arrow_back),
+                      CustomBackButton(),
+                      SizedBox(width: 12.w),
+                      Expanded(
+                        child: HomeSearchBarWidget(
+                          hintText: hint,
+                          onFilterTap: () => context.pop(),
                         ),
                       ),
-                      SizedBox(width: 12.w),
-                      Expanded(child: HomeSearchBarWidget(hintText: hint)),
                     ],
                   );
                 },
