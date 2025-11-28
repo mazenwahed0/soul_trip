@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import '../../../../core/dependency_injection/set_up_dependencies.dart';
 import '../../../../core/errors/exceptions/exports.dart';
 import '../../../../core/errors/failures.dart';
-import '../../../../core/model/user_model/user_model.dart';
+import '../../../../core/models/user_model/user_model.dart';
 import '../../../authentication/data/authentication_repository.dart';
 
 class UserRepository {

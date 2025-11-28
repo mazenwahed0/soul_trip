@@ -82,7 +82,8 @@ class _SignupBody extends StatelessWidget {
 
               // MARK:- Social Login
               const SocialLoginSection(text: "Or Sign Up with"),
-              SizedBox(height: 24.h),
+
+              SizedBox(height: 16.h),
 
               // MARK:- Login Footer
               AuthFooter(

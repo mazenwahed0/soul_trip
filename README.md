@@ -39,22 +39,30 @@ The project is built with scalability in mind, utilizing **Clean Architecture**,
 This project meets all core requirements of a full-stack mobile application, including:
 
 - **Advanced Authentication:**
+
   - Secure Email/Password Login & Registration.
   - **Social Login:** Integration with Google Sign-In.
   - **Route Guarding:** Automatic redirection based on authentication state (using `GoRouter`).
+
+- **Advanced Search & Discovery:**
+
+  - **Dynamic Filtering:** Search by location, budget range (`RangeSlider`), date, and wellness category.
+  - **Smart Home Feed:** Features "Most Popular" trips and category-based grouping using custom filtered lists.
+  - **Interactive Banners:** Auto-playing carousel showcasing top-rated destinations with granular widget architecture.
+
 - **Resilient Connectivity:**
-  - Real-time internet connection monitoring.
-  - dedicated "No Internet" screen with retry logic.
-- **Media Management:**
+
+  - Real-time internet connection monitoring (`ConnectivityPlus`) with a dedicated animated "No Internet" screen and retry logic.
+
+- **Media & Performance:**
+
+  - **Smart Caching:** Custom `CacheManager` with a 7-day stale period for optimized image loading.
+  - **Debouncing:** Utility implementation to optimize search inputs and reduce API calls.
   - Integration with **Cloudinary** for optimized profile picture storage.
-  - Cached Network Images for performance.
-- **Smart Onboarding:**
-  - Interactive onboarding flow for first-time users.
-  - Local persistence (Shared Prefs) to remember user sessions.
-- **Robust Architecture:**
-  - **Dependency Injection** using `GetIt`.
-  - **State Management** using `Flutter Bloc` (Cubits).
-  - **Functional Error Handling** using `dartz` (Either Pattern).
+
+- **Local Persistence:**
+  - **Hive Database:** Storage for complex objects (User Model) for offline access.
+  - **Shared Preferences:** Lightweight storage for flags (Onboarding, Remember Me).
 
 ---
 
@@ -67,6 +75,7 @@ This project meets all core requirements of a full-stack mobile application, inc
 - **Backend:** Firebase (Auth, Firestore)
 - **Local Storage:** Hive & SharedPreferences
 - **Cloud Storage:** Cloudinary
+- **UI/Animations:** Animate_do, Shimmer, Carousel Slider, Solar Icons
 - **Dependency Injection:** GetIt
 
 ---
@@ -104,20 +113,64 @@ lib/
 
 ### 1. Progress Log
 
-| Date       | Member        | Update                                                    |
-| :--------- | :------------ | :-------------------------------------------------------- |
-| 2025-11-18 | Mazen Wahed   | Initialized project & Added font                          |
-| 2025-11-19 | Safwa Ibrahim | Added Theme & Colors                                      |
-| 2025-11-20 | Mina Yasser   | Added Core Files                                          |
-| 2025-11-20 | Mazen Wahed   | Added Icons                                               |
-| 2025-11-20 | Mina Yasser   | Setup Firebase & Layout View                              |
-| 2025-11-21 | Mazen Wahed   | Update V0.1 (Added Assets & Reusable Widgets)             |
-| 2025-11-23 | Mazen Wahed   | Update V0.1.1 (Authentication Firebase + Added New Files) |
-| 2025-11-26 | Mazen Wahed   | Update V0.1.2 (Profile, Race Condition Fix, Dev Tools)    |
+| Date       | Member        | Update                                                             |
+| :--------- | :------------ | :----------------------------------------------------------------- |
+| 2025-11-18 | Mazen Wahed   | Initialized project & Added font                                   |
+| 2025-11-19 | Safwa Ibrahim | Added Theme & Colors                                               |
+| 2025-11-20 | Mina Yasser   | Added Core Files                                                   |
+| 2025-11-20 | Mazen Wahed   | Added Icons                                                        |
+| 2025-11-20 | Mina Yasser   | Setup Firebase & Layout View                                       |
+| 2025-11-21 | Mazen Wahed   | Update V0.1 (Added Assets & Reusable Widgets)                      |
+| 2025-11-22 | Mina Yasser   | Added Home Header & Search UI Structure                            |
+| 2025-11-23 | Mazen Wahed   | Update V0.1.1 (Authentication Firebase + Added New Files)          |
+| 2025-11-24 | Mina Yasser   | Implemented Banners, Categories & Most Popular Sections            |
+| 2025-11-26 | Mazen Wahed   | Update V0.1.2 (Profile, Race Condition Fix, Dev Tools)             |
+| 2025-11-26 | Mina Yasser   | Created Search Filter & Results Screens                            |
+| 2025-11-28 | Mazen Wahed   | Update V0.1.3 (Merge Auth, Home/Search Features & UI Enhancements) |
 
 ---
 
 ### 2. Version History (Changelog)
+
+#### V0.1.3 (Home, Search & Auth Integration)
+
+This major update unifies the Authentication system with the Home and Search modules, delivering a fully personalized and dynamic user experience.
+
+**Auth & Home Integration (Merge):**
+
+- **Dynamic AppBar:** Successfully merged `AuthCubit` with the Home screen. The AppBar now dynamically fetches and displays the **authenticated user's name and profile picture** from Firestore, replacing static placeholders.
+- **Personalized Greeting:** The home header now adapts to the current user's session data.
+
+**Search & Filter Module:**
+
+- **Advanced Filtering Logic:** Implemented `SearchCubit` to handle complex queries in-memory for instant feedback.
+- **Multi-Factor Search:** Filter by Location, Wellness Category, Budget Range, Date, and Number of Travellers.
+- **Search UI:**
+  - **Filter Screen:** dedicated bottom sheet/screen for adjusting search parameters.
+  - **Results Screen:** Displays filtered `HomeTripModel` results with empty state handling.
+
+**Dynamic Home Feed:**
+
+- **Live Banners:** Integrated `BannerCubit` to stream promotional banners from Firestore, displayed via an auto-playing `CarouselSlider`.
+- **Smart Sections:**
+  - **Most Popular:** Horizontal list of high-rated trips with "OFF" badges.
+  - **Category Grouping:** Dynamic section generation grouping trips by their category field.
+
+**UI/UX Refactoring & Design System:**
+
+- **Reusable Button Architecture:**
+  - **`SecondaryButton`:** Created a generic button widget that handles "Default" (Blue) and "Disabled" (Grey) states automatically, ensuring consistency across Profile, Search, and Dialogs.
+  - **`CustomCircleButton`:** Standardized all circular actions (Back Button, Notification, Filter) into a single scalable widget.
+- **Smart Search UI:**
+  - **Split Search Bar:** Implemented a custom text field with a distinct "Filter" button segment and specific border radii to match Figma specs.
+  - **Dynamic Reset:** The "Reset All" button in filters now auto-disables (turns grey) when no filters are active, preventing useless clicks.
+- **Layout Improvements:**
+  - **Sticky Footers:** Refactored `AccountInfoScreen` to pin the "Save Changes" button to the bottom, separating it from the scrollable form for better UX.
+
+**Core Enhancements:**
+
+- **Dependency Injection:** Registered new repositories (`HomeTripsRepository`, `SearchRepository`, `BannerRepository`) in `getIt`.
+- **Unified Routing:** Connected Auth flows (Login/Signup) with the Main App Shell (Home/Profile) using `GoRouter` and `AppRouteGuard`.
 
 #### V0.1.2 (Profile, Settings & Stability Improvements)
 

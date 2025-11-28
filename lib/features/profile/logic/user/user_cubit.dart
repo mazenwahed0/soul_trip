@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../../core/model/user_model/user_model.dart';
+import '../../../../core/models/user_model/user_model.dart';
 import '../../../../core/repositories/keys.dart';
 import '../../../../core/repositories/storage/cloudinary_service.dart';
 import '../../data/user/user_repository.dart';

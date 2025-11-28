@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:soul_trip/core/utils/images.dart';
 import '../../../../../../core/theme/colors.dart';
 import '../../../../../../core/theme/text_style.dart';
-import '../../../../../../core/utils/constant.dart';
 import '../../../../../../core/widgets/common/buttons/primary_shadow_button.dart';
+import '../../../../../../core/widgets/common/buttons/secondary_button.dart';
 
 class LogoutStatusSheet extends StatelessWidget {
   const LogoutStatusSheet({
@@ -62,7 +63,7 @@ class LogoutStatusSheet extends StatelessWidget {
 
           // Image
           Image.asset(
-            ConstantVariable.redVerfiy,
+            Images.redVerfiy,
             width: 89.w, // Figma Width: 89
             height: 89.w, // Figma Height: 89
             fit: BoxFit.contain,
@@ -91,29 +92,10 @@ class LogoutStatusSheet extends StatelessWidget {
               SizedBox(width: 8.w), // Gap: 8px
 
               Expanded(
-                child: SizedBox(
-                  height: 48.h, // Fixed Height: 48
-                  child: OutlinedButton(
-                    onPressed: () => context.pop(),
-                    style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.all(8), // Padding: 8px
-                      side: BorderSide(
-                        color: colorTheme.primaryBlue,
-                        width: 1.5, // BorderWidth: 1.5px
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          25,
-                        ), // 25px matches Figma more than Radius: 20px
-                      ),
-                    ),
-                    child: Text(
-                      "Cancel",
-                      style: AppTextStyles.semiBold16().copyWith(
-                        color: colorTheme.primaryBlue,
-                      ),
-                    ),
-                  ),
+                child: SecondaryButton(
+                  text: "Cancel",
+                  height: 48, // Match Figma Height
+                  onPressed: () => context.pop(),
                 ),
               ),
             ],

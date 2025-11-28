@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:soul_trip/core/utils/images.dart';
 
 import '../../../../../core/dependency_injection/set_up_dependencies.dart';
 import '../../../../../core/theme/colors.dart';
 import '../../../../../core/theme/text_style.dart';
-import '../../../../../core/utils/constant.dart';
 import '../../../../../core/utils/snackbars/loaders.dart';
 import '../../../data/authentication_repository.dart';
 import '../../../logic/social_auth/social_auth_cubit.dart';
@@ -49,7 +49,7 @@ class SocialLoginSection extends StatelessWidget {
                 children: [
                   // -- Google
                   SocialButton(
-                    image: ConstantVariable.google,
+                    image: Images.google,
                     isLoading: state is SocialAuthLoading,
                     onTap: () => context.read<SocialAuthCubit>().googleSignIn(),
                   ),
@@ -57,12 +57,12 @@ class SocialLoginSection extends StatelessWidget {
                   SizedBox(width: 20.w),
 
                   // -- Facebook
-                  SocialButton(image: ConstantVariable.facebook, onTap: () {}),
+                  SocialButton(image: Images.facebook, onTap: () {}),
 
                   SizedBox(width: 20.w),
 
                   // -- Instagram
-                  SocialButton(image: ConstantVariable.instagram, onTap: () {}),
+                  SocialButton(image: Images.instagram, onTap: () {}),
                 ],
               ),
             ],

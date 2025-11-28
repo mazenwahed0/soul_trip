@@ -6,7 +6,7 @@ import 'package:soul_trip/core/theme/soultrip_icons.dart';
 
 import '../../../../../core/dependency_injection/set_up_dependencies.dart';
 import '../../../../../core/func/format_phone.dart';
-import '../../../../../core/model/user_model/user_model.dart';
+import '../../../../../core/models/user_model/user_model.dart';
 import '../../../../../core/theme/colors.dart';
 import '../../../../../core/utils/snackbars/loaders.dart';
 import '../../../../../core/validation/validation.dart';
@@ -148,78 +148,93 @@ class _AccountInfoBodyState extends State<_AccountInfoBody> {
             Loaders.error(context, title: "Error", message: state.message);
           }
         },
-        child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 32.h),
+        child: SafeArea(
+          child: Column(
+            children: [
+              // Expanded: Forces the SingleChildScrollView to take up only the space above the button.
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 32.h),
 
-                // 1. Name Field
-                AccountField(
-                  label: "Name",
-                  controller: nameController,
-                  hintText: "Enter your name",
-                  icon: Soultrip.profile,
-                  keyboardType: TextInputType.name,
-                  validator: Validation.validateFullName,
+                        // 1. Name Field
+                        AccountField(
+                          label: "Name",
+                          controller: nameController,
+                          hintText: "Enter your name",
+                          icon: Soultrip.profile,
+                          keyboardType: TextInputType.name,
+                          validator: Validation.validateFullName,
+                        ),
+
+                        // 2. Email Field
+                        AccountField(
+                          label: "Email",
+                          controller: emailController,
+                          hintText: "",
+                          icon: Soultrip.email,
+                          keyboardType: TextInputType.emailAddress,
+                          isReadOnly: true,
+                        ),
+
+                        // 3. Password Field
+                        AccountField(
+                          label: "Password",
+                          controller: passwordController,
+                          hintText: "",
+                          icon: Soultrip.passwordlock,
+                          keyboardType: TextInputType.visiblePassword,
+                          isReadOnly: true,
+                          isObscure: true,
+                        ),
+
+                        // 4. Phone Field
+                        AccountField(
+                          label: "Phone Number",
+                          controller: phoneController,
+                          hintText: "Enter your phone number",
+                          icon: Soultrip.phone,
+                          keyboardType: TextInputType.phone,
+                          inputFormatters: [
+                            // 1. Allow only numbers, spaces, and +
+                            FilteringTextInputFormatter.allow(
+                              RegExp(r'[0-9\s+]'),
+                            ),
+                            // 2. Stop them from typing too much (approx length of formatted number)
+                            LengthLimitingTextInputFormatter(17),
+                          ],
+                          validator: (val) {
+                            if (val == null || val.isEmpty) return "Required";
+
+                            final isPhone =
+                                Validation.validateEgyptianPhone(val) == null;
+
+                            if (!isPhone) {
+                              return "Enter a vaild Egyptian Phone";
+                            }
+                            return null;
+                          },
+                        ),
+
+                        SizedBox(height: 48.h),
+
+                        SizedBox(height: 24.h),
+                      ],
+                    ),
+                  ),
                 ),
+              ),
 
-                // 2. Email Field
-                AccountField(
-                  label: "Email",
-                  controller: emailController,
-                  hintText: "",
-                  icon: Soultrip.email,
-                  keyboardType: TextInputType.emailAddress,
-                  isReadOnly: true,
-                ),
-
-                // 3. Password Field
-                AccountField(
-                  label: "Password",
-                  controller: passwordController,
-                  hintText: "",
-                  icon: Soultrip.passwordlock,
-                  keyboardType: TextInputType.visiblePassword,
-                  isReadOnly: true,
-                  isObscure: true,
-                ),
-
-                // 4. Phone Field
-                AccountField(
-                  label: "Phone Number",
-                  controller: phoneController,
-                  hintText: "Enter your phone number",
-                  icon: Soultrip.phone,
-                  keyboardType: TextInputType.phone,
-                  inputFormatters: [
-                    // 1. Allow only numbers, spaces, and +
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9\s+]')),
-                    // 2. Stop them from typing too much (approx length of formatted number)
-                    LengthLimitingTextInputFormatter(17),
-                  ],
-                  validator: (val) {
-                    // Allow Email OR Egyptian Phone
-                    if (val == null || val.isEmpty) return "Required";
-
-                    final isPhone =
-                        Validation.validateEgyptianPhone(val) == null;
-
-                    if (!isPhone) {
-                      return "Enter a vaild Egyptian Phone";
-                    }
-                    return null;
-                  },
-                ),
-
-                SizedBox(height: 48.h),
-
-                // Save Button (Conditional Button Visibility)
-                if (hasChanges)
-                  BlocBuilder<UserCubit, UserState>(
+              // Save Button (Conditional Button Visibility, Pinned to bottom)
+              if (hasChanges)
+                Container(
+                  padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 16.h),
+                  child: BlocBuilder<UserCubit, UserState>(
                     builder: (context, state) {
                       return PrimaryShadowButton(
                         text: "Save Changes",
@@ -229,10 +244,8 @@ class _AccountInfoBodyState extends State<_AccountInfoBody> {
                       );
                     },
                   ),
-
-                SizedBox(height: 24.h),
-              ],
-            ),
+                ),
+            ],
           ),
         ),
       ),

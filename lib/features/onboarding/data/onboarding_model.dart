@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../../../core/utils/constant.dart';
+import 'package:soul_trip/core/utils/images.dart';
 
 class OnboardingModel {
   final String imageUrl;
@@ -28,19 +27,19 @@ class OnboardingModel {
 
   static List<OnboardingModel> list = [
     OnboardingModel(
-      imageUrl: ConstantVariable.onboarding1,
+      imageUrl: Images.onboarding1,
       title: "Welcome to Soul Trip",
       description:
           "Discover wellness journeys that bring balance to your body, mind, and soul.",
     ),
     OnboardingModel(
-      imageUrl: ConstantVariable.onboarding2,
+      imageUrl: Images.onboarding2,
       title: "Explore Wellness Travel",
       description:
           "From desert healing retreats to mindful escapes by the Nile — explore destinations designed for your well-being",
     ),
     OnboardingModel(
-      imageUrl: ConstantVariable.onboarding3,
+      imageUrl: Images.onboarding3,
       title: "Begin your journey to peace",
       description:
           "Reconnect with yourself through mindful travel and natural healing.",

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:soul_trip/core/utils/images.dart';
 
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/text_style.dart';
-import '../../../../core/utils/constant.dart';
 
 class SplashContent extends StatelessWidget {
   const SplashContent({
@@ -34,7 +34,7 @@ class SplashContent extends StatelessWidget {
                   alignment: Alignment.bottomCenter,
                   heightFactor: logoReveal.value,
                   child: Image.asset(
-                    ConstantVariable.logo,
+                    Images.logo,
                     width: 120,
                     height: 100,
                     fit: BoxFit.contain,

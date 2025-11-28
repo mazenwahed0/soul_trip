@@ -8,7 +8,6 @@ import 'core/caching/hive/user_hive_helper.dart';
 import 'core/caching/shared/shared_perf_helper.dart';
 import 'core/dependency_injection/set_up_dependencies.dart';
 import 'core/internet_check/cubit/internet_check__cubit.dart';
-import 'core/utils/constant.dart';
 import 'core/widgets/no_internet_screen.dart';
 import 'features/authentication/data/authentication_repository.dart';
 import 'features/authentication/logic/auth/auth_cubit.dart';
@@ -40,7 +39,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: mobileDesignSize,
+      designSize: Size(375, 812), // iPhone X size as reference
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../model/text_field_model/text_field_model.dart';
+import '../../../models/text_field_model/text_field_model.dart';
 import '../../../theme/colors.dart';
 import '../../../theme/text_style.dart';
 

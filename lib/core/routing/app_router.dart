@@ -1,8 +1,10 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:soul_trip/core/routing/routes.dart';
 import 'package:soul_trip/features/experts/ui/screen/experts_screen.dart';
 import 'package:soul_trip/features/home/ui/screen/home_screen.dart';
 import 'package:soul_trip/features/layout/ui/screen/layout_screen.dart';
+import 'package:soul_trip/features/notification/ui/notification_screen.dart';
 import 'package:soul_trip/features/profile/ui/screen/account_info/account_info_screen.dart';
 import 'package:soul_trip/features/profile/ui/screen/load_data/load_data_screen.dart';
 import 'package:soul_trip/features/profile/ui/screen/profile/profile_screen.dart';
@@ -13,7 +15,12 @@ import '../../features/authentication/data/authentication_repository.dart';
 import '../../features/authentication/ui/forget_password/forget_password_view.dart';
 import '../../features/authentication/ui/login/login_view.dart';
 import '../../features/authentication/ui/signup/signup_view.dart';
+import '../../features/categories_trips/ui/screen/categories_trips_screen.dart';
+import '../../features/category_trips/ui/screen/category_trips_screen.dart';
 import '../../features/onboarding/ui/onboarding_view.dart';
+import '../../features/search/manager/search_cubit/search_cubit.dart';
+import '../../features/search/ui/screen/search_filter_screen.dart';
+import '../../features/search/ui/screen/search_results_screen.dart';
 import '../../features/splash/ui/splash_view.dart';
 import '../dependency_injection/set_up_dependencies.dart';
 import 'animation_route.dart';
@@ -63,6 +70,7 @@ abstract class AppRouter {
         ),
       ),
 
+      // -- Load Data View
       GoRoute(
         path: Routes.loadDataView,
         pageBuilder: (context, state) => slideTransitionPage(
@@ -71,10 +79,64 @@ abstract class AppRouter {
         ),
       ),
 
+      // -- Account Info View
       GoRoute(
         path: Routes.accountInfoView,
         pageBuilder: (context, state) => slideTransitionPage(
           child: const AccountInfoScreen(),
+          key: state.pageKey,
+        ),
+      ),
+
+      // -- Home View
+      GoRoute(
+        path: Routes.searchView,
+        pageBuilder: (context, state) => slideTransitionPage(
+          child: const SearchFilterScreen(),
+          key: state.pageKey,
+        ),
+      ),
+      GoRoute(
+        path: Routes.searchCategoryView,
+        pageBuilder: (context, state) {
+          final extra = state.extra;
+          if (extra is SearchCubit) {
+            return slideTransitionPage(
+              child: BlocProvider.value(
+                value: extra,
+                child: const SearchResultsScreen(),
+              ),
+              key: state.pageKey,
+            );
+          }
+          return slideTransitionPage(
+            child: const SearchResultsScreen(),
+            key: state.pageKey,
+          );
+        },
+      ),
+      GoRoute(
+        path: Routes.categoriesTripsView,
+        pageBuilder: (context, state) => slideTransitionPage(
+          child: const CategoriesTripsScreen(),
+          key: state.pageKey,
+        ),
+      ),
+      GoRoute(
+        path: '${Routes.categoryTripsView}/:categoryName',
+        pageBuilder: (context, state) {
+          final categoryName = state.pathParameters['categoryName'] ?? '';
+          return slideTransitionPage(
+            child: CategoryTripsScreen(categoryName: categoryName),
+            key: state.pageKey,
+          );
+        },
+      ),
+      // -- Notifications Screen
+      GoRoute(
+        path: Routes.notificationView,
+        pageBuilder: (context, state) => slideTransitionPage(
+          child: const NotificationScreen(),
           key: state.pageKey,
         ),
       ),

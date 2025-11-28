@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../../core/model/text_field_model/text_field_model.dart';
+import '../../../../../../core/models/text_field_model/text_field_model.dart';
 import '../../../../../../core/theme/colors.dart';
 import '../../../../../../core/theme/text_style.dart';
 import '../../../../../../core/widgets/common/text_field/custom_text_field.dart';

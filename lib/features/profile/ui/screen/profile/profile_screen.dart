@@ -68,7 +68,7 @@ class ProfileScreen extends StatelessWidget {
               SizedBox(height: 24.h),
 
               Column(
-                spacing: 12.h,
+                spacing: 16.h,
                 children: [
                   // -- Settings List
                   // 1. Account Info

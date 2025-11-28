@@ -1,6 +1,6 @@
 // hive_helper.dart
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:soul_trip/core/model/user_model/user_model.dart';
+import 'package:soul_trip/core/models/user_model/user_model.dart';
 import 'package:soul_trip/core/utils/constant.dart';
 
 class UserHiveHelper {

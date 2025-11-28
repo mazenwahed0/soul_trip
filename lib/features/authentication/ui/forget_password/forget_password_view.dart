@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/dependency_injection/set_up_dependencies.dart';
-import '../../../../core/model/text_field_model/text_field_model.dart';
+import '../../../../core/models/text_field_model/text_field_model.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/text_style.dart';
 import '../../../../core/validation/validation.dart';

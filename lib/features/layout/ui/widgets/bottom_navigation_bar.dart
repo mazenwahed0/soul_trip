@@ -17,7 +17,6 @@ class CustomBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: LayoutConstants.navigationBarHeight,
       decoration: _buildDecoration(),
       child: _buildNavigationItems(),
     );
@@ -28,9 +27,9 @@ class CustomBottomNavigationBar extends StatelessWidget {
       color: ColorTheme().whiteColor,
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withOpacity(0.05),
-          blurRadius: 2,
-          offset: const Offset(0, -1),
+          color: Colors.black.withValues(alpha: 0.05),
+          blurRadius: 20,
+          offset: const Offset(0, -5),
         ),
       ],
       borderRadius: const BorderRadius.only(
@@ -43,14 +42,17 @@ class CustomBottomNavigationBar extends StatelessWidget {
   Widget _buildNavigationItems() {
     return SafeArea(
       top: false,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: List.generate(
-          LayoutConstants.navigationItems.length,
-          (index) => BottomNavItem(
-            item: LayoutConstants.navigationItems[index],
-            isSelected: currentIndex == index,
-            onTap: () => onTap(index),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: List.generate(
+            LayoutConstants.navigationItems.length,
+            (index) => BottomNavItem(
+              item: LayoutConstants.navigationItems[index],
+              isSelected: currentIndex == index,
+              onTap: () => onTap(index),
+            ),
           ),
         ),
       ),

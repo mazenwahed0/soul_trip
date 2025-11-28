@@ -1,16 +1,25 @@
 import 'package:get_it/get_it.dart';
+import 'package:soul_trip/features/categories_trips/data/repositories/categories_trips_repository.dart';
+import 'package:soul_trip/features/categories_trips/manager/categories_trips_cubit/categories_trips_cubit.dart';
 
 import '../../features/authentication/data/authentication_repository.dart';
 import '../../features/authentication/logic/forget_password/forget_password_cubit.dart';
 import '../../features/authentication/logic/login/login_cubit.dart';
 import '../../features/authentication/logic/signup/signup_cubit.dart';
 import '../../features/authentication/logic/social_auth/social_auth_cubit.dart';
+import '../../features/category_trips/data/repositories/category_trips_repository.dart';
+import '../../features/home/data/repositories/banner_repository.dart';
+import '../../features/home/data/repositories/home_trips_repository.dart';
+import '../../features/home/manager/banner_cubit/banner_cubit.dart';
+import '../../features/home/manager/home_trips_cubit/home_trips_cubit.dart';
 import '../../features/onboarding/data/onboarding_repository.dart';
 import '../../features/onboarding/logic/onboarding_cubit.dart';
 import '../../features/profile/data/data_upload/data_upload_repository.dart';
 import '../../features/profile/data/user/user_repository.dart';
 import '../../features/profile/logic/data_upload/data_upload_cubit.dart';
 import '../../features/profile/logic/user/user_cubit.dart';
+import '../../features/search/data/repositories/search_repository.dart';
+import '../../features/search/manager/search_cubit/search_cubit.dart';
 import '../caching/hive/user_hive_helper.dart';
 import '../repositories/storage/cloudinary_service.dart';
 
@@ -19,13 +28,11 @@ final getIt = GetIt.instance;
 void setupDependencies() async {
   // getIt.registerSingleton<DioHelper>(DioHelper());
 
-  /// 1. (Singletons)
+  /// 1. (Singletons) -- Core / Helpers
   /// "registerLazySingleton" = Create it ONCE and keep it alive forever.
-  // -- Core / Helpers
-  getIt.registerLazySingleton<UserHiveHelper>(() => UserHiveHelper());
-
   /// Note: (ConnectivityCubit) Hashed to avoid Dual-Injection
   // getIt.registerFactory<ConnectivityCubit>(() => ConnectivityCubit());
+  getIt.registerLazySingleton<UserHiveHelper>(() => UserHiveHelper());
 
   // -- Repositories
   // - Cloudinary (Storage)
@@ -40,11 +47,25 @@ void setupDependencies() async {
   getIt.registerLazySingleton<OnboardingRepository>(
     () => OnboardingRepository(),
   );
+  // - Home Repositories
+  getIt.registerLazySingleton<HomeTripsRepository>(() => HomeTripsRepository());
+  getIt.registerLazySingleton<BannerRepository>(() => BannerRepository());
+  getIt.registerLazySingleton<CategoriesTripsRepository>(
+    () => CategoriesTripsRepository(),
+  );
+  getIt.registerLazySingleton<CategoryTripsRepository>(
+    () => CategoryTripsRepository(),
+  );
+  getIt.registerLazySingleton<SearchRepository>(
+    () => SearchRepository(
+      getIt<HomeTripsRepository>(),
+      getIt<CategoriesTripsRepository>(),
+    ),
+  );
 
-  /// 2. (Factories)
+  /// 2. (Factories) - Logic/State (Cubits)
   /// "registerFactory" = so a new Cubit is created every time a screen opens
   /// (Good for Screens like (Login/SignUp) which are destroyed when closed)
-  // -- Logic/State (Cubits)
 
   // - Login
   getIt.registerFactory<LoginCubit>(
@@ -77,5 +98,19 @@ void setupDependencies() async {
   );
   getIt.registerFactory<DataUploadCubit>(
     () => DataUploadCubit(getIt<DataUploadRepository>()),
+  );
+
+  // - Home Cubits
+  getIt.registerFactory<HomeTripsCubit>(
+    () => HomeTripsCubit(getIt<HomeTripsRepository>()),
+  );
+  getIt.registerFactory<BannerCubit>(
+    () => BannerCubit(getIt<BannerRepository>()),
+  );
+  getIt.registerFactory<CategoriesTripsCubit>(
+    () => CategoriesTripsCubit(getIt<CategoriesTripsRepository>()),
+  );
+  getIt.registerFactory<SearchCubit>(
+    () => SearchCubit(getIt<SearchRepository>()),
   );
 }

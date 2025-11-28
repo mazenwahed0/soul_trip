@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/text_style.dart';
-import '../../../../core/utils/constant.dart';
+import '../../../../core/utils/images.dart';
 
 class AuthLayout extends StatelessWidget {
   final Widget child;
@@ -56,22 +56,18 @@ class AuthLayout extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Image.asset(
-                    ConstantVariable.logo,
+                    Images.logo,
                     width: 83.w, // Figma: width: 83px
                     height: 64.h, // Figma: height: 64px
                     fit: BoxFit.contain,
                   ),
                   SizedBox(height: 8.h), // Figma: gap: 8px
                   Image.asset(
-                    ConstantVariable.splashText,
+                    Images.splashText,
                     width: 87.w, // Figma: width: 87px
                     height: 29.h, // Figma: height: 29px
                     fit: BoxFit.contain,
                   ),
-                  // Text(
-                  //   "Soul Trip",
-                  //   style: AppTextStyles.bold24().copyWith(fontSize: 24),
-                  // ),
                 ],
               ),
             ),

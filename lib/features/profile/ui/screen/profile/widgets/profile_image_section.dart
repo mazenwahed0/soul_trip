@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:solar_icon_pack/solar_bold_icons.dart';
+import 'package:soul_trip/core/utils/images.dart';
 
 import '../../../../../../core/theme/colors.dart';
-import '../../../../../../core/utils/constant.dart';
 import '../../../../../../core/utils/snackbars/loaders.dart';
 import '../../../../../../core/widgets/common/shimmers/shimmer.dart';
 import '../../../../../authentication/logic/auth/auth_cubit.dart';
@@ -74,7 +74,7 @@ class ProfileImageSection extends StatelessWidget {
                                 ),
                                 errorWidget: (context, url, error) =>
                                     Image.asset(
-                                      ConstantVariable.logo,
+                                      Images.logo,
                                       fit: BoxFit.contain,
                                     ),
                               )
@@ -82,7 +82,7 @@ class ProfileImageSection extends StatelessWidget {
                                 color: ColorTheme().grayVeryLight,
                                 padding: const EdgeInsets.all(30),
                                 child: Image.asset(
-                                  ConstantVariable.logo,
+                                  Images.logo,
                                   color: ColorTheme().grayMedium.withOpacity(
                                     0.5,
                                   ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:soul_trip/core/utils/images.dart';
 import '../../../theme/colors.dart';
 import '../../../theme/text_style.dart';
-import '../../../utils/constant.dart';
 import '../buttons/primary_shadow_button.dart';
 
 class StatusBottomSheet extends StatelessWidget {
@@ -63,7 +63,7 @@ class StatusBottomSheet extends StatelessWidget {
 
           // Image
           Image.asset(
-            ConstantVariable.yellowVerfiy,
+            Images.yellowVerfiy,
             width: 89.w, // Figma Width: 89
             height: 89.w, // Figma Height: 89
             fit: BoxFit.contain,

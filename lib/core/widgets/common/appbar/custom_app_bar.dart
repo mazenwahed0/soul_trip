@@ -29,7 +29,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: title != null
           ? Text(
               title!,
-              style: AppTextStyles.semiBold18().copyWith(
+              style: AppTextStyles.semiBold20().copyWith(
                 color: ColorTheme().navyBlue,
               ),
             )
@@ -41,7 +41,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: showBackButton
           ? Padding(
               // Matches Figma "Left: 16px"
-              padding: EdgeInsets.only(left: 16.w),
+              padding: EdgeInsets.only(left: 10.w),
               child: Center(child: CustomBackButton(onTap: onBackTap)),
             )
           : null,

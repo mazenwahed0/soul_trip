@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../../core/model/text_field_model/text_field_model.dart';
+import '../../../../../core/models/text_field_model/text_field_model.dart';
 import '../../../../../core/routing/routes.dart';
 import '../../../../../core/theme/colors.dart';
 import '../../../../../core/theme/text_style.dart';
@@ -22,7 +22,9 @@ class LoginForm extends StatelessWidget {
     return Form(
       key: cubit.formKey,
       child: Column(
+        spacing: 10.h,
         children: [
+          SizedBox(height: 2.h),
           // MARK:- Email
           Align(
             alignment: Alignment.centerLeft,
@@ -35,8 +37,6 @@ class LoginForm extends StatelessWidget {
             ),
           ),
 
-          SizedBox(height: 8.h),
-
           CustomTextField(
             textFieldModel: TextFieldModel(
               controller: cubit.emailController,
@@ -48,7 +48,7 @@ class LoginForm extends StatelessWidget {
             ),
           ),
 
-          SizedBox(height: 16.h),
+          SizedBox(height: 2.h),
 
           // MARK:- Password
           Align(
@@ -61,7 +61,7 @@ class LoginForm extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 8.h),
+          // SizedBox(height: 12.h),
           CustomTextField(
             textFieldModel: TextFieldModel(
               controller: cubit.passwordController,
@@ -74,8 +74,6 @@ class LoginForm extends StatelessWidget {
               textInputAction: TextInputAction.done,
             ),
           ),
-
-          SizedBox(height: 8.h),
 
           // MARK:- Remember Me & Forgot Password
           Row(
