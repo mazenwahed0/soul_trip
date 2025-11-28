@@ -31,6 +31,7 @@ The project is built with scalability in mind, utilizing **Clean Architecture**,
 | **Walaa Hatem**    |
 | **Walaa Elhawary** |
 | **Ibtehal Thabet** |
+| **Mai Emara** |
 
 ---
 
@@ -171,7 +172,7 @@ This major update unifies the Authentication system with the Home and Search mod
 
 - **Dependency Injection:** Registered new repositories (`HomeTripsRepository`, `SearchRepository`, `BannerRepository`) in `getIt`.
 - **Unified Routing:** Connected Auth flows (Login/Signup) with the Main App Shell (Home/Profile) using `GoRouter` and `AppRouteGuard`.
-
+---
 #### V0.1.2 (Profile, Settings & Stability Improvements)
 
 This update brings significant improvements to user profile management, completes the authentication suite, and adds essential developer utilities.
@@ -209,7 +210,7 @@ This update brings significant improvements to user profile management, complete
   - **StatusBottomSheet:** Streamlined for generic success messages.
   - **CustomAppBar:** Created a versatile, reusable app bar.
   - **CustomBackButton:** Standardized navigation buttons.
-
+---
 #### V0.1.1 (Major Refactor & Feature Expansion)
 
 - **Architecture & Dependency Injection:**
@@ -246,7 +247,7 @@ This update brings significant improvements to user profile management, complete
   - **Feedback System:** Added `StatusBottomSheet` for consistent success/failure messaging (e.g., "Email Verification Sent").
   - **Reusable Component Library:** Built a set of core widgets including PrimaryShadowButton, CustomAppBar, and CustomBackButton.
   - **Interactive Inputs:** Built `CustomTextFormField` with internal state management for focus border animation and password visibility toggling.
-
+---
 #### V0.1 (Project Init)
 
 - **Initialized Flutter project**
