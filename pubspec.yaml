@@ -35,16 +35,17 @@ dependencies:
   dartz: ^0.10.1
   equatable: ^2.0.5
   carousel_slider: ^5.0.0
+  flutter_native_splash: ^2.4.7
+  dio: ^5.9.0
+  image_picker: ^1.2.1
+  shimmer: ^3.0.0
 
   # Firebase
   firebase_core: ^4.2.1
   firebase_auth: ^6.0.2
   cloud_firestore: ^6.0.1
   google_sign_in: ^6.2.1
-  flutter_native_splash: ^2.4.7
-  dio: ^5.9.0
-  image_picker: ^1.2.1
-  shimmer: ^3.0.0
+  
 
 #--------------------------- ./ Packages END -------------------------------#
 dev_dependencies:

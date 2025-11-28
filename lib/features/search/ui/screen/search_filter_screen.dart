@@ -15,7 +15,7 @@ import 'package:soul_trip/features/search/manager/search_cubit/search_state.dart
 import '../../../../core/dependency_injection/set_up_dependencies.dart';
 import '../../../../core/widgets/common/appbar/custom_app_bar.dart';
 import '../../../../core/widgets/common/buttons/secondary_button.dart';
-import '../../../../core/theme/soultrip_icons.dart'; // Ensure this is imported
+import '../../../../core/theme/soultrip_icons.dart';
 
 class SearchFilterScreen extends StatelessWidget {
   const SearchFilterScreen({super.key});
@@ -293,7 +293,7 @@ class SearchFilterScreen extends StatelessWidget {
                                 // Travellers (Static or add logic)
                                 GestureDetector(
                                   onTap: () {
-                                    // TODO: Show BottomSheet or Dialog to pick number
+                                    // TODO: BottomSheet or Dialog to pick number
                                     // For testing, you can just increment:
                                     // context.read<SearchCubit>().updateTravellers(2);
                                   },
@@ -355,7 +355,7 @@ class SearchFilterScreen extends StatelessWidget {
     );
   }
 
-  // Helper widget to reduce code duplication for Date/Travellers tiles
+  // Helper widget to reduce duplication for Date/Travellers tiles
   Widget _buildSelectorTile({
     required IconData icon,
     required String title,

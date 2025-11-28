@@ -10,6 +10,12 @@ import 'package:soul_trip/features/profile/ui/screen/load_data/load_data_screen.
 import 'package:soul_trip/features/profile/ui/screen/profile/profile_screen.dart';
 import 'package:soul_trip/features/reviews/ui/screen/reviews_screen.dart';
 import 'package:soul_trip/features/wishlist/ui/screen/wishlist_screen.dart';
+import 'package:soul_trip/features/categories_trips/ui/screen/categories_trips_screen.dart';
+import 'package:soul_trip/features/category_trips/ui/screen/category_trips_screen.dart';
+import 'package:soul_trip/features/search/ui/screen/search_filter_screen.dart';
+import 'package:soul_trip/features/search/ui/screen/search_results_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:soul_trip/features/search/manager/search_cubit/search_cubit.dart';
 
 import '../../features/authentication/data/authentication_repository.dart';
 import '../../features/authentication/ui/forget_password/forget_password_view.dart';
