@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:soul_trip/core/theme/colors.dart';
 import 'package:soul_trip/core/theme/text_style.dart';
 import 'package:soul_trip/features/trip_details/widgets/trip_header.dart';
@@ -8,74 +9,144 @@ import 'package:soul_trip/core/widgets/common/taps.dart';
 import 'package:soul_trip/features/trip_details/widgets/about_tap.dart';
 import 'package:soul_trip/features/trip_details/widgets/experts_tap.dart';
 import 'package:soul_trip/features/trip_details/widgets/review_tap.dart';
-import 'package:flutter/widget_previews.dart';
-
-
+import 'package:soul_trip/core/routing/routes.dart';
+import 'package:soul_trip/core/widgets/common/buttons/primary_shadow_button.dart';
 
 class TripDetailsScreen extends StatefulWidget {
   const TripDetailsScreen({super.key});
-  
 
   @override
   State<TripDetailsScreen> createState() => _TripDetailsScreenState();
 }
 
-class _TripDetailsScreenState extends State<TripDetailsScreen>{
+class _TripDetailsScreenState extends State<TripDetailsScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> reviews = [
-      {
-        'name': 'Nora Ahmed',
-        'time': '2 hours ago',
-        'comment': 'This trip was amazing. It was very organized. The experts were very professional and my arthritis got so much better.',
-        'profileImage': 'https://res.cloudinary.com/da5c5nstz/image/upload/v1764169497/b4bf854289c3d7050e8037d3c7575a0b30a3a1ac_pemgro.png',
-        'reviewImage': 'https://res.cloudinary.com/da5c5nstz/image/upload/v1764168050/unsplash_bRit2WpoSSc_idtok1.png',
-        'likes': 22,
-        'comments': 22,
-        'shares': 22,
-      },
+    final double bottomPadding = MediaQuery.of(context).padding.bottom;
 
-    ];
-    
     return Scaffold(
-      body:  Column(
-          children: [
-            const TripHeader(
-              imageUrl: [
-                "https://res.cloudinary.com/da5c5nstz/image/upload/v1764205879/unsplash_tnRb6IwpJAE_zij5xd.png",
-              ],
+      body: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) {
+          return [
+
+            SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      TripHeader(
+                        imageUrl: [
+                          "https://res.cloudinary.com/da5c5nstz/image/upload/v1764205879/unsplash_tnRb6IwpJAE_zij5xd.png",
+                        ],
+                        onTapBack: () => context.go(Routes.homeView),
+                        title: "Healing Journey in the Oasis",
+                        location: "Oasis, Egypt",
+                        date: "25 Nov",
+                      ),
+
+                      /// PRICE BADGE
+                      Positioned(
+                        bottom: -32.h,
+                        right: 16.w,
+                        child: CardContent(price: "\$ 700", rating: 4),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 48.h),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    child: Text(
+                      "A natural recovery experience designed to ease joint pain and restore mobility through Egypt’s healing springs, mineral sands, and expert-guided therapy.",
+                      style: AppTextStyles.regular14().copyWith(
+                        color: ColorTheme().grayMedium,
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(height: 20.h),
+                ],
+              ),
             ),
-
-            // --- Tab Bar Section (Taps widget) ---
-            // Padding(
-            //   padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-            //   child: Taps(controller: _tabController,
-            //     tabs: const [
-            //      AboutTap(),
-            //      ExpertsTap(),
-            //      ReviewsTab(overallRating: 4.8),
-            //     ],
-            //   ),
-            // ),
-
-
-
+            SliverPersistentHeader(
+              pinned: true,
+              delegate: _TabBarDelegate(
+                Taps(
+                  controller: _tabController,
+                  tabHeaders: const [
+                    Tab(text: "About"),
+                    Tab(text: "Experts"),
+                    Tab(text: "Reviews"),
+                  ],
+                ),
+              ),
+            ),
+          ];
+        },
+        body: TabBarView(
+          controller: _tabController,
+          children: const [
+            SingleChildScrollView(child: AboutTap()),
+            SingleChildScrollView(child: ExpertsTap()),
+            SingleChildScrollView(child: ReviewsTab(overallRating: 4.8)),
           ],
         ),
+      ),
 
-
+      /// BOTTOM BUTTON
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.only(
+          left: 16,
+          right: 16,
+          bottom: 16 + bottomPadding,
+          top: 8,
+        ),
+        child: PrimaryShadowButton(
+          text: "Book Now",
+          onPressed: () {
+            print("Booking Trip: Healing Journey in the Oasis");
+          },
+        ),
+      ),
     );
   }
 }
 
-@Preview()
-Widget previewTripDetailsScreen() {
-  return MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: ScreenUtilInit(
-      designSize: const Size(390, 844),
-      builder: (context, child) => const TripDetailsScreen(),
-    ),
-  );
+class _TabBarDelegate extends SliverPersistentHeaderDelegate {
+  final Widget tabBar;
+
+  _TabBarDelegate(this.tabBar);
+
+  @override
+  Widget build(context, shrinkOffset, overlapsContent) {
+    return Container(
+      color: Colors.white,
+      child: tabBar,
+    );
+  }
+
+  @override
+  double get maxExtent => 48;
+
+  @override
+  double get minExtent => 48;
+
+  @override
+  bool shouldRebuild(_) => false;
 }

@@ -80,6 +80,17 @@ class ReviewsTab extends StatelessWidget {
         'comments': 22,
         'shares': 22,
       },
+      {
+        'name': 'Nora Ahmed',
+        'time': '2 hours ago',
+        'comment': 'This trip was amazing. It was very organized. The experts were very professional and my arthritis got so much better.',
+        'profileImage': 'https://res.cloudinary.com/da5c5nstz/image/upload/v1764169497/b4bf854289c3d7050e8037d3c7575a0b30a3a1ac_pemgro.png',
+        'reviewImage': 'https://res.cloudinary.com/da5c5nstz/image/upload/v1764168050/unsplash_bRit2WpoSSc_idtok1.png',
+        'likes': 22,
+        'comments': 22,
+        'shares': 22,
+      },
+      
       
     ];
 
@@ -88,9 +99,6 @@ class ReviewsTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ----------------------------------------------------
-          // 1. OVERALL RATING SUMMARY (NO CARD)
-          // ----------------------------------------------------
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: Column(

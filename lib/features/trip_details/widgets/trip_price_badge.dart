@@ -18,12 +18,21 @@ class TripPriceBadge extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 12.h),
         decoration: BoxDecoration(
           color: ColorTheme().primaryYellow,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 6,
+              offset: const Offset(0, 3),
+            ),
+          ],
         ),
-        child: Text(
-          price,
-          textAlign: TextAlign.center,
-          style: AppTextStyles.regular24().copyWith(color: Colors.white),
+        child: Center(
+          child: Text(
+            price,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.semiBold22().copyWith(color: Colors.white),
+          ),
         ),
       ),
     );
@@ -34,30 +43,22 @@ class RatingRaw extends StatelessWidget {
   final int rating;
 
   const RatingRaw({super.key, required this.rating});
-
-  // Assuming this is inside a StatelessWidget/StatefulWidget like RatingRow
-  // with a property 'final double rating;'
-
   @override
   Widget build(BuildContext context) {
-    const int starCount = 5;
+    
 
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        ...List.generate(starCount, (index) {
+        ...List.generate(rating, (index) {
           const String starAssetPath = 'assets/icons/StarIcon.png';
-
-          Color starColor = index < rating
-              ? ColorTheme().primaryYellow
-              : Colors.grey;
-
+           Color starColor = ColorTheme().primaryYellow; 
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 2.w),
             child: Image.asset(
               starAssetPath,
-              width: 16.w,
-              height: 16.w,
+              width: 18.w,
+              height: 18.w,
               color: starColor,
             ),
           );
@@ -83,7 +84,6 @@ class CardContent extends StatelessWidget {
     return Container(
       height: 72.h,
       width: 340.w,
-      padding: EdgeInsets.only(left: 12.w),
       child: Stack(
         alignment: AlignmentDirectional.center,
         children: [
@@ -97,30 +97,13 @@ class CardContent extends StatelessWidget {
             right: 0,
             top: 0,
             bottom: 0,
-            child: TripPriceBadge(price: price),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: TripPriceBadge(price: price),
+            ),
           ),
         ],
       ),
     );
   }
-}
-
-@Preview(name: "CardBottomLayout")
-Widget cardBottomLayoutPreview() {
-  return ScreenUtilInit(
-    designSize: const Size(375, 812),
-    minTextAdapt: true,
-    splitScreenMode: true,
-    builder: (context, child) {
-      return MaterialApp(
-        theme: ThemeData(primaryColor: Colors.yellow),
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          body: Center(
-            child: CardContent(rating: 3.0.toInt(), price: "700"),
-          ),
-        ),
-      );
-    },
-  );
 }

@@ -5,7 +5,7 @@ import 'package:soul_trip/core/theme/colors.dart';
 import 'package:soul_trip/core/theme/text_style.dart';
 
 class CustomIconText extends StatelessWidget {
-  final IconData icon;
+  final String icon;
   final String text;
 
   const CustomIconText({super.key, required this.icon, required this.text});
@@ -14,17 +14,21 @@ class CustomIconText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(
+        Image.asset(
           icon,
-          size: 18.w,
-          color: ColorTheme().primaryBlue,
+          width: 18.w,
+          height: 18.w,
         ),
-        SizedBox(width: 8.w),
-        Text(
-          text,
-          style: TextStyle(
-            color: ColorTheme().grayDarker,
-            fontSize:AppTextStyles.medium13().fontSize,
+        SizedBox(width: 16.w),
+        Expanded(
+          child: Text(
+            text,
+            style: TextStyle(
+              color: ColorTheme().grayDarker,
+              fontSize:AppTextStyles.medium13().fontSize,
+              
+            ),
+            softWrap: true,
           ),
         ),
       ],
@@ -32,18 +36,3 @@ class CustomIconText extends StatelessWidget {
   }
 }
 
-@Preview(name: "CustomIconText Preview") 
-Widget preview() {
-  return ScreenUtilInit(
-    child: const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: CustomIconText(
-            icon: Icons.location_on,
-            text: 'Sample Location',
-          ),
-        ),
-      ),
-    ),
-  );
-}

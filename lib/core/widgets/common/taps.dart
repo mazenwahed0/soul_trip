@@ -1,21 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:soul_trip/core/theme/colors.dart';
+import 'package:soul_trip/core/theme/text_style.dart';
 
 class Taps extends StatelessWidget {
-
   final TabController controller;
-  final List<Widget> tabs;
+  final List<Widget> tabHeaders;
 
-  const Taps({super.key, required this.controller, required this.tabs});
+  const Taps({
+    super.key,
+    required this.controller,
+    required this.tabHeaders,
+  });
+
   @override
-  Widget build(BuildContext context) {  
+  Widget build(BuildContext context) {
     return TabBar(
       controller: controller,
-      tabs: tabs,
-      indicatorColor:ColorTheme().blackColor ,
+      tabs: tabHeaders,
+      indicatorColor: ColorTheme().blackColor,
       labelColor: ColorTheme().blackColor,
       unselectedLabelColor: ColorTheme().grayDark,
+      labelStyle: AppTextStyles.semiBold16(),
+      unselectedLabelStyle: AppTextStyles.semiBold16(),
+      
     );
   }
-
 }
+
