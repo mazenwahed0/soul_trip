@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:soul_trip/core/theme/colors.dart';
 import 'package:soul_trip/core/theme/text_style.dart';
-import 'package:soul_trip/features/experts/ui/widgets/book_Experts/ExpertdetailsView.dart';
+import 'package:soul_trip/features/experts/ui/widgets/book_Experts/ExpertdetailsView%20widget.dart';
 
 class ModeSelectorWidget extends StatelessWidget {
   final Mode? selectedMode;

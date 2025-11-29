@@ -9,7 +9,8 @@ class ExpertModel {
   final int price;
   final double rating;
   final int reviewsCount;
-
+final List<String> availabilityDays;
+ final List<String> availableTimes;
   ExpertModel({
     required this.id,
     required this.name,
@@ -20,7 +21,7 @@ class ExpertModel {
     required this.fees,
     required this.price,
     required this.rating,
-    required this.reviewsCount,
+    required this.reviewsCount, required this.availabilityDays, required this.availableTimes,
   });
 
 
@@ -36,6 +37,8 @@ class ExpertModel {
       price: data['price'] ?? 0,
       rating: (data['rating'] ?? 0).toDouble(),
       reviewsCount: data['reviewsCount'] ?? 0,
+      availabilityDays: List<String>.from(data['availabilityDays'] ?? []),
+      availableTimes: List<String>.from(data['availableTimes'] ?? []),
     );
   }
 }

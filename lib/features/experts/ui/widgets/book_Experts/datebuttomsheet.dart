@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:soul_trip/core/theme/colors.dart';
 import 'package:soul_trip/core/theme/text_style.dart';
+import 'package:soul_trip/core/widgets/common/buttons/primary_shadow_button.dart';
 import 'package:soul_trip/features/experts/ui/widgets/widthspace_and%20_heigthspace%20_widget.dart';
 
 class DatePickerBottomSheet extends StatefulWidget {
   final DateTime initialDate;
   final ValueChanged<DateTime> onDateConfirmed;
+  final List<int> allowedWeekDays;
 
   const DatePickerBottomSheet({
     super.key,
     required this.initialDate,
     required this.onDateConfirmed,
+    required this.allowedWeekDays,
   });
 
   @override
@@ -19,6 +22,7 @@ class DatePickerBottomSheet extends StatefulWidget {
 
 class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
   late DateTime tempSelectedDate;
+
   @override
   void initState() {
     super.initState();
@@ -44,29 +48,22 @@ class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
           Expanded(
             child: CalendarDatePicker(
               initialDate: tempSelectedDate,
-              firstDate: DateTime(2020),
+              firstDate: DateTime.now(),
               lastDate: DateTime(2050),
-              onDateChanged: (date) => setState(() => tempSelectedDate = date),
+              selectableDayPredicate: (date) {
+                return widget.allowedWeekDays.contains(date.weekday);
+              },
+              onDateChanged: (date) {
+                setState(() => tempSelectedDate = date);
+              },
             ),
           ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: ColorTheme().primaryBlue,
-              padding: const EdgeInsets.symmetric(vertical: 14),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-            ),
+          PrimaryShadowButton(
             onPressed: () {
               widget.onDateConfirmed(tempSelectedDate);
               Navigator.pop(context);
             },
-            child: Text(
-              "Confirm",
-              style: AppTextStyles.semiBold16().copyWith(
-                color: ColorTheme().whiteColor,
-              ),
-            ),
+            text: "Confirm",
           ),
         ],
       ),

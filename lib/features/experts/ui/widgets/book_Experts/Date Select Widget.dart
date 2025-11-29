@@ -1,20 +1,25 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:soul_trip/core/theme/colors.dart';
 import 'package:soul_trip/core/theme/soultrip_icons.dart';
 import 'package:soul_trip/core/theme/text_style.dart';
 import 'package:soul_trip/features/experts/logic/cubitDate/cubitdate.dart';
-import 'package:soul_trip/features/experts/ui/widgets/book_Experts/datebuttomsheet.dart';
+import 'package:soul_trip/features/experts/logic/cubitDate/date_state.dart';
+import 'datebuttomsheet.dart';
 
 class DateSelectorWidget extends StatelessWidget {
-  const DateSelectorWidget({super.key});
+  final ValueChanged<DateTime>? onDateSelected;
+
+  const DateSelectorWidget({super.key, this.onDateSelected});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DateCubit, DateTime>(
-      builder: (context, selectedDate) {
+    return BlocBuilder<DateCubit, DateState>(
+      builder: (context, state) {
+        final selectedDate = state.selectedDate;
+        final allowedWeekDays = context.read<DateCubit>().allowedWeekDays;
+
         final formattedDate = DateFormat('d MMMM').format(selectedDate);
 
         return Column(
@@ -23,9 +28,11 @@ class DateSelectorWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("choose Date", style: AppTextStyles.medium16()),
+                Text("Choose Date", style: AppTextStyles.medium16()),
                 IconButton(
                   onPressed: () {
+                    context.read<DateCubit>().updateDate(selectedDate);
+
                     showModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
@@ -36,8 +43,11 @@ class DateSelectorWidget extends StatelessWidget {
                       ),
                       builder: (_) => DatePickerBottomSheet(
                         initialDate: selectedDate,
-                        onDateConfirmed: (date) =>
-                            context.read<DateCubit>().updateDate(date),
+                        allowedWeekDays: allowedWeekDays,
+                        onDateConfirmed: (date) {
+                          context.read<DateCubit>().updateDate(date);
+                          if (onDateSelected != null) onDateSelected!(date);
+                        },
                       ),
                     );
                   },
