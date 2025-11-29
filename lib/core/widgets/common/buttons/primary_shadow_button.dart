@@ -30,7 +30,9 @@ class PrimaryShadowButton extends StatelessWidget {
       width: width.w,
       height: height.h,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20), // Radius: 20px
+        borderRadius: BorderRadius.circular(
+          25,
+        ), // 25px matches Figma more than Radius: 20px
         color: colorTheme.primaryBlue, // Background: #003566
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -62,7 +64,7 @@ class PrimaryShadowButton extends StatelessWidget {
           shadowColor: Colors.transparent,
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(25),
           ),
           padding: const EdgeInsets.all(8), // Padding: 8px
         ),

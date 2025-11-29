@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:soul_trip/core/model/text_field_model/text_field_model.dart';
+import 'package:soul_trip/core/models/text_field_model/text_field_model.dart';
 import 'package:soul_trip/core/theme/colors.dart';
 
 class CustomTextFormField extends StatefulWidget {
