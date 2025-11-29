@@ -7,6 +7,7 @@ import 'package:soul_trip/core/theme/text_style.dart';
 import 'package:soul_trip/core/widgets/error_state_widget.dart';
 import 'package:soul_trip/features/home/manager/banner_cubit/banner_cubit.dart';
 import 'package:soul_trip/features/home/manager/banner_cubit/banner_state.dart';
+
 import 'package:soul_trip/features/home/ui/widgets/banner_widgets/banner_card_widget.dart';
 
 class BannersListWidget extends StatefulWidget {
@@ -47,6 +48,8 @@ class _BannersListWidgetState extends State<BannersListWidget> {
             return _buildEmptyState(colors);
           }
 
+          // Likes are initialized via stream in Cubit constructor
+
           return Stack(
             alignment: Alignment.bottomCenter,
             children: [
@@ -57,9 +60,6 @@ class _BannersListWidgetState extends State<BannersListWidget> {
                 itemBuilder: (context, index, realIndex) {
                   return BannerCardWidget(
                     banner: banners[index],
-                    onTap: () {
-                      // TODO: Navigate to banner details
-                    },
                     onBookNow: () {
                       // TODO: Handle book now action
                     },

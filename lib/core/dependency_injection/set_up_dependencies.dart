@@ -8,10 +8,12 @@ import '../../features/authentication/logic/login/login_cubit.dart';
 import '../../features/authentication/logic/signup/signup_cubit.dart';
 import '../../features/authentication/logic/social_auth/social_auth_cubit.dart';
 import '../../features/category_trips/data/repositories/category_trips_repository.dart';
-import '../../features/home/data/repositories/banner_repository.dart';
-import '../../features/home/data/repositories/home_trips_repository.dart';
-import '../../features/home/manager/banner_cubit/banner_cubit.dart';
-import '../../features/home/manager/home_trips_cubit/home_trips_cubit.dart';
+import 'package:soul_trip/features/home/data/repositories/banner_repository.dart';
+import 'package:soul_trip/features/home/data/repositories/home_trips_repository.dart';
+import 'package:soul_trip/features/home/data/repositories/banner_likes_repository.dart';
+import 'package:soul_trip/features/home/data/repositories/trips_likes_repository.dart';
+import 'package:soul_trip/features/home/manager/banner_cubit/banner_cubit.dart';
+import 'package:soul_trip/features/home/manager/home_trips_cubit/home_trips_cubit.dart';
 import '../../features/onboarding/data/onboarding_repository.dart';
 import '../../features/onboarding/logic/onboarding_cubit.dart';
 import '../../features/profile/data/data_upload/data_upload_repository.dart';
@@ -50,6 +52,12 @@ void setupDependencies() async {
   // - Home Repositories
   getIt.registerLazySingleton<HomeTripsRepository>(() => HomeTripsRepository());
   getIt.registerLazySingleton<BannerRepository>(() => BannerRepository());
+  getIt.registerLazySingleton<BannerLikesRepository>(
+    () => BannerLikesRepository(),
+  );
+  getIt.registerLazySingleton<TripsLikesRepository>(
+    () => TripsLikesRepository(),
+  );
   getIt.registerLazySingleton<CategoriesTripsRepository>(
     () => CategoriesTripsRepository(),
   );
