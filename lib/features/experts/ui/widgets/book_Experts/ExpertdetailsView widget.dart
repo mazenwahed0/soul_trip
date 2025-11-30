@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:soul_trip/features/experts/data/models/Expert_model.dart';
+
 import 'package:soul_trip/features/experts/logic/cubitDate/cubitdate.dart';
 import 'package:soul_trip/features/experts/logic/cubitDate/date_state.dart';
 import 'package:soul_trip/features/experts/ui/widgets/book_Experts/Date%20Select%20Widget.dart';
@@ -11,6 +13,7 @@ import 'package:soul_trip/features/experts/ui/widgets/book_Experts/header_of_det
 import 'package:soul_trip/features/experts/ui/widgets/book_Experts/timeSelect_widget.dart';
 import 'package:soul_trip/features/experts/ui/widgets/expert_image_widget.dart';
 import 'package:soul_trip/features/experts/ui/widgets/widthspace_and%20_heigthspace%20_widget.dart';
+
 class ExpertdetailsView extends StatefulWidget {
   final ExpertModel expert;
 
@@ -66,6 +69,7 @@ class _ExpertdetailsViewState extends State<ExpertdetailsView> {
                 },
               ),
               const SizedBox(height: 16),
+
               TimeSelector(
                 times: widget.expert.availableTimes,
                 onSelected: (time) {
@@ -73,6 +77,7 @@ class _ExpertdetailsViewState extends State<ExpertdetailsView> {
                 },
               ),
               heightSpace(16),
+
               ModeSelectorWidget(
                 selectedMode: selectedMode,
                 price: widget.expert.price,
@@ -80,8 +85,16 @@ class _ExpertdetailsViewState extends State<ExpertdetailsView> {
                   setState(() => selectedMode = value);
                 },
               ),
-               heightSpace( 24),
-              BookingButton(canBook: canBook),
+              heightSpace(24),
+
+              BookingButton(
+                canBook: canBook,
+                expert: widget.expert,
+                selectedDate: selectedDate ?? DateTime.now(),
+                selectedTime: selectedTime ?? "",
+                mode: selectedMode == Mode.online ? "online" : "inPerson",
+              ),
+              heightSpace(20.h),
             ],
           ),
         ),

@@ -52,7 +52,7 @@ class DateSelectorWidget extends StatelessWidget {
                     );
                   },
                   icon: Icon(
-                    Soultrip.calendar_bold,
+                    Soultrip.calendarBold,
                     color: ColorTheme().primaryBlue,
                   ),
                 ),

@@ -26,7 +26,7 @@ class HeaderOfDetails extends StatelessWidget {
             ),
           ),
           Text("Expert Details", style: AppTextStyles.semiBold20()),
-          Container(child: Icon(Soultrip.chat_rounded)),
+          Container(child: Icon(Soultrip.chatRounded)),
         ],
       ),
     );

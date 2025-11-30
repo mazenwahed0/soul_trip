@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:soul_trip/core/model/text_field_model/text_field_model.dart';
+
+import 'package:soul_trip/core/models/text_field_model/text_field_model.dart';
 import 'package:soul_trip/core/theme/colors.dart';
 import 'package:soul_trip/core/theme/soultrip_icons.dart';
 import 'package:soul_trip/core/widgets/custom_text_form_field.dart';
