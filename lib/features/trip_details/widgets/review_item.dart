@@ -49,7 +49,7 @@ class ReviewItem extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 16.h),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(50.r),
+        borderRadius: BorderRadius.circular(30.r),
         border: Border.all(
           color: Colors.grey.shade200,
           width: 1.w,

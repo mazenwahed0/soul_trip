@@ -94,62 +94,59 @@ class ReviewsTab extends StatelessWidget {
       
     ];
 
-    return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(vertical: 20.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Stars and Score
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _buildStarRatingRow(_overallRating), // Using the new function
-                    Text(
-                      _overallRating.toStringAsFixed(1),
-                      style: AppTextStyles.medium20().copyWith(
-                        color: ColorTheme().blackColor,
-                      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(left: 16.w,right: 16.w,top: 16.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Stars and Score
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _buildStarRatingRow(_overallRating), // Using the new function
+                  Text(
+                    _overallRating.toStringAsFixed(1),
+                    style: AppTextStyles.medium20().copyWith(
+                      color: ColorTheme().blackColor,
                     ),
-                  ],
-                ),
-                SizedBox(height: 16.h),
-                
-                // Progress Bars
-                RatingProgressItem(label: 'Activities', rating: 4.5),
-                RatingProgressItem(label: 'Experts', rating: 4.7),
-                RatingProgressItem(label: 'Location', rating: 4.0),
-              ],
-            ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 16.h),
+              
+              // Progress Bars
+              RatingProgressItem(label: 'Activities', rating: 4.5),
+              RatingProgressItem(label: 'Experts', rating: 4.7),
+              RatingProgressItem(label: 'Location', rating: 4.0),
+            ],
           ),
-
-          SizedBox(height: 24.h),
-
-          // ----------------------------------------------------
-          // 2. REVIEW LIST
-          // ----------------------------------------------------
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: Column(
-              children: reviews.map((review) => ReviewItem(
-                  name: review['name'] as String,
-                  time: review['time'] as String,
-                  comment: review['comment'] as String,
-                  profileImage: review['profileImage'] as String,
-                  reviewImage: review['reviewImage'] as String,
-                  likes: review['likes'] as int,
-                  comments: review['comments'] as int,
-                  shares: review['shares'] as int,
-                ),
-              ).toList(),
-            ),
+        ),
+    
+        SizedBox(height: 24.h),
+    
+        // ----------------------------------------------------
+        // 2. REVIEW LIST
+        // ----------------------------------------------------
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: Column(
+            children: reviews.map((review) => ReviewItem(
+                name: review['name'] as String,
+                time: review['time'] as String,
+                comment: review['comment'] as String,
+                profileImage: review['profileImage'] as String,
+                reviewImage: review['reviewImage'] as String,
+                likes: review['likes'] as int,
+                comments: review['comments'] as int,
+                shares: review['shares'] as int,
+              ),
+            ).toList(),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

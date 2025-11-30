@@ -6,24 +6,22 @@ class AboutTap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(18.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CustomIconText(
-              icon: 'assets/icons/wave.png',
-              text: 'Soak in Siwa’s sulfur springs and mineral pools to relieve inflammation.',
-            ),
-            const SizedBox(height: 16),
-            CustomIconText(icon: 'assets/icons/Group.png', text: 'Experience black sand therapy sessions that soothe muscles and joints.'),
-            const SizedBox(height: 16),
-            CustomIconText(icon: 'assets/icons/Vector.png', text: 'Practice mobility-focused yoga and light stretching guided by a physiotherapist.'),
-            
-            
-          ],
-        ),
+    return Padding(
+      padding: const EdgeInsets.all(18.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CustomIconText(
+            icon: 'assets/icons/wave.png',
+            text: 'Soak in Siwa’s sulfur springs and mineral pools to relieve inflammation.',
+          ),
+          const SizedBox(height: 16),
+          CustomIconText(icon: 'assets/icons/Group.png', text: 'Experience black sand therapy sessions that soothe muscles and joints.'),
+          const SizedBox(height: 16),
+          CustomIconText(icon: 'assets/icons/Vector.png', text: 'Practice mobility-focused yoga and light stretching guided by a physiotherapist.'),
+          
+          
+        ],
       ),
     );
   }

@@ -9,36 +9,34 @@ class ExpertsTap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-         children: [
-            ExpertItem(
-              name: 'Alice Smith',
-              profession: 'Physiotherapist',
-              imageUrl:
-                  'https://res.cloudinary.com/da5c5nstz/image/upload/v1764380641/docSarah_gkhgpp.png',
-              rating: 4.9,
-            ),
-            SizedBox(height: 10.h),
-            ExpertItem(
-              name: 'Bob Johnson',
-              profession: 'Travel Consultant',
-              imageUrl:
-                  'https://res.cloudinary.com/da5c5nstz/image/upload/v1764380641/docSarah_gkhgpp.png',
-              rating: 4.7,
-            ),
-            SizedBox(height: 10.h),
-            ExpertItem(
-              name: 'Catherine Lee',
-              profession: 'Cultural Expert',
-              imageUrl:
-                  'https://res.cloudinary.com/da4b3zgxp/image/upload/v1763951882/doctor_fi54hn.png',
-              rating: 4.8,
-            ),
-          ],
-        ),
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Column(
+       children: [
+          ExpertItem(
+            name: 'Alice Smith',
+            profession: 'Physiotherapist',
+            imageUrl:
+                'https://res.cloudinary.com/da5c5nstz/image/upload/v1764380641/docSarah_gkhgpp.png',
+            rating: 4.9,
+          ),
+          SizedBox(height: 10.h),
+          ExpertItem(
+            name: 'Bob Johnson',
+            profession: 'Travel Consultant',
+            imageUrl:
+                'https://res.cloudinary.com/da5c5nstz/image/upload/v1764380641/docSarah_gkhgpp.png',
+            rating: 4.7,
+          ),
+          SizedBox(height: 10.h),
+          ExpertItem(
+            name: 'Catherine Lee',
+            profession: 'Cultural Expert',
+            imageUrl:
+                'https://res.cloudinary.com/da4b3zgxp/image/upload/v1763951882/doctor_fi54hn.png',
+            rating: 4.8,
+          ),
+        ],
       ),
     );
   }
