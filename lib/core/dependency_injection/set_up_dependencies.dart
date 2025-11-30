@@ -24,6 +24,8 @@ import '../../features/search/data/repositories/search_repository.dart';
 import '../../features/search/manager/search_cubit/search_cubit.dart';
 import '../caching/hive/user_hive_helper.dart';
 import '../repositories/storage/cloudinary_service.dart';
+import '../services/fcm_service.dart';
+import '../../features/notification/data/repositories/notification_repository.dart';
 
 final getIt = GetIt.instance;
 
@@ -39,6 +41,8 @@ void setupDependencies() async {
   // -- Repositories
   // - Cloudinary (Storage)
   getIt.registerLazySingleton<CloudinaryService>(() => CloudinaryService());
+  // - FCM Service
+  getIt.registerLazySingleton<FCMService>(() => FCMService());
   // - Authentication Repository
   getIt.registerLazySingleton<AuthenticationRepository>(
     () => AuthenticationRepository(),
@@ -69,6 +73,10 @@ void setupDependencies() async {
       getIt<HomeTripsRepository>(),
       getIt<CategoriesTripsRepository>(),
     ),
+  );
+  // - Notification Repository
+  getIt.registerLazySingleton<NotificationRepository>(
+    () => NotificationRepository(),
   );
 
   /// 2. (Factories) - Logic/State (Cubits)
