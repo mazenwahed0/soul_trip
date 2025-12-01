@@ -13,59 +13,7 @@ class ReviewsTab extends StatelessWidget {
   static const String _starIconPath = 'assets/icons/StarIcon.png';
   static const double _starSize = 28.0;
 
-  Widget _buildFullStarAsset() {
-    return Padding(
-      padding: EdgeInsets.only(right: 4.w),
-      child: Image.asset(
-        _starIconPath,
-        width: _starSize.sp,
-        height: _starSize.sp,
-        color: ColorTheme().primaryYellow, 
-        errorBuilder: (context, error, stackTrace) => Icon(
-          Icons.star, 
-          color: ColorTheme().primaryYellow, 
-          size: _starSize.sp,
-        ), 
-      ),
-    );
-  }
-
-   Widget _buildStarRatingRow(double rating) {
-    final int maxStars = 5;
-    final int fullStars = rating.floor();
-    final double fractionalPart = rating - fullStars;
-
-    return Row(
-      children: List.generate(maxStars, (index) {
-        if (index < fullStars) {
-          // Full Star
-          return _buildFullStarAsset();
-        } else if (index == fullStars && fractionalPart > 0) {
-          // Fractional Star (Clipped)
-          return Padding(
-            padding: EdgeInsets.only(right: 4.w),
-            child: ClippedStar(
-              size: _starSize.sp,
-              assetPath: _starIconPath,
-              fraction: fractionalPart,
-              color: ColorTheme().primaryYellow,
-            ),
-          );
-        } else {
-          // Empty Star
-          return Padding(
-            padding: EdgeInsets.only(right: 4.w),
-            child: Icon(
-              Icons.star_border, 
-              color: Colors.grey.shade300, 
-              size: _starSize.sp,
-            ),
-          );
-        }
-      }),
-    );
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     // Dummy Data for the review list
@@ -106,7 +54,7 @@ class ReviewsTab extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _buildStarRatingRow(_overallRating), // Using the new function
+                  buildStarRatingRow(_overallRating,28), // Using the new function
                   Text(
                     _overallRating.toStringAsFixed(1),
                     style: AppTextStyles.medium20().copyWith(
@@ -169,3 +117,45 @@ Widget previewReviewsTab() {
   );
 }
 
+Widget buildFullStarAsset(int starSize,int padding) {
+    return Padding(
+      padding: EdgeInsets.only(right: padding.w),
+      child: Image.asset(
+        'assets/icons/StarIcon.png',
+        width: starSize.sp,
+        height: starSize.sp,
+        color: ColorTheme().primaryYellow, 
+        errorBuilder: (context, error, stackTrace) => Icon(
+          Icons.star, 
+          color: ColorTheme().primaryYellow, 
+          size: starSize.sp,
+        ), 
+      ),
+    );
+  }
+
+   Widget buildStarRatingRow(double rating,int starSize) {
+    final int maxStars = 5;
+    final int fullStars = rating.floor();
+    final double fractionalPart = rating - fullStars;
+
+    return Row(
+      children: List.generate(maxStars, (index) {
+        if (index < fullStars) {
+          // Full Star
+          return buildFullStarAsset(starSize,4);
+        } else if (index == fullStars && fractionalPart > 0) {
+          // Fractional Star (Clipped)
+          return ClippedStar(
+            size: starSize.sp,
+            assetPath: 'assets/icons/StarIcon.png',
+            fraction: fractionalPart,
+            color: ColorTheme().primaryYellow,
+          );
+        } else {
+          // Empty Star
+          return SizedBox(width: 0);
+        }
+      }),
+    );
+  }

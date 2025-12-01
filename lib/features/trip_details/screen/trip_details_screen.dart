@@ -11,6 +11,8 @@ import 'package:soul_trip/features/trip_details/widgets/experts_tap.dart';
 import 'package:soul_trip/features/trip_details/widgets/review_tap.dart';
 import 'package:soul_trip/core/routing/routes.dart';
 import 'package:soul_trip/core/widgets/common/buttons/primary_shadow_button.dart';
+import 'package:go_router/go_router.dart';
+import 'package:soul_trip/core/routing/routes.dart';
 
 class TripDetailsScreen extends StatefulWidget {
   const TripDetailsScreen({super.key});
@@ -129,7 +131,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen>
         child: PrimaryShadowButton(
           text: "Book Now",
           onPressed: () {
-            print("Booking Trip: Healing Journey in the Oasis");
+             context.go(Routes.paymentScreen);
           },
         ),
       ),
