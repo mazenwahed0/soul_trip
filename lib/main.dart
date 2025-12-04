@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:soul_trip/core/routing/app_router.dart';
 import 'package:soul_trip/core/theme/app_theme.dart';
+import 'package:soul_trip/features/reviews/controller/post_review_cubit.dart';
 import 'core/caching/hive/user_hive_helper.dart';
 import 'core/caching/shared/shared_perf_helper.dart';
 import 'core/dependency_injection/set_up_dependencies.dart';
@@ -13,6 +14,7 @@ import 'features/authentication/data/authentication_repository.dart';
 import 'features/authentication/logic/auth/auth_cubit.dart';
 import 'features/profile/data/user/user_repository.dart';
 import 'firebase_options.dart';
+import 'features/reviews/controller/write_review_cubit.dart';
 
 void main() async {
   // -- Widgets Binding: needed for async main to load widgets first before Firebase
@@ -56,6 +58,9 @@ class MyApp extends StatelessWidget {
                 getIt<UserRepository>(), // Inject UserRepo
               ),
             ),
+
+            BlocProvider(create: (context) => ReviewCubit()), 
+            BlocProvider(create: (context) => WriteReviewCubit()),
           ],
           child: MaterialApp.router(
             debugShowCheckedModeBanner: false,
