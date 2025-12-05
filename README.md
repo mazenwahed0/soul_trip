@@ -156,35 +156,6 @@ This update introduces a fully custom serverless backend to handle secure passwo
   - `/verify-otp`: Validates code before allowing password change access.
   - `/reset-password`: Force-updates user credentials via Firebase Admin SDK.
 
-**Forgot Password UX:**
-
-- **3-Step Wizard:** Implemented `EmailScreen` → `OtpScreen` → `NewPasswordScreen` with smooth transitions.
-- **Smart Timer:** Added a 60-second countdown for resending OTPs with visual feedback.
-- **Navigation Logic:** Implemented smart "Back" navigation:
-  - Going back from OTP clears the input.
-  - Going back from New Password resets the entire flow to prevent stale state.
-- **Enhanced Validation:** Added strict password strength checks and confirmation matching before API calls.
-
-**Refactoring & Clean Architecture:**
-
-- **Repository Pattern:** Refactored `AuthenticationRepository` to use a generic `_postRequest` helper, strictly adhering to DRY (Don't Repeat Yourself) principles.
-- **Theme Extraction:** Moved `Pinput` styling to a dedicated `CustomPinTheme` class in `core/theme`.
-- **Utility Extraction:** Created `format_timer.dart` for reusable time formatting logic.
-- **State Management Fixes:** Solved a state-looping bug in `ForgetPasswordCubit` where the success Snackbar would trigger repeatedly during the timer countdown.
-
-#### V0.1.6 (Custom OTP Backend & Advanced Auth Refactoring)
-
-This update introduces a fully custom serverless backend to handle secure password resets, bypassing Firebase's standard link limitations, along with significant architectural refactoring.
-
-**Serverless Backend Architecture (Vercel + Node.js):**
-
-- **Custom API:** Deployed a Node.js backend on Vercel to handle sensitive Admin SDK operations without exposing credentials.
-- **OTP Logic:** Implemented a secure 4-digit OTP system using `Nodemailer` (Gmail SMTP) and Firestore for temporary code storage (5-minute expiry).
-- **Endpoints:** Created three dedicated secure endpoints:
-  - `/send-otp`: Verifies user existence and dispatches email.
-  - `/verify-otp`: Validates code before allowing password change access.
-  - `/reset-password`: Force-updates user credentials via Firebase Admin SDK.
-
 **Forgot Password UX (Wizard Flow):**
 
 - **3-Step Wizard:** Implemented `EmailScreen` → `OtpScreen` → `NewPasswordScreen` with smooth transitions.
