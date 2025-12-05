@@ -129,12 +129,43 @@ lib/
 | 2025-11-26 | Mazen Wahed    | Update V0.1.2 (Profile, Race Condition Fix, Dev Tools)              |
 | 2025-11-26 | Mina Yasser    | Created Search Filter & Results Screens                             |
 | 2025-11-28 | Mazen Wahed    | Update V0.1.3 (Merge Auth, Home/Search Features & UI Enhancements)  |
+| 2025-11-30 | Mina Yasser    | Finish Like in Home (Banner and Trips of Categories)                |
+| 2025-12-01 | Mina Yasser    | Implement Notifications Screen                                      |
+| 2025-12-02 | Mina Yasser    | Implement Favorite Like in Category & Search Result View            |
+| 2025-12-03 | Mazen Wahed    | Update Readme & Adding New Assets                                   |
 | 2025-12-04 | Youssef Hesham | Update V0.1.4 (Implemented Reviews Feature)                         |
 | 2025-12-04 | Mazen Wahed    | Update V0.1.4b (Added Image Picker, Refactored Reviews & Bug Fixes) |
+| 2025-12-05 | Mina Yasser    | Implemented Notification Screen & Likes Logic (Cubits/Repos)        |
+| 2025-12-05 | Mazen Wahed    | Update V0.1.5 (Merged Reviews, Search, and Notification Features)   |
 
 ---
 
 ### 2. Version History (Changelog)
+
+#### V0.1.5 (Likes & Notifications Features)
+
+This update focuses on user engagement, introducing a fully synchronized **Favorites System** across the app and a robust **Notification Center** powered by FCM.
+
+**Real-time Favorites System:**
+
+- **Centralized Logic:** Replaced local state "heart" toggles with a dedicated architecture using specific Cubits (`BannerLikesCubit`, `TripsLikesCubit`, `CategoryTripsLikesCubit`, `SearchLikesCubit`).
+- **Optimistic UI:** Implemented instant visual feedback (heart turns red immediately) while performing the asynchronous Firestore write in the background.
+- **Cross-View Sync:** Liking a trip in the "Search" view now instantly updates its status in the "Home" view and "Saved" lists via Firestore streams.
+- **Data Structure:** Likes are now persisted in a scalable sub-collection structure: `Users/{userId}/likes/{type}/{itemId}`.
+
+**Notification Center:**
+
+- **Full UI Implementation:** Replaced the placeholder screen with a grouped list view (Today, Yesterday, Older).
+- **Interactive Actions:** Added functionality to **Mark as Read** and **Delete** notifications via a bottom sheet menu.
+- **FCM Integration:** Implemented `FCMService` to handle:
+  - **Foreground:** Showing `FlutterLocalNotifications` when the app is open.
+  - **Background/Terminated:** Handling notification taps to navigate users to specific trips.
+- **Real-time Stream:** `NotificationCubit` listens to the user's notification collection for live updates.
+
+**✨ UI & Refactoring:**
+
+- **Refactored Cards:** Updated `BannerCardWidget`, `CategoryTripItemCardWidget`, and `SearchTripFavoriteButton` to consume the new Likes Cubits.
+- **Assets:** Added new icons and assets to support the notification and empty state UIs.
 
 #### V0.1.4b (Refactoring & Stability Polish)
 
@@ -337,3 +368,19 @@ This update brings significant improvements to user profile management, complete
     - Example: `feat: added wishlist UI` or `fix: resolved cart bug`
 5.  **Communicate big changes**
     - If you change project structure or shared files, notify the team on WhatsApp.
+
+## 🏁 Getting Started
+
+### Prerequisites
+
+- Flutter SDK (3.x.x)
+- Dart SDK
+- Android Studio / VS Code
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone [https://github.com/mazenwahed0/soul_trip](https://github.com/mazenwahed0/soul_trip)
+   cd soul-trip
+   ```
