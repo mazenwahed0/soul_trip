@@ -74,7 +74,7 @@ This project meets all core requirements of a full-stack mobile application, inc
 - **Language:** Dart
 - **State Management:** Flutter Bloc (Cubit)
 - **Navigation:** GoRouter
-- **Backend:** Firebase (Auth, Firestore)
+- **Backend:** Firebase (Auth, Firestore), Vercel (OTP Forgot Password)
 - **Local Storage:** Hive & SharedPreferences
 - **Cloud Storage:** Cloudinary
 - **UI/Animations:** Animate_do, Shimmer, Carousel Slider, Solar Icons
@@ -115,32 +115,92 @@ lib/
 
 ### 1. Progress Log
 
-| Date       | Member         | Update                                                              |
-| :--------- | :------------- | :------------------------------------------------------------------ |
-| 2025-11-18 | Mazen Wahed    | Initialized project & Added font                                    |
-| 2025-11-19 | Safwa Ibrahim  | Added Theme & Colors                                                |
-| 2025-11-20 | Mina Yasser    | Added Core Files                                                    |
-| 2025-11-20 | Mazen Wahed    | Added Icons                                                         |
-| 2025-11-20 | Mina Yasser    | Setup Firebase & Layout View                                        |
-| 2025-11-21 | Mazen Wahed    | Update V0.1 (Added Assets & Reusable Widgets)                       |
-| 2025-11-22 | Mina Yasser    | Added Home Header & Search UI Structure                             |
-| 2025-11-23 | Mazen Wahed    | Update V0.1.1 (Authentication Firebase + Added New Files)           |
-| 2025-11-24 | Mina Yasser    | Implemented Banners, Categories & Most Popular Sections             |
-| 2025-11-26 | Mazen Wahed    | Update V0.1.2 (Profile, Race Condition Fix, Dev Tools)              |
-| 2025-11-26 | Mina Yasser    | Created Search Filter & Results Screens                             |
-| 2025-11-28 | Mazen Wahed    | Update V0.1.3 (Merge Auth, Home/Search Features & UI Enhancements)  |
-| 2025-11-30 | Mina Yasser    | Finish Like in Home (Banner and Trips of Categories)                |
-| 2025-12-01 | Mina Yasser    | Implement Notifications Screen                                      |
-| 2025-12-02 | Mina Yasser    | Implement Favorite Like in Category & Search Result View            |
-| 2025-12-03 | Mazen Wahed    | Update Readme & Adding New Assets                                   |
-| 2025-12-04 | Youssef Hesham | Update V0.1.4 (Implemented Reviews Feature)                         |
-| 2025-12-04 | Mazen Wahed    | Update V0.1.4b (Added Image Picker, Refactored Reviews & Bug Fixes) |
-| 2025-12-05 | Mina Yasser    | Implemented Notification Screen & Likes Logic (Cubits/Repos)        |
-| 2025-12-05 | Mazen Wahed    | Update V0.1.5 (Merged Reviews, Search, and Notification Features)   |
+| Date       | Member         | Update                                                                       |
+| :--------- | :------------- | :--------------------------------------------------------------------------- |
+| 2025-11-18 | Mazen Wahed    | Initialized project & Added font                                             |
+| 2025-11-19 | Safwa Ibrahim  | Added Theme & Colors                                                         |
+| 2025-11-20 | Mina Yasser    | Added Core Files                                                             |
+| 2025-11-20 | Mazen Wahed    | Added Icons                                                                  |
+| 2025-11-20 | Mina Yasser    | Setup Firebase & Layout View                                                 |
+| 2025-11-21 | Mazen Wahed    | Update V0.1 (Added Assets & Reusable Widgets)                                |
+| 2025-11-22 | Mina Yasser    | Added Home Header & Search UI Structure                                      |
+| 2025-11-23 | Mazen Wahed    | Update V0.1.1 (Authentication Firebase + Added New Files)                    |
+| 2025-11-24 | Mina Yasser    | Implemented Banners, Categories & Most Popular Sections                      |
+| 2025-11-26 | Mazen Wahed    | Update V0.1.2 (Profile, Race Condition Fix, Dev Tools)                       |
+| 2025-11-26 | Mina Yasser    | Created Search Filter & Results Screens                                      |
+| 2025-11-28 | Mazen Wahed    | Update V0.1.3 (Merge Auth, Home/Search Features & UI Enhancements)           |
+| 2025-11-30 | Mina Yasser    | Finish Like in Home (Banner and Trips of Categories)                         |
+| 2025-12-01 | Mina Yasser    | Implement Notifications Screen                                               |
+| 2025-12-02 | Mina Yasser    | Implement Favorite Like in Category & Search Result View                     |
+| 2025-12-03 | Mazen Wahed    | Update Readme & Adding New Assets                                            |
+| 2025-12-04 | Youssef Hesham | Update V0.1.4 (Implemented Reviews Feature)                                  |
+| 2025-12-04 | Mazen Wahed    | Update V0.1.4b (Added Image Picker, Refactored Reviews & Bug Fixes)          |
+| 2025-12-05 | Mina Yasser    | Update V0.1.5 (Implemented Notification Screen & Likes Logic (Cubits/Repos)) |
+| 2025-12-05 | Mazen Wahed    | Merged Reviews, Search, and Notification Features                            |
+| 2025-12-05 | Mazen Wahed    | Update V0.1.6 (OTP Forgot Password)                                          |
 
 ---
 
 ### 2. Version History (Changelog)
+
+#### V0.1.6 (Custom OTP Backend & Advanced Auth Refactoring)
+
+This update introduces a fully custom serverless backend to handle secure password resets, bypassing Firebase's standard link limitations, along with significant architectural refactoring.
+
+**Serverless Backend Architecture (Vercel + Node.js):**
+
+- **Custom API:** Deployed a Node.js backend on Vercel to handle sensitive Admin SDK operations without exposing credentials.
+- **OTP Logic:** Implemented a secure 4-digit OTP system using `Nodemailer` (Gmail SMTP) and Firestore for temporary code storage (5-minute expiry).
+- **Endpoints:** Created three dedicated secure endpoints:
+  - `/send-otp`: Verifies user existence and dispatches email.
+  - `/verify-otp`: Validates code before allowing password change access.
+  - `/reset-password`: Force-updates user credentials via Firebase Admin SDK.
+
+**Forgot Password UX:**
+
+- **3-Step Wizard:** Implemented `EmailScreen` → `OtpScreen` → `NewPasswordScreen` with smooth transitions.
+- **Smart Timer:** Added a 60-second countdown for resending OTPs with visual feedback.
+- **Navigation Logic:** Implemented smart "Back" navigation:
+  - Going back from OTP clears the input.
+  - Going back from New Password resets the entire flow to prevent stale state.
+- **Enhanced Validation:** Added strict password strength checks and confirmation matching before API calls.
+
+**Refactoring & Clean Architecture:**
+
+- **Repository Pattern:** Refactored `AuthenticationRepository` to use a generic `_postRequest` helper, strictly adhering to DRY (Don't Repeat Yourself) principles.
+- **Theme Extraction:** Moved `Pinput` styling to a dedicated `CustomPinTheme` class in `core/theme`.
+- **Utility Extraction:** Created `format_timer.dart` for reusable time formatting logic.
+- **State Management Fixes:** Solved a state-looping bug in `ForgetPasswordCubit` where the success Snackbar would trigger repeatedly during the timer countdown.
+
+#### V0.1.6 (Custom OTP Backend & Advanced Auth Refactoring)
+
+This update introduces a fully custom serverless backend to handle secure password resets, bypassing Firebase's standard link limitations, along with significant architectural refactoring.
+
+**Serverless Backend Architecture (Vercel + Node.js):**
+
+- **Custom API:** Deployed a Node.js backend on Vercel to handle sensitive Admin SDK operations without exposing credentials.
+- **OTP Logic:** Implemented a secure 4-digit OTP system using `Nodemailer` (Gmail SMTP) and Firestore for temporary code storage (5-minute expiry).
+- **Endpoints:** Created three dedicated secure endpoints:
+  - `/send-otp`: Verifies user existence and dispatches email.
+  - `/verify-otp`: Validates code before allowing password change access.
+  - `/reset-password`: Force-updates user credentials via Firebase Admin SDK.
+
+**Forgot Password UX (Wizard Flow):**
+
+- **3-Step Wizard:** Implemented `EmailScreen` → `OtpScreen` → `NewPasswordScreen` with smooth transitions.
+- **Smart Timer:** Added a 60-second countdown for resending OTPs with visual feedback.
+- **Navigation Logic:** Implemented smart "Back" navigation:
+  - Going back from OTP clears the input.
+  - Going back from New Password resets the entire flow to prevent stale state.
+- **Enhanced Validation:** Added strict password strength checks and confirmation matching before API calls.
+
+**♻️ Refactoring & Clean Architecture:**
+
+- **Repository Pattern:** Refactored `AuthenticationRepository` to use a generic `_postRequest` helper, strictly adhering to DRY (Don't Repeat Yourself) principles.
+- **Theme Extraction:** Moved `Pinput` styling to a dedicated `CustomPinTheme` class in `core/theme`.
+- **Utility Extraction:** Created `format_timer.dart` for reusable time formatting logic.
+- **Dependency Injection Fixes:** Resolved missing registrations for `SearchLikesRepository` and `CategoryTripsLikesRepository`, preventing runtime crashes.
+- **State Management Fixes:** Solved a state-looping bug in `ForgetPasswordCubit` where the success Snackbar would trigger repeatedly during the timer countdown.
 
 #### V0.1.5 (Likes & Notifications Features)
 
