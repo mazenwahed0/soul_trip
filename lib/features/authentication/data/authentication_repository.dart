@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart' as http;
 
 import '../../../core/errors/exceptions/exports.dart';
 import '../../../core/errors/failures.dart';
@@ -105,5 +107,77 @@ class AuthenticationRepository {
       await GoogleSignIn().signOut();
       await _auth.signOut();
     });
+  }
+
+  /// [VERCEL] - OTP Forgot Password via Email Address
+  /// [Custom] - Send OTP
+  Future<Either<Failure, void>> sendOtpEmail(String email) async {
+    // Note: NO (_guard) here to handle HTTP errors specifically
+    try {
+      final response = await http.post(
+        Uri.parse('https://soul-trip-backend.vercel.app/api/send-otp'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'email': email}),
+      );
+
+      if (response.statusCode == 200) {
+        return const Right(null);
+      } else {
+        // Decode the error message from the server
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        return Left(ServerFailure(data['error'] ?? 'Failed to send OTP'));
+      }
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  /// [Custom] - Verify OTP
+  Future<Either<Failure, bool>> verifyOtp(String email, String otp) async {
+    try {
+      final response = await http.post(
+        Uri.parse('https://soul-trip-backend.vercel.app/api/verify-otp'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'email': email, 'otp': otp}),
+      );
+
+      if (response.statusCode == 200) {
+        return const Right(true);
+      } else {
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        // Return a failure so the UI knows it's invalid
+        return Left(ServerFailure(data['error'] ?? 'Invalid OTP'));
+      }
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  /// [Custom] - Verify OTP & Reset Password
+  Future<Either<Failure, void>> resetPasswordWithOtp({
+    required String email,
+    required String otp,
+    required String newPassword,
+  }) async {
+    try {
+      final response = await http.post(
+        Uri.parse('https://soul-trip-backend.vercel.app/api/reset-password'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'email': email,
+          'otp': otp,
+          'newPassword': newPassword,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        return const Right(null);
+      } else {
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        return Left(ServerFailure(data['error'] ?? 'Failed to reset password'));
+      }
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
   }
 }
