@@ -17,7 +17,7 @@ import 'package:soul_trip/features/home/manager/trips_likes_cubit/trips_likes_cu
 import 'package:soul_trip/features/home/ui/widgets/banners_list_widget.dart';
 import 'package:soul_trip/features/home/ui/widgets/categories_list_widget.dart';
 import 'package:soul_trip/core/widgets/common/header/home_header_widget.dart';
-import 'package:soul_trip/features/home/ui/widgets/home_search_widget.dart';
+import 'package:soul_trip/core/widgets/common/search/home_search_widget.dart';
 import 'package:soul_trip/features/home/ui/widgets/home_trips/home_trips_list_widget.dart';
 import 'package:soul_trip/features/home/ui/widgets/home_trips/home_trips_by_category_widget.dart';
 import 'package:soul_trip/features/home/ui/widgets/section_header_widget.dart';

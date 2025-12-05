@@ -27,6 +27,7 @@ class Keys {
   static const String onBoardingFolder = 'OnBoarding/Images';
   static const String tripsFolder = 'Trips/Images';
   static const String expertsFolder = 'Experts/Images';
+  static const String reviewsFolder = 'Reviews/Images';
 
   static const String cartItemsKey = 'cartItems';
   static const String productId = 'productId';

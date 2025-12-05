@@ -21,6 +21,11 @@ import '../../features/authentication/ui/forget_password/forget_password_view.da
 import '../../features/authentication/ui/login/login_view.dart';
 import '../../features/authentication/ui/signup/signup_view.dart';
 import '../../features/onboarding/ui/onboarding_view.dart';
+import '../../features/reviews/logic/post_review/post_review_cubit.dart';
+import '../../features/reviews/logic/write_review/write_review_cubit.dart';
+import '../../features/search/manager/search_cubit/search_cubit.dart';
+import '../../features/search/ui/screen/search_filter_screen.dart';
+import '../../features/search/ui/screen/search_results_screen.dart';
 import '../../features/splash/ui/splash_view.dart';
 import '../dependency_injection/set_up_dependencies.dart';
 import 'animation_route.dart';
@@ -176,8 +181,19 @@ abstract class AppRouter {
           ),
           GoRoute(
             path: Routes.reviewsView,
-            pageBuilder: (context, state) =>
-                fadeTransitionPage(const ReviewsScreen()),
+            pageBuilder: (context, state) {
+              return fadeTransitionPage(
+                MultiBlocProvider(
+                  providers: [
+                    BlocProvider(create: (context) => getIt<ReviewCubit>()),
+                    BlocProvider(
+                      create: (context) => getIt<WriteReviewCubit>(),
+                    ),
+                  ],
+                  child: const ReviewsScreen(),
+                ),
+              );
+            },
           ),
           GoRoute(
             path: Routes.profileView,

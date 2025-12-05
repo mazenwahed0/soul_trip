@@ -12,7 +12,28 @@
           "package_name": "com.example.soul_trip"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "279104476962-0iui324sgumpn0ioaoc51avrminavvq0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.soul_trip",
+            "certificate_hash": "190c8b16ecc0058b08e79cca2dd725a75978ca7e"
+          }
+        },
+        {
+          "client_id": "279104476962-15i7lok44f9914qeo25borv3pi6qqcv2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.soul_trip",
+            "certificate_hash": "e20b686801b132dbb0035173a99e72ba6df2a3c0"
+          }
+        },
+        {
+          "client_id": "279104476962-8erddaaedeufugkkgck9ic568bnbb2k8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAzMGgSMPnDVuo8CL-hCTATWACS9l0vgYY"
@@ -20,7 +41,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "279104476962-8erddaaedeufugkkgck9ic568bnbb2k8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "279104476962-movbc3r6805fo118hfvqsi9tpdsgbr6l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.soulTrip"
+              }
+            }
+          ]
         }
       }
     }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:soul_trip/core/routing/app_router.dart';
 import 'package:soul_trip/core/theme/app_theme.dart';
@@ -8,6 +9,7 @@ import 'core/caching/hive/user_hive_helper.dart';
 import 'core/caching/shared/shared_perf_helper.dart';
 import 'core/dependency_injection/set_up_dependencies.dart';
 import 'core/internet_check/cubit/internet_check__cubit.dart';
+import 'core/utils/loading_helper.dart';
 import 'core/widgets/no_internet_screen.dart';
 import 'core/services/fcm_service.dart';
 import 'features/authentication/data/authentication_repository.dart';
@@ -33,6 +35,9 @@ void main() async {
 
   // -- Initialize FCM
   await getIt<FCMService>().initialize();
+
+  // -- Initialize Loading Style
+  LoadingHelper.init();
 
   runApp(const MyApp());
 }
@@ -67,6 +72,9 @@ class MyApp extends StatelessWidget {
             theme: themeDataFunc(),
             routerConfig: AppRouter.router,
             builder: (context, child) {
+              // -- Initialize EasyLoading
+              final easyLoadingBuilder = EasyLoading.init();
+              child = easyLoadingBuilder(context, child);
               return BlocBuilder<ConnectivityCubit, ConnectivityState>(
                 builder: (context, state) {
                   if (state is ConnectivityDisconnected) {

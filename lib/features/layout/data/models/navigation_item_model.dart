@@ -3,12 +3,17 @@ import 'package:flutter/material.dart';
 /// Model representing a bottom navigation item
 class NavigationItemModel {
   const NavigationItemModel({
-    required this.icon,
+    this.icon,
+    this.svgPath,
     required this.label,
     required this.route,
-  });
+  }) : assert(
+         icon != null || svgPath != null,
+         'Must provide either icon or svgPath',
+       );
 
-  final IconData icon;
+  final IconData? icon;
+  final String? svgPath;
   final String label;
   final String route;
 

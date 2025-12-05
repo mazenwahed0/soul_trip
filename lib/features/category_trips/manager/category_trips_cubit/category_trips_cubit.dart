@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:soul_trip/features/category_trips/data/repositories/category_trips_repository.dart';
 import 'package:soul_trip/features/category_trips/manager/category_trips_cubit/category_trips_state.dart';
@@ -5,6 +7,7 @@ import 'package:soul_trip/features/category_trips/manager/category_trips_cubit/c
 class CategoryTripsCubit extends Cubit<CategoryTripsState> {
   final CategoryTripsRepository _repository;
   final String categoryName;
+  StreamSubscription? _tripsSubscription;
 
   CategoryTripsCubit(this._repository, this.categoryName)
     : super(const CategoryTripsInitial());
@@ -13,6 +16,9 @@ class CategoryTripsCubit extends Cubit<CategoryTripsState> {
     emit(const CategoryTripsLoading());
 
     final result = await _repository.fetchTripsByCategory(categoryName);
+
+    // Stop if the user left the screen
+    if (isClosed) return;
 
     result.fold(
       (failure) => emit(CategoryTripsError(failure.message)),
@@ -23,7 +29,9 @@ class CategoryTripsCubit extends Cubit<CategoryTripsState> {
   void streamTrips() {
     emit(const CategoryTripsLoading());
 
-    _repository
+    _tripsSubscription?.cancel();
+
+    _tripsSubscription = _repository
         .streamTripsByCategory(categoryName)
         .listen(
           (either) {
@@ -36,5 +44,11 @@ class CategoryTripsCubit extends Cubit<CategoryTripsState> {
             emit(CategoryTripsError('Stream error: $error'));
           },
         );
+  }
+
+  @override
+  Future<void> close() {
+    _tripsSubscription?.cancel();
+    return super.close();
   }
 }

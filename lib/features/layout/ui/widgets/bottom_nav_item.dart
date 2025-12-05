@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:soul_trip/core/theme/colors.dart';
 import 'package:soul_trip/features/layout/data/models/navigation_item_model.dart';
 import 'package:soul_trip/features/layout/data/helper/layout_constants.dart';
@@ -47,16 +49,22 @@ class BottomNavItem extends StatelessWidget {
   }
 
   Widget _buildIcon() {
+    final double size = isSelected
+        ? LayoutConstants.activeIconSize
+        : LayoutConstants.inactiveIconSize;
+
+    final Color color = _getColor();
     return AnimatedContainer(
       duration: LayoutConstants.itemTransitionDuration,
       curve: Curves.easeInOut,
-      child: Icon(
-        item.icon,
-        size: isSelected
-            ? LayoutConstants.activeIconSize
-            : LayoutConstants.inactiveIconSize,
-        color: _getColor(),
-      ),
+      child: item.svgPath != null
+          ? SvgPicture.asset(
+              item.svgPath!,
+              width: size.sp,
+              height: size.sp,
+              colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+            )
+          : Icon(item.icon, size: size, color: color),
     );
   }
 

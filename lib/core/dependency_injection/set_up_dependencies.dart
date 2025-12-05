@@ -20,6 +20,9 @@ import '../../features/profile/data/data_upload/data_upload_repository.dart';
 import '../../features/profile/data/user/user_repository.dart';
 import '../../features/profile/logic/data_upload/data_upload_cubit.dart';
 import '../../features/profile/logic/user/user_cubit.dart';
+import '../../features/reviews/data/reviews_repository.dart';
+import '../../features/reviews/logic/post_review/post_review_cubit.dart';
+import '../../features/reviews/logic/write_review/write_review_cubit.dart';
 import '../../features/search/data/repositories/search_repository.dart';
 import '../../features/search/manager/search_cubit/search_cubit.dart';
 import '../caching/hive/user_hive_helper.dart';
@@ -79,6 +82,11 @@ void setupDependencies() async {
     () => NotificationRepository(),
   );
 
+  // - Reviews Repository
+  getIt.registerLazySingleton<ReviewsRepository>(
+    () => ReviewsRepository(getIt<CloudinaryService>()),
+  );
+
   /// 2. (Factories) - Logic/State (Cubits)
   /// "registerFactory" = so a new Cubit is created every time a screen opens
   /// (Good for Screens like (Login/SignUp) which are destroyed when closed)
@@ -128,5 +136,14 @@ void setupDependencies() async {
   );
   getIt.registerFactory<SearchCubit>(
     () => SearchCubit(getIt<SearchRepository>()),
+  );
+
+  // Reviews Logic
+  getIt.registerFactory<ReviewCubit>(
+    () => ReviewCubit(getIt<ReviewsRepository>()),
+  );
+
+  getIt.registerFactory<WriteReviewCubit>(
+    () => WriteReviewCubit(getIt<ReviewsRepository>()),
   );
 }

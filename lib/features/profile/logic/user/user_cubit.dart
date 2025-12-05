@@ -26,7 +26,10 @@ class UserCubit extends Cubit<UserState> {
       );
 
       if (image != null) {
+        // Check if closed before emitting loading
+        if (isClosed) return;
         emit(UserLoading());
+
         File file = File(image.path);
 
         // 1. Delete old image if exists
@@ -34,12 +37,18 @@ class UserCubit extends Cubit<UserState> {
           await _cloudinaryService.deleteImage(currentUser.publicId);
         }
 
+        // Safety check after await
+        if (isClosed) return;
+
         // 2. Upload new image
         final response = await _cloudinaryService.uploadImage(
           file,
           Keys.profileFolder,
           publicId: currentUser.id,
         );
+
+        // Safety check after heavy upload await
+        if (isClosed) return;
 
         if (response.statusCode == 200) {
           final imageUrl = response.data['secure_url'];
@@ -51,6 +60,9 @@ class UserCubit extends Cubit<UserState> {
             'publicId': publicId,
           });
 
+          // Final Safety check before emitting success/failure
+          if (isClosed) return;
+
           result.fold(
             (failure) => emit(UserFailure(failure.message)),
             (_) =>
@@ -61,15 +73,19 @@ class UserCubit extends Cubit<UserState> {
         }
       }
     } catch (e) {
-      emit(UserFailure(e.toString()));
+      // Only emit failure if the cubit is still alive
+      if (!isClosed) emit(UserFailure(e.toString()));
     }
   }
 
   /// [UpdateSingleField] - Update a single field on Firestore
   Future<void> updateField(Map<String, dynamic> json) async {
+    if (isClosed) return;
     emit(UserLoading());
 
     final result = await _userRepo.updateSingleField(json);
+
+    if (isClosed) return;
 
     result.fold(
       (failure) => emit(UserFailure(failure.message)),
@@ -82,6 +98,7 @@ class UserCubit extends Cubit<UserState> {
     required String fullName,
     required String phoneNumber,
   }) async {
+    if (isClosed) return;
     emit(UserLoading());
 
     // -- Split Name
@@ -98,6 +115,8 @@ class UserCubit extends Cubit<UserState> {
 
     // -- Call Repo
     final result = await _userRepo.updateSingleField(data);
+
+    if (isClosed) return;
 
     result.fold(
       (failure) => emit(UserFailure(failure.message)),
