@@ -14,8 +14,9 @@ class AuthenticationRepository {
   Stream<User?> get authStateChanges => _auth.authStateChanges();
   User? get currentUser => _auth.currentUser;
   bool get isEmailVerified => currentUser?.emailVerified ?? false;
+  final String _backendUrl = 'https://soul-trip-backend.vercel.app/api';
 
-  /// Helper to catch exceptions and return Failure
+  /// -- Helper to catch exceptions and return Failure
   Future<Either<Failure, T>> _guard<T>(Future<T> Function() body) async {
     try {
       final result = await body();
@@ -30,6 +31,30 @@ class AuthenticationRepository {
       return Left(AuthFailure(CPlatformException(e.code).message));
     } catch (e) {
       return Left(ServerFailure('Something went wrong. Please try again.'));
+    }
+  }
+
+  // -- Helper Method for API (Vercel)
+  Future<Either<Failure, T>> _postRequest<T>({
+    required String endpoint,
+    required Map<String, dynamic> body,
+    T? successResult,
+  }) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$_backendUrl/$endpoint'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(body),
+      );
+
+      if (response.statusCode == 200) {
+        return Right(successResult as T);
+      } else {
+        final data = jsonDecode(response.body);
+        return Left(ServerFailure(data['error'] ?? 'Request failed'));
+      }
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
     }
   }
 
@@ -112,45 +137,20 @@ class AuthenticationRepository {
   /// [VERCEL] - OTP Forgot Password via Email Address
   /// [Custom] - Send OTP
   Future<Either<Failure, void>> sendOtpEmail(String email) async {
-    // Note: NO (_guard) here to handle HTTP errors specifically
-    try {
-      final response = await http.post(
-        Uri.parse('https://soul-trip-backend.vercel.app/api/send-otp'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'email': email}),
-      );
-
-      if (response.statusCode == 200) {
-        return const Right(null);
-      } else {
-        // Decode the error message from the server
-        final Map<String, dynamic> data = jsonDecode(response.body);
-        return Left(ServerFailure(data['error'] ?? 'Failed to send OTP'));
-      }
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+    return _postRequest(
+      endpoint: 'send-otp',
+      body: {'email': email},
+      successResult: null,
+    );
   }
 
   /// [Custom] - Verify OTP
   Future<Either<Failure, bool>> verifyOtp(String email, String otp) async {
-    try {
-      final response = await http.post(
-        Uri.parse('https://soul-trip-backend.vercel.app/api/verify-otp'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'email': email, 'otp': otp}),
-      );
-
-      if (response.statusCode == 200) {
-        return const Right(true);
-      } else {
-        final Map<String, dynamic> data = jsonDecode(response.body);
-        // Return a failure so the UI knows it's invalid
-        return Left(ServerFailure(data['error'] ?? 'Invalid OTP'));
-      }
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+    return _postRequest(
+      endpoint: 'verify-otp',
+      body: {'email': email, 'otp': otp},
+      successResult: true, // Return true on success
+    );
   }
 
   /// [Custom] - Verify OTP & Reset Password
@@ -159,25 +159,10 @@ class AuthenticationRepository {
     required String otp,
     required String newPassword,
   }) async {
-    try {
-      final response = await http.post(
-        Uri.parse('https://soul-trip-backend.vercel.app/api/reset-password'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'email': email,
-          'otp': otp,
-          'newPassword': newPassword,
-        }),
-      );
-
-      if (response.statusCode == 200) {
-        return const Right(null);
-      } else {
-        final Map<String, dynamic> data = jsonDecode(response.body);
-        return Left(ServerFailure(data['error'] ?? 'Failed to reset password'));
-      }
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+    return _postRequest(
+      endpoint: 'reset-password',
+      body: {'email': email, 'otp': otp, 'newPassword': newPassword},
+      successResult: null,
+    );
   }
 }
