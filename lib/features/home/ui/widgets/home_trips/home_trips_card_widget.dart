@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:soul_trip/core/models/home_trip_model.dart';
 import 'package:soul_trip/core/theme/colors.dart';
 import 'package:soul_trip/core/theme/text_style.dart';
+import 'package:soul_trip/core/theme/soultrip_icons.dart';
+import '../../../manager/trips_likes_cubit/trips_likes_cubit.dart';
+import '../../../manager/trips_likes_cubit/trips_likes_state.dart';
+import '../../../../../features/authentication/logic/auth/auth_cubit.dart';
+import '../../../../../features/authentication/logic/auth/auth_state.dart';
 
 class HomeTripsCardWidget extends StatelessWidget {
   final HomeTripModel trip;
@@ -78,22 +84,88 @@ class HomeTripsCardWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // OFF badge at top-left
-          Align(
-            alignment: Alignment.topLeft,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.9),
-                borderRadius: BorderRadius.circular(20.r),
-              ),
-              child: Text(
-                '${trip.off}% OFF',
-                style: AppTextStyles.semiBold12().copyWith(
-                  color: colors.primaryBlue,
+          // OFF badge at top-left and Like button at top-right
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // OFF badge
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.9),
+                  borderRadius: BorderRadius.circular(20.r),
+                ),
+                child: Text(
+                  '${trip.off}% OFF',
+                  style: AppTextStyles.semiBold12().copyWith(
+                    color: colors.primaryBlue,
+                  ),
                 ),
               ),
-            ),
+
+              // Like button
+              BlocBuilder<TripsLikesCubit, TripsLikesState>(
+                buildWhen: (previous, current) {
+                  if (current is TripsLikesLoaded &&
+                      previous is TripsLikesLoaded) {
+                    return previous.likedTrips[trip.id] !=
+                        current.likedTrips[trip.id];
+                  }
+                  return true;
+                },
+                builder: (context, state) {
+                  bool isLiked = false;
+                  if (state is TripsLikesLoaded) {
+                    isLiked = state.likedTrips[trip.id] ?? false;
+                  } else {
+                    // Fallback to cubit's current state if not loaded (e.g. initial)
+                    isLiked = context.read<TripsLikesCubit>().isTripLiked(
+                      trip.id,
+                    );
+                  }
+
+                  return GestureDetector(
+                    onTap: () {
+                      // Check if user is authenticated before allowing like
+                      final authCubit = context.read<AuthCubit>();
+                      if (authCubit.state.status == AuthStatus.authenticated) {
+                        context.read<TripsLikesCubit>().toggleLike(trip.id);
+                      } else {
+                        // Show message or navigate to login
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Please login to like trips'),
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                      }
+                    },
+                    child: Container(
+                      width: 32.w,
+                      height: 32.w,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: colors.whiteColor.withValues(alpha: 0.9),
+                      ),
+                      child: state is TripsLikesLoading
+                          ? SizedBox(
+                              width: 16.sp,
+                              height: 16.sp,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: colors.primaryBlue,
+                              ),
+                            )
+                          : Icon(
+                              isLiked ? Soultrip.hearts : Icons.favorite_border,
+                              size: 16.sp,
+                              color: isLiked ? Colors.red : colors.primaryBlue,
+                            ),
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
 
           const Spacer(),

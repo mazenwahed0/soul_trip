@@ -8,10 +8,12 @@ import '../../features/authentication/logic/login/login_cubit.dart';
 import '../../features/authentication/logic/signup/signup_cubit.dart';
 import '../../features/authentication/logic/social_auth/social_auth_cubit.dart';
 import '../../features/category_trips/data/repositories/category_trips_repository.dart';
-import '../../features/home/data/repositories/banner_repository.dart';
-import '../../features/home/data/repositories/home_trips_repository.dart';
-import '../../features/home/manager/banner_cubit/banner_cubit.dart';
-import '../../features/home/manager/home_trips_cubit/home_trips_cubit.dart';
+import 'package:soul_trip/features/home/data/repositories/banner_repository.dart';
+import 'package:soul_trip/features/home/data/repositories/home_trips_repository.dart';
+import 'package:soul_trip/features/home/data/repositories/banner_likes_repository.dart';
+import 'package:soul_trip/features/home/data/repositories/trips_likes_repository.dart';
+import 'package:soul_trip/features/home/manager/banner_cubit/banner_cubit.dart';
+import 'package:soul_trip/features/home/manager/home_trips_cubit/home_trips_cubit.dart';
 import '../../features/onboarding/data/onboarding_repository.dart';
 import '../../features/onboarding/logic/onboarding_cubit.dart';
 import '../../features/profile/data/data_upload/data_upload_repository.dart';
@@ -25,6 +27,8 @@ import '../../features/search/data/repositories/search_repository.dart';
 import '../../features/search/manager/search_cubit/search_cubit.dart';
 import '../caching/hive/user_hive_helper.dart';
 import '../repositories/storage/cloudinary_service.dart';
+import '../services/fcm_service.dart';
+import '../../features/notification/data/repositories/notification_repository.dart';
 
 final getIt = GetIt.instance;
 
@@ -40,6 +44,8 @@ void setupDependencies() async {
   // -- Repositories
   // - Cloudinary (Storage)
   getIt.registerLazySingleton<CloudinaryService>(() => CloudinaryService());
+  // - FCM Service
+  getIt.registerLazySingleton<FCMService>(() => FCMService());
   // - Authentication Repository
   getIt.registerLazySingleton<AuthenticationRepository>(
     () => AuthenticationRepository(),
@@ -53,6 +59,12 @@ void setupDependencies() async {
   // - Home Repositories
   getIt.registerLazySingleton<HomeTripsRepository>(() => HomeTripsRepository());
   getIt.registerLazySingleton<BannerRepository>(() => BannerRepository());
+  getIt.registerLazySingleton<BannerLikesRepository>(
+    () => BannerLikesRepository(),
+  );
+  getIt.registerLazySingleton<TripsLikesRepository>(
+    () => TripsLikesRepository(),
+  );
   getIt.registerLazySingleton<CategoriesTripsRepository>(
     () => CategoriesTripsRepository(),
   );
@@ -64,6 +76,10 @@ void setupDependencies() async {
       getIt<HomeTripsRepository>(),
       getIt<CategoriesTripsRepository>(),
     ),
+  );
+  // - Notification Repository
+  getIt.registerLazySingleton<NotificationRepository>(
+    () => NotificationRepository(),
   );
 
   // - Reviews Repository

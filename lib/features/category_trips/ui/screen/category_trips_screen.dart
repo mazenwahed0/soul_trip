@@ -7,6 +7,10 @@ import 'package:soul_trip/features/category_trips/data/repositories/category_tri
 import 'package:soul_trip/features/category_trips/manager/category_trips_cubit/category_trips_cubit.dart';
 import 'package:soul_trip/features/category_trips/ui/widgets/category_trips_list_widget.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:soul_trip/features/category_trips/data/repositories/category_trips_likes_repository.dart';
+import 'package:soul_trip/features/category_trips/manager/category_trips_likes_cubit/category_trips_likes_cubit.dart';
+
 class CategoryTripsScreen extends StatelessWidget {
   final String categoryName;
 
@@ -15,11 +19,20 @@ class CategoryTripsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = ColorTheme();
+    final userId = FirebaseAuth.instance.currentUser?.uid ?? 'anonymous';
 
-    return BlocProvider(
-      create: (_) =>
-          CategoryTripsCubit(CategoryTripsRepository(), categoryName)
-            ..streamTrips(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) =>
+              CategoryTripsCubit(CategoryTripsRepository(), categoryName)
+                ..streamTrips(),
+        ),
+        BlocProvider(
+          create: (_) =>
+              CategoryTripsLikesCubit(CategoryTripsLikesRepository(), userId),
+        ),
+      ],
       child: Scaffold(
         appBar: CustomAppBar(title: categoryName, showBackButton: true),
         backgroundColor: colors.backgroundWhite,

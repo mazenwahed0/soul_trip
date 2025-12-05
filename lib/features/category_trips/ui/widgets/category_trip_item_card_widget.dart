@@ -10,8 +10,14 @@ import 'package:soul_trip/features/category_trips/ui/widgets/category_trip_categ
 class CategoryTripItemCardWidget extends StatelessWidget {
   final HomeTripModel trip;
   final VoidCallback? onTap;
+  final Widget? favoriteButton;
 
-  const CategoryTripItemCardWidget({super.key, required this.trip, this.onTap});
+  const CategoryTripItemCardWidget({
+    super.key,
+    required this.trip,
+    this.onTap,
+    this.favoriteButton,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +37,10 @@ class CategoryTripItemCardWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Image + favorite
-            CategoryTripImageFavoriteWidget(trip: trip),
+            CategoryTripImageFavoriteWidget(
+              trip: trip,
+              favoriteButton: favoriteButton,
+            ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
               child: Column(

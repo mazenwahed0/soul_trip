@@ -14,15 +14,12 @@ import 'package:soul_trip/features/categories_trips/ui/screen/categories_trips_s
 import 'package:soul_trip/features/category_trips/ui/screen/category_trips_screen.dart';
 import 'package:soul_trip/features/search/ui/screen/search_filter_screen.dart';
 import 'package:soul_trip/features/search/ui/screen/search_results_screen.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:soul_trip/features/search/manager/search_cubit/search_cubit.dart';
 
 import '../../features/authentication/data/authentication_repository.dart';
 import '../../features/authentication/ui/forget_password/forget_password_view.dart';
 import '../../features/authentication/ui/login/login_view.dart';
 import '../../features/authentication/ui/signup/signup_view.dart';
-import '../../features/categories_trips/ui/screen/categories_trips_screen.dart';
-import '../../features/category_trips/ui/screen/category_trips_screen.dart';
 import '../../features/onboarding/ui/onboarding_view.dart';
 import '../../features/reviews/logic/post_review/post_review_cubit.dart';
 import '../../features/reviews/logic/write_review/write_review_cubit.dart';
