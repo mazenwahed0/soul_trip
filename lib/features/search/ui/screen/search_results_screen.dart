@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:soul_trip/core/theme/colors.dart';
 import 'package:soul_trip/core/theme/text_style.dart';
 import 'package:soul_trip/features/category_trips/ui/widgets/category_trip_item_card_widget.dart';
-import 'package:soul_trip/features/home/ui/widgets/home_search_widget.dart';
+import 'package:soul_trip/core/widgets/common/search/home_search_widget.dart';
 import 'package:soul_trip/features/search/manager/search_cubit/search_cubit.dart';
 import 'package:soul_trip/features/search/manager/search_cubit/search_state.dart';
 

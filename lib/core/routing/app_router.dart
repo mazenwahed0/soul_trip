@@ -24,6 +24,8 @@ import '../../features/authentication/ui/signup/signup_view.dart';
 import '../../features/categories_trips/ui/screen/categories_trips_screen.dart';
 import '../../features/category_trips/ui/screen/category_trips_screen.dart';
 import '../../features/onboarding/ui/onboarding_view.dart';
+import '../../features/reviews/logic/post_review/post_review_cubit.dart';
+import '../../features/reviews/logic/write_review/write_review_cubit.dart';
 import '../../features/search/manager/search_cubit/search_cubit.dart';
 import '../../features/search/ui/screen/search_filter_screen.dart';
 import '../../features/search/ui/screen/search_results_screen.dart';
@@ -182,8 +184,19 @@ abstract class AppRouter {
           ),
           GoRoute(
             path: Routes.reviewsView,
-            pageBuilder: (context, state) =>
-                fadeTransitionPage(const ReviewsScreen()),
+            pageBuilder: (context, state) {
+              return fadeTransitionPage(
+                MultiBlocProvider(
+                  providers: [
+                    BlocProvider(create: (context) => getIt<ReviewCubit>()),
+                    BlocProvider(
+                      create: (context) => getIt<WriteReviewCubit>(),
+                    ),
+                  ],
+                  child: const ReviewsScreen(),
+                ),
+              );
+            },
           ),
           GoRoute(
             path: Routes.profileView,

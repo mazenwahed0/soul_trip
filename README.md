@@ -115,24 +115,81 @@ lib/
 
 ### 1. Progress Log
 
-| Date       | Member        | Update                                                             |
-| :--------- | :------------ | :----------------------------------------------------------------- |
-| 2025-11-18 | Mazen Wahed   | Initialized project & Added font                                   |
-| 2025-11-19 | Safwa Ibrahim | Added Theme & Colors                                               |
-| 2025-11-20 | Mina Yasser   | Added Core Files                                                   |
-| 2025-11-20 | Mazen Wahed   | Added Icons                                                        |
-| 2025-11-20 | Mina Yasser   | Setup Firebase & Layout View                                       |
-| 2025-11-21 | Mazen Wahed   | Update V0.1 (Added Assets & Reusable Widgets)                      |
-| 2025-11-22 | Mina Yasser   | Added Home Header & Search UI Structure                            |
-| 2025-11-23 | Mazen Wahed   | Update V0.1.1 (Authentication Firebase + Added New Files)          |
-| 2025-11-24 | Mina Yasser   | Implemented Banners, Categories & Most Popular Sections            |
-| 2025-11-26 | Mazen Wahed   | Update V0.1.2 (Profile, Race Condition Fix, Dev Tools)             |
-| 2025-11-26 | Mina Yasser   | Created Search Filter & Results Screens                            |
-| 2025-11-28 | Mazen Wahed   | Update V0.1.3 (Merge Auth, Home/Search Features & UI Enhancements) |
+| Date       | Member         | Update                                                              |
+| :--------- | :------------- | :------------------------------------------------------------------ |
+| 2025-11-18 | Mazen Wahed    | Initialized project & Added font                                    |
+| 2025-11-19 | Safwa Ibrahim  | Added Theme & Colors                                                |
+| 2025-11-20 | Mina Yasser    | Added Core Files                                                    |
+| 2025-11-20 | Mazen Wahed    | Added Icons                                                         |
+| 2025-11-20 | Mina Yasser    | Setup Firebase & Layout View                                        |
+| 2025-11-21 | Mazen Wahed    | Update V0.1 (Added Assets & Reusable Widgets)                       |
+| 2025-11-22 | Mina Yasser    | Added Home Header & Search UI Structure                             |
+| 2025-11-23 | Mazen Wahed    | Update V0.1.1 (Authentication Firebase + Added New Files)           |
+| 2025-11-24 | Mina Yasser    | Implemented Banners, Categories & Most Popular Sections             |
+| 2025-11-26 | Mazen Wahed    | Update V0.1.2 (Profile, Race Condition Fix, Dev Tools)              |
+| 2025-11-26 | Mina Yasser    | Created Search Filter & Results Screens                             |
+| 2025-11-28 | Mazen Wahed    | Update V0.1.3 (Merge Auth, Home/Search Features & UI Enhancements)  |
+| 2025-12-04 | Youssef Hesham | Update V0.1.4 (Implemented Reviews Feature)                         |
+| 2025-12-04 | Mazen Wahed    | Update V0.1.4b (Added Image Picker, Refactored Reviews & Bug Fixes) |
 
 ---
 
 ### 2. Version History (Changelog)
+
+#### V0.1.4b (Refactoring & Stability Polish)
+
+This patch focuses on architectural cleanup, bug fixes, and unifying the UI consistency across the Reviews and Profile modules.
+
+**Reviews & Community Module:**
+
+- **Media Integration:** Added **Image Picker** functionality, allowing users to select and preview photos from their gallery before posting reviews.
+
+**Bug Fixes & Stability:**
+
+- **Stream Subscription Safety:** Standardized stream handling across all Cubits (`HomeTripsCubit`, `BannerCubit`, `ReviewCubit`, etc.). Implemented explicit `StreamSubscription` cancellation in `close()` to prevent memory leaks and "Bad State" crashes when navigating away during data loading.
+- **Async State Safety:** Fixed `StateError` in `UserCubit` by adding `isClosed` checks to all asynchronous operations, preventing crashes when navigating away during uploads.
+- **Layout Constraints:** Resolved `BoxConstraints` infinite width crash in `WriteReviewWidget` by overriding the global button theme constraints.
+- **Time Logic:** Fixed negative duration calculation in `getTimeAgo`, ensuring post timestamps correctly show "Just now" for server-synced times.
+- **Broken Image Handling:** Implemented `CachedNetworkImage` with error widgets in `ReviewSection` to gracefully handle 404 errors (e.g., deleted images).
+
+**UI/UX Enhancements:**
+
+- **Live Author Sync:** Logic added to `ReviewSection` to check if the reviewer is the current user. If true, it displays live profile data (Name/Photo) from `AuthCubit` instead of stale snapshot data.
+- **Unified Search:** Refactored `ReviewsScreen` to use the shared `HomeSearchBarWidget`, ensuring visual consistency with Home and Search screens.
+- **Loading Architecture:** Created `LoadingHelper` to centralize `EasyLoading` configuration (White theme, rounded corners) and fixed `MaterialApp.router` builder conflicts in `main.dart`.
+- **Iconography:** Standardized icon usage, switching between `Soultrip` font icons and SVGs where appropriate for better visual balance (e.g., Bottom Navigation, Action Buttons).
+
+**Refactoring:**
+
+- **Stateless UI:** Refactored `ReviewsScreen` to `StatelessWidget` by moving UI state (Tabs, Search Visibility) into a dedicated `ReviewsUiCubit`.
+- **Header Cleanup:** Removed redundant background attributes from `HomeHeaderWidget` for a cleaner look.
+- **Dependency Injection:** Finalized dependencies and routing configurations for the Reviews and Search features.
+
+#### V0.1.4 (Reviews & Social Community)
+
+This update introduces the community aspect of Soul Trip, allowing users to share their experiences and interact with others.
+
+**Reviews & Community Module:**
+
+- **Interactive Feed:** Implemented `ReviewsScreen` featuring a dynamic list of user reviews with "Discover", "My Timeline", and "Saved" tabs.
+- **Social Interactions:**
+  - **Real-time Like System:** Users can like reviews with immediate optimistic UI updates (local state updates instantly while Firestore syncs in the background).
+  - **Save for Later:** Functionality to bookmark reviews to the "Saved" tab using `toggleSave` logic.
+  - **Search Reviews:** Local search capability to filter reviews by caption or user name.
+- **Post Creation:**
+  - **Write Review Widget:** A dedicated input section with validation (prevents empty posts) and visual feedback.
+  - **Firestore Integration:** `WriteReviewCubit` handles creating new documents in the `reviews` collection with timestamps, user data, and initial stats.
+
+**Architecture & State Management:**
+
+- **Dual Cubit Strategy:** Separated logic into `ReviewCubit` (for fetching and interactions) and `WriteReviewCubit` (for posting), ensuring separation of concerns.
+- **Global Access:** Registered Review cubits in `main.dart` and `set_up_dependencies.dart` to ensure state persists across navigation.
+- **Optimized Performance:** Used `ListView.builder` with `BouncingScrollPhysics` for a smooth scrolling experience even with large datasets.
+
+**UI Enhancements:**
+
+- **Dynamic Header:** Integrated the reusable `HomeHeaderWidget` into the Reviews screen, featuring a toggleable Search bar.
+- **Action Items:** Created reusable `ActionItem`, `FavCircleButton`, and `SaveCircleButton` widgets to standardize social interaction buttons.
 
 #### V0.1.3 (Home, Search & Auth Integration)
 

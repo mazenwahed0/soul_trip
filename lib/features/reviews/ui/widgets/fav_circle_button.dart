@@ -35,7 +35,6 @@ class FavCircleButton extends StatelessWidget {
               size: 22.sp,
             ),
           ),
-          SizedBox(width: 4.w),
           Text(
             count.toString(),
             style: TextStyle(fontSize: 14.sp, color: Colors.grey.shade700),

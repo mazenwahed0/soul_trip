@@ -15,6 +15,9 @@ class SearchCubit extends Cubit<SearchState> {
     final tripsResult = await _repository.getAllTrips();
     final categoriesResult = await _repository.getAllCategories();
 
+    // Stop if the user left the screen
+    if (isClosed) return;
+
     tripsResult.fold((failure) => emit(SearchError(failure.message)), (trips) {
       categoriesResult.fold((failure) => emit(SearchError(failure.message)), (
         categories,

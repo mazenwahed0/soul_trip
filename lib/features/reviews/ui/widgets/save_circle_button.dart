@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:solar_icon_pack/solar_icon_pack.dart';
+
+import '../../../../core/theme/colors.dart';
 
 class SaveCircleButton extends StatelessWidget {
   final double size;
@@ -12,7 +14,7 @@ class SaveCircleButton extends StatelessWidget {
   const SaveCircleButton({
     super.key,
     this.size = 44,
-    this.iconSize = 18,
+    this.iconSize = 20,
     this.backgroundColor = Colors.white,
     this.onTap,
     this.isSaved = false,
@@ -31,10 +33,10 @@ class SaveCircleButton extends StatelessWidget {
           border: Border.all(color: Colors.grey.shade200, width: 1),
         ),
         child: Center(
-          child: SvgPicture.asset(
-            isSaved ? 'assets/icons/saveOn.svg' : 'assets/icons/saveOff.svg',
-            width: iconSize.w,
-            height: iconSize.w,
+          child: Icon(
+            isSaved ? SolarBoldIcons.bookmark : SolarLinearIcons.bookmark,
+            size: iconSize.sp,
+            color: isSaved ? ColorTheme().primaryBlue : Colors.grey.shade700,
           ),
         ),
       ),

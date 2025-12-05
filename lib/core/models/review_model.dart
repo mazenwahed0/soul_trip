@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Review {
+class ReviewModel {
   final String docId;
   final String userId;
   final String name;
@@ -14,7 +14,7 @@ class Review {
   final List<String> likedBy;
   final List<String> savedBy;
 
-  Review({
+  const ReviewModel({
     this.docId = '',
     required this.userId,
     required this.name,
@@ -29,8 +29,8 @@ class Review {
     this.savedBy = const [],
   });
 
-  factory Review.fromMap(Map<String, dynamic> map) {
-    return Review(
+  factory ReviewModel.fromMap(Map<String, dynamic> map) {
+    return ReviewModel(
       docId: map['docId'] ?? '',
       userId: map['userId'] ?? '',
       name: map['name'] ?? '',
@@ -38,20 +38,16 @@ class Review {
       caption: map['caption'] ?? '',
       profileImage: map['profileImage'] ?? '',
       reviewImage: map['reviewImage'] ?? '',
-      likes: map['likes'] ?? 0,
-      comments: map['comments'] ?? 0,
-      shares: map['shares'] ?? 0,
-      likedBy: map['likedBy'] != null && map['likedBy'] is List
-          ? List<String>.from(map['likedBy'])
-          : [],
-      savedBy: map['savedBy'] != null && map['savedBy'] is List
-          ? List<String>.from(map['savedBy'])
-          : [],
+      likes: (map['likes'] ?? 0).toInt(),
+      comments: (map['comments'] ?? 0).toInt(),
+      shares: (map['shares'] ?? 0).toInt(),
+      likedBy: List<String>.from(map['likedBy'] ?? []),
+      savedBy: List<String>.from(map['savedBy'] ?? []),
     );
   }
 
   // Add a copyWith method for easier updates
-  Review copyWith({
+  ReviewModel copyWith({
     String? docId,
     String? userId,
     String? name,
@@ -65,7 +61,7 @@ class Review {
     List<String>? likedBy,
     List<String>? savedBy,
   }) {
-    return Review(
+    return ReviewModel(
       docId: docId ?? this.docId,
       userId: userId ?? this.userId,
       name: name ?? this.name,

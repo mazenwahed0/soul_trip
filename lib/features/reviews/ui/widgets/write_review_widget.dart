@@ -1,16 +1,21 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:soul_trip/core/theme/colors.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import '../../../../core/theme/soultrip_icons.dart';
 
 class WriteReviewWidget extends StatefulWidget {
   final VoidCallback onMediaTap;
+  final VoidCallback? onRemoveImage;
   final void Function(String caption) onPostTap;
+  final File? selectedImage;
 
   const WriteReviewWidget({
     super.key,
     required this.onMediaTap,
+    this.onRemoveImage,
     required this.onPostTap,
+    this.selectedImage,
   });
 
   @override
@@ -79,41 +84,83 @@ class _WriteReviewWidgetState extends State<WriteReviewWidget> {
               style: TextStyle(fontSize: 16.sp, color: Colors.black87),
             ),
 
-            SizedBox(height: 12.h),
+            SizedBox(height: 8.h),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Media Button
-                SizedBox(
-                  width: 45.w,
-                  height: 40.h,
-                  child: GestureDetector(
-                    onTap: widget.onMediaTap,
-                    child: Container(
-                      width: 35.w,
-                      height: 35.w,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: colors.primaryBlue,
-                          width: 1.5.w,
+                Row(
+                  children: [
+                    // Media Button
+                    GestureDetector(
+                      onTap: widget.onMediaTap,
+                      child: Container(
+                        width: 32.w,
+                        height: 32.w,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: colors.primaryBlue,
+                            width: 1.5.w,
+                          ),
                         ),
-                      ),
-                      child: Center(
-                        child: SvgPicture.asset(
-                          "assets/icons/imagePick.svg",
-                          width: 18.sp,
-                          height: 18.sp,
+                        child: Center(
+                          child: Icon(
+                            Soultrip.photoPlusSolid,
+                            size: 18.sp,
+                            color: colors.primaryBlue,
+                          ),
                         ),
                       ),
                     ),
-                  ),
+
+                    // Selected Image Preview (Beside the icon)
+                    if (widget.selectedImage != null) ...[
+                      SizedBox(width: 12.w),
+                      Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8.r),
+                            child: Image.file(
+                              widget.selectedImage!,
+                              height: 40.h,
+                              width: 40.w,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          // Remove Button (Small X)
+                          Positioned(
+                            top: -6,
+                            right: -6,
+                            child: GestureDetector(
+                              onTap: widget.onRemoveImage,
+                              child: Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Icon(
+                                  Icons.close,
+                                  size: 10.sp,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ],
                 ),
 
                 // Post Button
                 SizedBox(
-                  width: 100.w,
                   height: 40.h,
                   child: ElevatedButton.icon(
                     onPressed: _isTextEmpty
@@ -127,14 +174,10 @@ class _WriteReviewWidgetState extends State<WriteReviewWidget> {
                               FocusManager.instance.primaryFocus?.unfocus();
                             }
                           },
-                    icon: SvgPicture.asset(
-                      "assets/icons/pen.svg",
-                      width: 18.sp,
-                      height: 18.sp,
-                      colorFilter: ColorFilter.mode(
-                        _isTextEmpty ? Colors.white : colors.whiteColor,
-                        BlendMode.srcIn,
-                      ),
+                    icon: Icon(
+                      Soultrip.edit,
+                      size: 18.sp,
+                      color: _isTextEmpty ? Colors.white : colors.whiteColor,
                     ),
                     label: Text(
                       'Post',
@@ -150,10 +193,9 @@ class _WriteReviewWidgetState extends State<WriteReviewWidget> {
                       backgroundColor: _isTextEmpty
                           ? colors.grayVeryLight
                           : colors.primaryBlue,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 15.w,
-                        vertical: 8.h,
-                      ),
+                      // CRITICAL: Override global theme's infinite width
+                      minimumSize: const Size(0, 0),
+                      padding: EdgeInsets.symmetric(horizontal: 20.w),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25.r),
                       ),
