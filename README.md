@@ -194,12 +194,11 @@ This update introduces a fully custom serverless backend to handle secure passwo
   - Going back from New Password resets the entire flow to prevent stale state.
 - **Enhanced Validation:** Added strict password strength checks and confirmation matching before API calls.
 
-**♻️ Refactoring & Clean Architecture:**
+**Refactoring & Clean Architecture:**
 
 - **Repository Pattern:** Refactored `AuthenticationRepository` to use a generic `_postRequest` helper, strictly adhering to DRY (Don't Repeat Yourself) principles.
 - **Theme Extraction:** Moved `Pinput` styling to a dedicated `CustomPinTheme` class in `core/theme`.
 - **Utility Extraction:** Created `format_timer.dart` for reusable time formatting logic.
-- **Dependency Injection Fixes:** Resolved missing registrations for `SearchLikesRepository` and `CategoryTripsLikesRepository`, preventing runtime crashes.
 - **State Management Fixes:** Solved a state-looping bug in `ForgetPasswordCubit` where the success Snackbar would trigger repeatedly during the timer countdown.
 
 #### V0.1.5 (Likes & Notifications Features)
@@ -222,7 +221,7 @@ This update focuses on user engagement, introducing a fully synchronized **Favor
   - **Background/Terminated:** Handling notification taps to navigate users to specific trips.
 - **Real-time Stream:** `NotificationCubit` listens to the user's notification collection for live updates.
 
-**✨ UI & Refactoring:**
+**UI & Refactoring:**
 
 - **Refactored Cards:** Updated `BannerCardWidget`, `CategoryTripItemCardWidget`, and `SearchTripFavoriteButton` to consume the new Likes Cubits.
 - **Assets:** Added new icons and assets to support the notification and empty state UIs.
