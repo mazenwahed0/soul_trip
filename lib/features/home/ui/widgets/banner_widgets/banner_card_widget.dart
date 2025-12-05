@@ -90,7 +90,10 @@ class BannerCardWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               BannerRatingWidget(rating: banner.rate),
-              BannerFavoriteButton(onToggle: onFavoriteToggle),
+              BannerFavoriteButton(
+                bannerId: banner.id,
+                onToggle: onFavoriteToggle,
+              ),
             ],
           ),
 

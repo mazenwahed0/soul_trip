@@ -9,6 +9,7 @@ import 'core/caching/shared/shared_perf_helper.dart';
 import 'core/dependency_injection/set_up_dependencies.dart';
 import 'core/internet_check/cubit/internet_check__cubit.dart';
 import 'core/widgets/no_internet_screen.dart';
+import 'core/services/fcm_service.dart';
 import 'features/authentication/data/authentication_repository.dart';
 import 'features/authentication/logic/auth/auth_cubit.dart';
 import 'features/profile/data/user/user_repository.dart';
@@ -29,6 +30,9 @@ void main() async {
 
   // -- Setup GetIt
   setupDependencies();
+
+  // -- Initialize FCM
+  await getIt<FCMService>().initialize();
 
   runApp(const MyApp());
 }

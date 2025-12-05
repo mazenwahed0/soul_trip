@@ -5,8 +5,13 @@ import 'package:soul_trip/core/theme/colors.dart';
 
 class CategoryTripImageFavoriteWidget extends StatelessWidget {
   final HomeTripModel trip;
+  final Widget? favoriteButton;
 
-  const CategoryTripImageFavoriteWidget({super.key, required this.trip});
+  const CategoryTripImageFavoriteWidget({
+    super.key,
+    required this.trip,
+    this.favoriteButton,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,23 +25,26 @@ class CategoryTripImageFavoriteWidget extends StatelessWidget {
       child: Stack(
         children: [
           _buildImage(colors),
-          Positioned(
-            top: 12.h,
-            right: 12.w,
-            child: Container(
-              width: 32.w,
-              height: 32.w,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: colors.backgroundWhite.withValues(alpha: 0.9),
-              ),
-              child: Icon(
-                Icons.favorite_border,
-                size: 18.sp,
-                color: colors.primaryBlue,
+          if (favoriteButton != null)
+            Positioned(top: 12.h, right: 12.w, child: favoriteButton!)
+          else
+            Positioned(
+              top: 12.h,
+              right: 12.w,
+              child: Container(
+                width: 32.w,
+                height: 32.w,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: colors.backgroundWhite.withValues(alpha: 0.9),
+                ),
+                child: Icon(
+                  Icons.favorite_border,
+                  size: 18.sp,
+                  color: colors.primaryBlue,
+                ),
               ),
             ),
-          ),
         ],
       ),
     );

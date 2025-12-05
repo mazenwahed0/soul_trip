@@ -7,6 +7,7 @@ import 'package:soul_trip/core/widgets/error_state_widget.dart';
 import 'package:soul_trip/features/category_trips/manager/category_trips_cubit/category_trips_cubit.dart';
 import 'package:soul_trip/features/category_trips/manager/category_trips_cubit/category_trips_state.dart';
 import 'package:soul_trip/features/category_trips/ui/widgets/category_trip_item_card_widget.dart';
+import 'package:soul_trip/features/category_trips/ui/widgets/category_trip_favorite_button.dart';
 
 class CategoryTripsListWidget extends StatelessWidget {
   const CategoryTripsListWidget({super.key});
@@ -52,7 +53,10 @@ class CategoryTripsListWidget extends StatelessWidget {
               itemCount: trips.length,
               itemBuilder: (context, index) {
                 final trip = trips[index];
-                return CategoryTripItemCardWidget(trip: trip);
+                return CategoryTripItemCardWidget(
+                  trip: trip,
+                  favoriteButton: CategoryTripFavoriteButton(tripId: trip.id),
+                );
               },
             ),
           );
