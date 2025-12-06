@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -57,12 +59,10 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-
-    FirebaseMessaging.instance.subscribeToTopic('all'); // مهم جداً!
+    FirebaseMessaging.instance.subscribeToTopic('all');
 
     FirebaseMessaging.instance.getToken().then((token) {
-      print("FCM Token: $token");
-      // احفظ التوكن في Firestore لو عايز targeted notifications
+      log("FCM Token: $token");
     });
   }
 
