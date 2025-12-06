@@ -45,4 +45,5 @@ class Routes {
   static const String galleriesArticlesWidget = '/galleries-articles-widget';
   static const String tripDetailsScreen = '/trip-details';
   static const String paymentScreen = '/payment';
+  static const String addCardScreen = '/add-card';
 }

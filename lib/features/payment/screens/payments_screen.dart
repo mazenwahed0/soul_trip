@@ -10,6 +10,8 @@ import 'package:soul_trip/features/payment/widgets/payment_header.dart';
 import 'package:soul_trip/features/payment/widgets/payment_details_card.dart';
 import 'package:soul_trip/features/payment/widgets/payment_option.dart';
 import 'package:soul_trip/core/widgets/common/buttons/primary_shadow_button.dart';
+import 'package:soul_trip/core/routing/routes.dart';
+import 'package:go_router/go_router.dart';
 
 class PaymentScreen extends StatelessWidget {
   const PaymentScreen({super.key});
@@ -103,9 +105,7 @@ class PaymentScreen extends StatelessWidget {
                         // ADD NEW CARD BUTTON (Centered)
                         Center(
                           child: AddNewCardButton(
-                            onTap: () {
-                              // Handle Add New Card action
-                            },
+                            onTap:() => context.go(Routes.addCardScreen),
                           ),
                         ),
                         SizedBox(height: 20.h),

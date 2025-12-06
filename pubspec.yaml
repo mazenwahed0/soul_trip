@@ -35,6 +35,8 @@ dependencies:
   dartz: ^0.10.1
   equatable: ^2.0.5
   firebase_core: ^4.2.1
+  flutter_svg: ^2.0.10
+
 
 #--------------------------- ./ Packages END -------------------------------#
 dev_dependencies:
@@ -81,7 +83,12 @@ flutter:
 
         - asset: assets/fonts/Poppins-Bold.ttf
           weight: 800
+    - family: Aldrich
+      fonts:
+        - asset: assets/fonts/Aldrich-Regular.ttf
+          weight: 400
 
     - family: Soultrip
       fonts:
         - asset: assets/icons/Soultrip.ttf
+
