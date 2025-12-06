@@ -16,12 +16,13 @@ The project is built with scalability in mind, utilizing **Clean Architecture**,
 
 ### Flutter Developers Team
 
-| Name              | Role                                                    |
-| :---------------- | :------------------------------------------------------ |
-| **Mazen Wahed**   | Full-Stack (Splash, Onboarding, Firebase Auth, Profile) |
-| **Mina Yasser**   | Full-Stack (Home, Categories, Search, Notification)     |
-| **Safwa Ibrahim** | Full-Stack (Trip Details Screen, Orders, Checkout)      |
-| **Mariam Naeem**  | Full-Stack (Expert Screen, Booking Appointments)        |
+| Name               | Role                                                    |
+| :----------------- | :------------------------------------------------------ |
+| **Mazen Wahed**    | Full-Stack (Splash, Onboarding, Firebase Auth, Profile) |
+| **Mina Yasser**    | Full-Stack (Home, Categories, Search, Notification)     |
+| **Safwa Ibrahim**  | Full-Stack (Trip Details Screen, Orders, Checkout)      |
+| **Youssef Hesham** | Full-Stack (Wishlist, Reviews Screens)                  |
+| **Mariam Naeem**   | Full-Stack (Expert Screen, Booking Appointments)        |
 
 ### UI/UX Designers Team
 
@@ -31,7 +32,7 @@ The project is built with scalability in mind, utilizing **Clean Architecture**,
 | **Walaa Hatem**    |
 | **Walaa Elhawary** |
 | **Ibtehal Thabet** |
-| **Mai Emara** |
+| **Mai Emara**      |
 
 ---
 
@@ -73,7 +74,7 @@ This project meets all core requirements of a full-stack mobile application, inc
 - **Language:** Dart
 - **State Management:** Flutter Bloc (Cubit)
 - **Navigation:** GoRouter
-- **Backend:** Firebase (Auth, Firestore)
+- **Backend:** Firebase (Auth, Firestore), Vercel (OTP Forgot Password)
 - **Local Storage:** Hive & SharedPreferences
 - **Cloud Storage:** Cloudinary
 - **UI/Animations:** Animate_do, Shimmer, Carousel Slider, Solar Icons
@@ -114,24 +115,142 @@ lib/
 
 ### 1. Progress Log
 
-| Date       | Member        | Update                                                             |
-| :--------- | :------------ | :----------------------------------------------------------------- |
-| 2025-11-18 | Mazen Wahed   | Initialized project & Added font                                   |
-| 2025-11-19 | Safwa Ibrahim | Added Theme & Colors                                               |
-| 2025-11-20 | Mina Yasser   | Added Core Files                                                   |
-| 2025-11-20 | Mazen Wahed   | Added Icons                                                        |
-| 2025-11-20 | Mina Yasser   | Setup Firebase & Layout View                                       |
-| 2025-11-21 | Mazen Wahed   | Update V0.1 (Added Assets & Reusable Widgets)                      |
-| 2025-11-22 | Mina Yasser   | Added Home Header & Search UI Structure                            |
-| 2025-11-23 | Mazen Wahed   | Update V0.1.1 (Authentication Firebase + Added New Files)          |
-| 2025-11-24 | Mina Yasser   | Implemented Banners, Categories & Most Popular Sections            |
-| 2025-11-26 | Mazen Wahed   | Update V0.1.2 (Profile, Race Condition Fix, Dev Tools)             |
-| 2025-11-26 | Mina Yasser   | Created Search Filter & Results Screens                            |
-| 2025-11-28 | Mazen Wahed   | Update V0.1.3 (Merge Auth, Home/Search Features & UI Enhancements) |
+| Date       | Member         | Update                                                                       |
+| :--------- | :------------- | :--------------------------------------------------------------------------- |
+| 2025-11-18 | Mazen Wahed    | Initialized project & Added font                                             |
+| 2025-11-19 | Safwa Ibrahim  | Added Theme & Colors                                                         |
+| 2025-11-20 | Mina Yasser    | Added Core Files                                                             |
+| 2025-11-20 | Mazen Wahed    | Added Icons                                                                  |
+| 2025-11-20 | Mina Yasser    | Setup Firebase & Layout View                                                 |
+| 2025-11-21 | Mazen Wahed    | Update V0.1 (Added Assets & Reusable Widgets)                                |
+| 2025-11-22 | Mina Yasser    | Added Home Header & Search UI Structure                                      |
+| 2025-11-23 | Mazen Wahed    | Update V0.1.1 (Authentication Firebase + Added New Files)                    |
+| 2025-11-24 | Mina Yasser    | Implemented Banners, Categories & Most Popular Sections                      |
+| 2025-11-26 | Mazen Wahed    | Update V0.1.2 (Profile, Race Condition Fix, Dev Tools)                       |
+| 2025-11-26 | Mina Yasser    | Created Search Filter & Results Screens                                      |
+| 2025-11-28 | Mazen Wahed    | Update V0.1.3 (Merge Auth, Home/Search Features & UI Enhancements)           |
+| 2025-11-30 | Mina Yasser    | Finish Like in Home (Banner and Trips of Categories)                         |
+| 2025-12-01 | Mina Yasser    | Implement Notifications Screen                                               |
+| 2025-12-02 | Mina Yasser    | Implement Favorite Like in Category & Search Result View                     |
+| 2025-12-03 | Mazen Wahed    | Update Readme & Adding New Assets                                            |
+| 2025-12-04 | Youssef Hesham | Update V0.1.4 (Implemented Reviews Feature)                                  |
+| 2025-12-04 | Mazen Wahed    | Update V0.1.4b (Added Image Picker, Refactored Reviews & Bug Fixes)          |
+| 2025-12-05 | Mina Yasser    | Update V0.1.5 (Implemented Notification Screen & Likes Logic (Cubits/Repos)) |
+| 2025-12-05 | Mazen Wahed    | Merged Reviews, Search, and Notification Features                            |
+| 2025-12-05 | Mazen Wahed    | Update V0.1.6 (OTP Forgot Password)                                          |
 
 ---
 
 ### 2. Version History (Changelog)
+
+#### V0.1.6 (Custom OTP Backend & Advanced Auth Refactoring)
+
+This update introduces a fully custom serverless backend to handle secure password resets, bypassing Firebase's standard link limitations, along with significant architectural refactoring.
+
+**Serverless Backend Architecture (Vercel + Node.js):**
+
+- **Custom API:** Deployed a Node.js backend on Vercel to handle sensitive Admin SDK operations without exposing credentials.
+- **OTP Logic:** Implemented a secure 4-digit OTP system using `Nodemailer` (Gmail SMTP) and Firestore for temporary code storage (5-minute expiry).
+- **Endpoints:** Created three dedicated secure endpoints:
+  - `/send-otp`: Verifies user existence and dispatches email.
+  - `/verify-otp`: Validates code before allowing password change access.
+  - `/reset-password`: Force-updates user credentials via Firebase Admin SDK.
+
+**Forgot Password UX (Wizard Flow):**
+
+- **3-Step Wizard:** Implemented `EmailScreen` → `OtpScreen` → `NewPasswordScreen` with smooth transitions.
+- **Smart Timer:** Added a 60-second countdown for resending OTPs with visual feedback.
+- **Navigation Logic:** Implemented smart "Back" navigation:
+  - Going back from OTP clears the input.
+  - Going back from New Password resets the entire flow to prevent stale state.
+- **Enhanced Validation:** Added strict password strength checks and confirmation matching before API calls.
+
+**Refactoring & Clean Architecture:**
+
+- **Repository Pattern:** Refactored `AuthenticationRepository` to use a generic `_postRequest` helper, strictly adhering to DRY (Don't Repeat Yourself) principles.
+- **Theme Extraction:** Moved `Pinput` styling to a dedicated `CustomPinTheme` class in `core/theme`.
+- **Utility Extraction:** Created `format_timer.dart` for reusable time formatting logic.
+- **State Management Fixes:** Solved a state-looping bug in `ForgetPasswordCubit` where the success Snackbar would trigger repeatedly during the timer countdown.
+
+#### V0.1.5 (Likes & Notifications Features)
+
+This update focuses on user engagement, introducing a fully synchronized **Favorites System** across the app and a robust **Notification Center** powered by FCM.
+
+**Real-time Favorites System:**
+
+- **Centralized Logic:** Replaced local state "heart" toggles with a dedicated architecture using specific Cubits (`BannerLikesCubit`, `TripsLikesCubit`, `CategoryTripsLikesCubit`, `SearchLikesCubit`).
+- **Optimistic UI:** Implemented instant visual feedback (heart turns red immediately) while performing the asynchronous Firestore write in the background.
+- **Cross-View Sync:** Liking a trip in the "Search" view now instantly updates its status in the "Home" view and "Saved" lists via Firestore streams.
+- **Data Structure:** Likes are now persisted in a scalable sub-collection structure: `Users/{userId}/likes/{type}/{itemId}`.
+
+**Notification Center:**
+
+- **Full UI Implementation:** Replaced the placeholder screen with a grouped list view (Today, Yesterday, Older).
+- **Interactive Actions:** Added functionality to **Mark as Read** and **Delete** notifications via a bottom sheet menu.
+- **FCM Integration:** Implemented `FCMService` to handle:
+  - **Foreground:** Showing `FlutterLocalNotifications` when the app is open.
+  - **Background/Terminated:** Handling notification taps to navigate users to specific trips.
+- **Real-time Stream:** `NotificationCubit` listens to the user's notification collection for live updates.
+
+**UI & Refactoring:**
+
+- **Refactored Cards:** Updated `BannerCardWidget`, `CategoryTripItemCardWidget`, and `SearchTripFavoriteButton` to consume the new Likes Cubits.
+- **Assets:** Added new icons and assets to support the notification and empty state UIs.
+
+#### V0.1.4b (Refactoring & Stability Polish)
+
+This patch focuses on architectural cleanup, bug fixes, and unifying the UI consistency across the Reviews and Profile modules.
+
+**Reviews & Community Module:**
+
+- **Media Integration:** Added **Image Picker** functionality, allowing users to select and preview photos from their gallery before posting reviews.
+
+**Bug Fixes & Stability:**
+
+- **Stream Subscription Safety:** Standardized stream handling across all Cubits (`HomeTripsCubit`, `BannerCubit`, `ReviewCubit`, etc.). Implemented explicit `StreamSubscription` cancellation in `close()` to prevent memory leaks and "Bad State" crashes when navigating away during data loading.
+- **Async State Safety:** Fixed `StateError` in `UserCubit` by adding `isClosed` checks to all asynchronous operations, preventing crashes when navigating away during uploads.
+- **Layout Constraints:** Resolved `BoxConstraints` infinite width crash in `WriteReviewWidget` by overriding the global button theme constraints.
+- **Time Logic:** Fixed negative duration calculation in `getTimeAgo`, ensuring post timestamps correctly show "Just now" for server-synced times.
+- **Broken Image Handling:** Implemented `CachedNetworkImage` with error widgets in `ReviewSection` to gracefully handle 404 errors (e.g., deleted images).
+
+**UI/UX Enhancements:**
+
+- **Live Author Sync:** Logic added to `ReviewSection` to check if the reviewer is the current user. If true, it displays live profile data (Name/Photo) from `AuthCubit` instead of stale snapshot data.
+- **Unified Search:** Refactored `ReviewsScreen` to use the shared `HomeSearchBarWidget`, ensuring visual consistency with Home and Search screens.
+- **Loading Architecture:** Created `LoadingHelper` to centralize `EasyLoading` configuration (White theme, rounded corners) and fixed `MaterialApp.router` builder conflicts in `main.dart`.
+- **Iconography:** Standardized icon usage, switching between `Soultrip` font icons and SVGs where appropriate for better visual balance (e.g., Bottom Navigation, Action Buttons).
+
+**Refactoring:**
+
+- **Stateless UI:** Refactored `ReviewsScreen` to `StatelessWidget` by moving UI state (Tabs, Search Visibility) into a dedicated `ReviewsUiCubit`.
+- **Header Cleanup:** Removed redundant background attributes from `HomeHeaderWidget` for a cleaner look.
+- **Dependency Injection:** Finalized dependencies and routing configurations for the Reviews and Search features.
+
+#### V0.1.4 (Reviews & Social Community)
+
+This update introduces the community aspect of Soul Trip, allowing users to share their experiences and interact with others.
+
+**Reviews & Community Module:**
+
+- **Interactive Feed:** Implemented `ReviewsScreen` featuring a dynamic list of user reviews with "Discover", "My Timeline", and "Saved" tabs.
+- **Social Interactions:**
+  - **Real-time Like System:** Users can like reviews with immediate optimistic UI updates (local state updates instantly while Firestore syncs in the background).
+  - **Save for Later:** Functionality to bookmark reviews to the "Saved" tab using `toggleSave` logic.
+  - **Search Reviews:** Local search capability to filter reviews by caption or user name.
+- **Post Creation:**
+  - **Write Review Widget:** A dedicated input section with validation (prevents empty posts) and visual feedback.
+  - **Firestore Integration:** `WriteReviewCubit` handles creating new documents in the `reviews` collection with timestamps, user data, and initial stats.
+
+**Architecture & State Management:**
+
+- **Dual Cubit Strategy:** Separated logic into `ReviewCubit` (for fetching and interactions) and `WriteReviewCubit` (for posting), ensuring separation of concerns.
+- **Global Access:** Registered Review cubits in `main.dart` and `set_up_dependencies.dart` to ensure state persists across navigation.
+- **Optimized Performance:** Used `ListView.builder` with `BouncingScrollPhysics` for a smooth scrolling experience even with large datasets.
+
+**UI Enhancements:**
+
+- **Dynamic Header:** Integrated the reusable `HomeHeaderWidget` into the Reviews screen, featuring a toggleable Search bar.
+- **Action Items:** Created reusable `ActionItem`, `FavCircleButton`, and `SaveCircleButton` widgets to standardize social interaction buttons.
 
 #### V0.1.3 (Home, Search & Auth Integration)
 
@@ -172,7 +291,9 @@ This major update unifies the Authentication system with the Home and Search mod
 
 - **Dependency Injection:** Registered new repositories (`HomeTripsRepository`, `SearchRepository`, `BannerRepository`) in `getIt`.
 - **Unified Routing:** Connected Auth flows (Login/Signup) with the Main App Shell (Home/Profile) using `GoRouter` and `AppRouteGuard`.
+
 ---
+
 #### V0.1.2 (Profile, Settings & Stability Improvements)
 
 This update brings significant improvements to user profile management, completes the authentication suite, and adds essential developer utilities.
@@ -210,7 +331,9 @@ This update brings significant improvements to user profile management, complete
   - **StatusBottomSheet:** Streamlined for generic success messages.
   - **CustomAppBar:** Created a versatile, reusable app bar.
   - **CustomBackButton:** Standardized navigation buttons.
+
 ---
+
 #### V0.1.1 (Major Refactor & Feature Expansion)
 
 - **Architecture & Dependency Injection:**
@@ -247,7 +370,9 @@ This update brings significant improvements to user profile management, complete
   - **Feedback System:** Added `StatusBottomSheet` for consistent success/failure messaging (e.g., "Email Verification Sent").
   - **Reusable Component Library:** Built a set of core widgets including PrimaryShadowButton, CustomAppBar, and CustomBackButton.
   - **Interactive Inputs:** Built `CustomTextFormField` with internal state management for focus border animation and password visibility toggling.
+
 ---
+
 #### V0.1 (Project Init)
 
 - **Initialized Flutter project**
@@ -273,3 +398,19 @@ This update brings significant improvements to user profile management, complete
     - Example: `feat: added wishlist UI` or `fix: resolved cart bug`
 5.  **Communicate big changes**
     - If you change project structure or shared files, notify the team on WhatsApp.
+
+## 🏁 Getting Started
+
+### Prerequisites
+
+- Flutter SDK (3.x.x)
+- Dart SDK
+- Android Studio / VS Code
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone [https://github.com/mazenwahed0/soul_trip](https://github.com/mazenwahed0/soul_trip)
+   cd soul-trip
+   ```
