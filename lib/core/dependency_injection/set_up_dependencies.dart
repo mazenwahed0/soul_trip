@@ -25,6 +25,7 @@ import '../../features/reviews/logic/post_review/post_review_cubit.dart';
 import '../../features/reviews/logic/write_review/write_review_cubit.dart';
 import '../../features/search/data/repositories/search_repository.dart';
 import '../../features/search/manager/search_cubit/search_cubit.dart';
+import 'package:soul_trip/core/caching/hive/notification_hive_helper.dart';
 import '../caching/hive/user_hive_helper.dart';
 import '../repositories/storage/cloudinary_service.dart';
 import '../services/fcm_service.dart';
@@ -40,6 +41,9 @@ void setupDependencies() async {
   /// Note: (ConnectivityCubit) Hashed to avoid Dual-Injection
   // getIt.registerFactory<ConnectivityCubit>(() => ConnectivityCubit());
   getIt.registerLazySingleton<UserHiveHelper>(() => UserHiveHelper());
+  getIt.registerLazySingleton<NotificationHiveHelper>(
+    () => NotificationHiveHelper(),
+  );
 
   // -- Repositories
   // - Cloudinary (Storage)
@@ -79,7 +83,7 @@ void setupDependencies() async {
   );
   // - Notification Repository
   getIt.registerLazySingleton<NotificationRepository>(
-    () => NotificationRepository(),
+    () => NotificationRepository(getIt<NotificationHiveHelper>()),
   );
 
   // - Reviews Repository

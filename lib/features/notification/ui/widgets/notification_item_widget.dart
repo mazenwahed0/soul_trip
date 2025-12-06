@@ -105,27 +105,30 @@ class NotificationItemWidget extends StatelessWidget {
 
             SizedBox(width: 12.w),
 
-            // Time and Menu
+            // Right side: Three-dot menu and Time
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                // Time
-                Text(
-                  _getTimeAgo(notification.timestamp),
-                  style: AppTextStyles.medium12().copyWith(
-                    color: colors.primaryYellow,
+                // Three-dot Menu Icon
+                InkWell(
+                  onTap: onMenuTap,
+                  child: Padding(
+                    padding: EdgeInsets.all(4.w),
+                    child: Icon(
+                      Icons.more_horiz,
+                      color: colors.blackColor,
+                      size: 20.sp,
+                    ),
                   ),
                 ),
 
                 SizedBox(height: 8.h),
 
-                // Menu Icon
-                InkWell(
-                  onTap: onMenuTap,
-                  child: Icon(
-                    Icons.more_horiz,
-                    color: colors.blackColor,
-                    size: 20.sp,
+                // Time
+                Text(
+                  _getTimeAgo(notification.timestamp),
+                  style: AppTextStyles.medium12().copyWith(
+                    color: colors.primaryYellow,
                   ),
                 ),
               ],
