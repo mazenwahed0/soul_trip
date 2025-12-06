@@ -7,6 +7,7 @@ import 'package:soul_trip/features/notification/manager/notification_cubit/notif
 import 'package:soul_trip/features/notification/manager/notification_cubit/notification_state.dart';
 import 'package:soul_trip/features/notification/ui/widgets/notification_item_widget.dart';
 import 'package:soul_trip/features/notification/ui/widgets/notification_section_header_widget.dart';
+import 'package:soul_trip/features/notification/ui/widgets/notification_details_bottom_sheet.dart';
 
 class NotificationListWidget extends StatelessWidget {
   const NotificationListWidget({super.key});
@@ -182,7 +183,25 @@ class NotificationListWidget extends StatelessWidget {
                     return NotificationItemWidget(
                       notification: notification,
                       onTap: () {
-                        // TODO: Implement notification tap functionality
+                        // Show notification details in bottom sheet
+                        NotificationDetailsBottomSheet.show(
+                          context,
+                          notification,
+                          onMarkAsRead: !notification.isRead
+                              ? () {
+                                  context.read<NotificationCubit>().markAsRead(
+                                    notification.id,
+                                  );
+                                }
+                              : null,
+                          onDelete: () {
+                            context
+                                .read<NotificationCubit>()
+                                .deleteNotification(notification.id);
+                          },
+                        );
+
+                        // Mark as read when viewed
                         if (!notification.isRead) {
                           context.read<NotificationCubit>().markAsRead(
                             notification.id,

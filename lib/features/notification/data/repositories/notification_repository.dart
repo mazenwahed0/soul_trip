@@ -17,7 +17,9 @@ class NotificationRepository {
   Future<void> saveNotificationFromFCM(RemoteMessage message) async {
     try {
       final notification = NotificationHiveModel(
-        id: message.messageId ?? DateTime.now().millisecondsSinceEpoch.toString(),
+        id:
+            message.messageId ??
+            DateTime.now().millisecondsSinceEpoch.toString(),
         title: message.notification?.title ?? '',
         description: message.notification?.body ?? '',
         timestamp: DateTime.now(),
@@ -65,10 +67,8 @@ class NotificationRepository {
       // Initial load from Hive
       yield await fetchNotifications(userId);
 
-      // Optionally: Stream from Firestore for cross-device sync
-      // For now, we'll rely on FCM to update local storage
-      yield* Stream.periodic(const Duration(seconds: 1), (_) {
-        final hiveNotifications = _hiveHelper.getAllNotifications();
+      // Listen to Hive box changes using watch() stream
+      yield* _hiveHelper.watchNotifications().map((hiveNotifications) {
         final notificationModels = hiveNotifications
             .map((hive) => _convertHiveToModel(hive))
             .toList();
@@ -92,15 +92,19 @@ class NotificationRepository {
 
       if (snapshot.docs.isNotEmpty) {
         final firestoreNotifications = snapshot.docs
-            .map((doc) => NotificationHiveModel.fromNotificationModel({
-                  'id': doc.id,
-                  ...doc.data(),
-                  'timestamp': (doc.data()['timestamp'] as Timestamp?)?.toDate(),
-                }))
+            .map(
+              (doc) => NotificationHiveModel.fromNotificationModel({
+                'id': doc.id,
+                ...doc.data(),
+                'timestamp': (doc.data()['timestamp'] as Timestamp?)?.toDate(),
+              }),
+            )
             .toList();
 
         await _hiveHelper.saveNotifications(firestoreNotifications);
-        debugPrint('Synced ${firestoreNotifications.length} notifications from Firestore');
+        debugPrint(
+          'Synced ${firestoreNotifications.length} notifications from Firestore',
+        );
       }
     } catch (e) {
       debugPrint('Error syncing with Firestore: $e');
@@ -176,8 +180,8 @@ class NotificationRepository {
         .doc(notificationId)
         .update(updates)
         .catchError((e) {
-      debugPrint('Error updating Firestore in background: $e');
-    });
+          debugPrint('Error updating Firestore in background: $e');
+        });
   }
 
   /// Background Firestore batch update (non-blocking)
@@ -192,21 +196,19 @@ class NotificationRepository {
         .where('isRead', isEqualTo: false)
         .get()
         .then((snapshot) {
-      final batch = _firestore.batch();
-      for (var doc in snapshot.docs) {
-        batch.update(doc.reference, updates);
-      }
-      return batch.commit();
-    }).catchError((e) {
-      debugPrint('Error updating all in Firestore: $e');
-    });
+          final batch = _firestore.batch();
+          for (var doc in snapshot.docs) {
+            batch.update(doc.reference, updates);
+          }
+          return batch.commit();
+        })
+        .catchError((e) {
+          debugPrint('Error updating all in Firestore: $e');
+        });
   }
 
   /// Background Firestore delete (non-blocking)
-  void _deleteFromFirestoreInBackground(
-    String userId,
-    String notificationId,
-  ) {
+  void _deleteFromFirestoreInBackground(String userId, String notificationId) {
     _firestore
         .collection('notifications')
         .doc(userId)
@@ -214,8 +216,8 @@ class NotificationRepository {
         .doc(notificationId)
         .delete()
         .catchError((e) {
-      debugPrint('Error deleting from Firestore: $e');
-    });
+          debugPrint('Error deleting from Firestore: $e');
+        });
   }
 
   /// Helper: Convert Hive model to NotificationModel
@@ -232,4 +234,3 @@ class NotificationRepository {
     );
   }
 }
-

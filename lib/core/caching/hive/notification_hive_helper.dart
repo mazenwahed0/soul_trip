@@ -76,6 +76,20 @@ class NotificationHiveHelper {
     }
   }
 
+  /// Watch notifications for real-time updates
+  Stream<List<NotificationHiveModel>> watchNotifications() {
+    try {
+      return _box.watch().map((_) {
+        final notifications = _box.values.toList();
+        notifications.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+        return notifications;
+      });
+    } catch (e) {
+      debugPrint('Error watching notifications: $e');
+      return Stream.value([]);
+    }
+  }
+
   /// Get a single notification by ID
   NotificationHiveModel? getNotification(String id) {
     try {
