@@ -16,6 +16,27 @@ import 'package:soul_trip/features/profile/ui/screen/profile/profile_screen.dart
 
 import 'package:soul_trip/features/reviews/ui/screen/reviews_screen.dart';
 import 'package:soul_trip/features/wishlist/ui/screen/wishlist_screen.dart';
+import 'package:soul_trip/features/categories_trips/ui/screen/categories_trips_screen.dart';
+import 'package:soul_trip/features/category_trips/ui/screen/category_trips_screen.dart';
+import 'package:soul_trip/features/search/ui/screen/search_filter_screen.dart';
+import 'package:soul_trip/features/search/ui/screen/search_results_screen.dart';
+import 'package:soul_trip/features/search/manager/search_cubit/search_cubit.dart';
+
+import '../../features/authentication/data/authentication_repository.dart';
+import '../../features/authentication/ui/forget_password/forget_password_view.dart';
+import '../../features/authentication/ui/login/login_view.dart';
+import '../../features/authentication/ui/signup/signup_view.dart';
+import '../../features/onboarding/ui/onboarding_view.dart';
+import '../../features/reviews/logic/post_review/post_review_cubit.dart';
+import '../../features/reviews/logic/write_review/write_review_cubit.dart';
+import '../../features/search/manager/search_cubit/search_cubit.dart';
+import '../../features/search/ui/screen/search_filter_screen.dart';
+import '../../features/search/ui/screen/search_results_screen.dart';
+import '../../features/splash/ui/splash_view.dart';
+import '../dependency_injection/set_up_dependencies.dart';
+import 'animation_route.dart';
+import 'app_route_guard.dart';
+import 'go_router_refresh_stream.dart';
 
 abstract class AppRouter {
   static final router = GoRouter(
@@ -57,8 +78,19 @@ abstract class AppRouter {
           ),
           GoRoute(
             path: Routes.reviewsView,
-            pageBuilder: (context, state) =>
-                fadeTransitionPage(const ReviewsScreen()),
+            pageBuilder: (context, state) {
+              return fadeTransitionPage(
+                MultiBlocProvider(
+                  providers: [
+                    BlocProvider(create: (context) => getIt<ReviewCubit>()),
+                    BlocProvider(
+                      create: (context) => getIt<WriteReviewCubit>(),
+                    ),
+                  ],
+                  child: const ReviewsScreen(),
+                ),
+              );
+            },
           ),
           GoRoute(
             path: Routes.profileView,
@@ -66,35 +98,6 @@ abstract class AppRouter {
                 fadeTransitionPage(const ProfileScreen()),
           ),
         ],
-      ),
-
-      GoRoute(
-        path: Routes.expertsDetailsView,
-        pageBuilder: (context, state) {
-          final id = state.uri.queryParameters['id']!;
-          return fadeTransitionPage(DetailsScreen(expertId: id));
-        },
-      ),
-
-      GoRoute(
-        path: Routes.expertsfilterscreen,
-        pageBuilder: (context, state) {
-          final extra = state.extra as Map<String, dynamic>? ?? {};
-          final allExperts = extra['allExperts'] as List<ExpertModel>? ?? [];
-          final expertCubit = extra['expertCubit'] as ExpertCubit;
-
-          return fadeTransitionPage(
-            MultiBlocProvider(
-              providers: [
-                BlocProvider.value(value: expertCubit),
-                BlocProvider(
-                  create: (_) => ExpertFilterCubit(allExperts: allExperts),
-                ),
-              ],
-              child: FilterExpertsScreen(),
-            ),
-          );
-        },
       ),
     ],
   );

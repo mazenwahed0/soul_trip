@@ -1,15 +1,36 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import '../theme/colors.dart';
+
 /// Helper class for EasyLoading
 /// Use this class throughout the app for consistent loading UI
 class LoadingHelper {
   LoadingHelper._();
 
+  /// Initialize and Configure Global Loading Style
+  static void init() {
+    final colors = ColorTheme();
+
+    EasyLoading.instance
+      ..displayDuration = const Duration(milliseconds: 2000)
+      ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+      ..loadingStyle = EasyLoadingStyle.custom
+      ..indicatorSize = 45.0
+      ..radius = 20.0
+      ..progressColor = colors.primaryBlue
+      ..backgroundColor = colors.whiteColor
+      ..indicatorColor = colors.primaryBlue
+      ..textColor = colors.primaryBlue
+      ..maskType = EasyLoadingMaskType.black
+      ..userInteractions = false
+      ..dismissOnTap = false;
+  }
+
   /// Show loading indicator
   static void show({String? message}) {
     EasyLoading.show(
       status: message ?? 'Loading...',
-      maskType: EasyLoadingMaskType.clear,
+      maskType: EasyLoadingMaskType.black,
     );
   }
 

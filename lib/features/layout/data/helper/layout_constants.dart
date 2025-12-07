@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:solar_icon_pack/solar_icon_pack.dart';
 import 'package:soul_trip/core/routing/routes.dart';
 import 'package:soul_trip/core/theme/soultrip_icons.dart';
@@ -42,7 +41,7 @@ abstract class LayoutConstants {
       route: Routes.wishlistView,
     ),
     NavigationItemModel(
-      icon: CupertinoIcons.ellipses_bubble_fill,
+      svgPath: "assets/icons/Community.svg",
       label: 'Reviews',
       route: Routes.reviewsView,
     ),

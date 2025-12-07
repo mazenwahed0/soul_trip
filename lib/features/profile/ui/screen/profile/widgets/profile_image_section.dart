@@ -8,6 +8,7 @@ import 'package:soul_trip/core/utils/images.dart';
 import '../../../../../../core/theme/colors.dart';
 import '../../../../../../core/utils/snackbars/loaders.dart';
 import '../../../../../../core/widgets/common/shimmers/shimmer.dart';
+import '../../../../../../core/utils/loading_helper.dart';
 import '../../../../../authentication/logic/auth/auth_cubit.dart';
 import '../../../../../authentication/logic/auth/auth_state.dart';
 import '../../../../logic/user/user_cubit.dart';
@@ -20,6 +21,15 @@ class ProfileImageSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<UserCubit, UserState>(
       listener: (context, state) {
+        // -- Loading Block UI
+        if (state is UserLoading) {
+          LoadingHelper.show(message: "Uploading...");
+        } else {
+          // Dismiss on Success or Failure
+          LoadingHelper.dismiss();
+        }
+
+        // -- Snackbars on Success/Error
         if (state is UserSuccess) {
           Loaders.success(context, title: "Success", message: state.message);
 
@@ -30,15 +40,12 @@ class ProfileImageSection extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        final isLoading = state is UserLoading;
-
         return Center(
           child: SizedBox(
             width: 140.w,
             height: 140.w,
             child: Stack(
-              clipBehavior:
-                  Clip.none, // Allow button to slightly overlap if needed
+              clipBehavior: Clip.none,
               children: [
                 // 1. The Image (or Shimmer)
                 BlocBuilder<AuthCubit, AuthState>(
@@ -46,20 +53,13 @@ class ProfileImageSection extends StatelessWidget {
                     final imagePath = authState.userModel?.profilePicture ?? '';
                     final hasImage = imagePath.isNotEmpty;
 
-                    if (isLoading) {
-                      return CShimmerEffect(
-                        width: 140.w,
-                        height: 140.w,
-                        radius: 98, // Matches Figma radius
-                      );
-                    }
-
                     return Container(
                       width: 140.w,
                       height: 140.w,
                       decoration: BoxDecoration(
-                        // borderRadius: 98px
-                        borderRadius: BorderRadius.circular(98),
+                        borderRadius: BorderRadius.circular(
+                          98,
+                        ), // borderRadius: 98px
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(98),
@@ -83,8 +83,8 @@ class ProfileImageSection extends StatelessWidget {
                                 padding: const EdgeInsets.all(30),
                                 child: Image.asset(
                                   Images.logo,
-                                  color: ColorTheme().grayMedium.withOpacity(
-                                    0.5,
+                                  color: ColorTheme().grayMedium.withValues(
+                                    alpha: 0.5,
                                   ),
                                 ),
                               ),

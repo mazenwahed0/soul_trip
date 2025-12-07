@@ -10,6 +10,8 @@ class HomeSearchBarWidget extends StatelessWidget {
   final TextEditingController? controller;
   final Function(String)? onChanged;
   final String hintText;
+  final bool showFilter;
+  final bool autofocus;
 
   const HomeSearchBarWidget({
     super.key,
@@ -18,6 +20,8 @@ class HomeSearchBarWidget extends StatelessWidget {
     this.controller,
     this.onChanged,
     this.hintText = "Search",
+    this.showFilter = true,
+    this.autofocus = false,
   });
 
   @override
@@ -64,6 +68,7 @@ class HomeSearchBarWidget extends StatelessWidget {
                         onChanged: onChanged,
                         // If we are navigating (onTap exists), disable direct editing
                         enabled: onTap == null,
+                        autofocus: autofocus,
                         style: AppTextStyles.regular16().copyWith(
                           color: colors.blackColor,
                           height: 1.2,
@@ -85,32 +90,34 @@ class HomeSearchBarWidget extends StatelessWidget {
               ),
             ),
           ),
-          // MARK:- Right Side: Filter Button
-          GestureDetector(
-            // Use specific filter callback or default to main tap
-            onTap: onFilterTap ?? onTap,
-            child: Container(
-              width: 56.w,
-              height: double.infinity,
-              decoration: BoxDecoration(
-                color: colors.whiteColor,
-                border: const Border(
-                  left: BorderSide(color: Color(0xFFE5E5E5), width: 1),
+
+          // MARK:- Right Side: Filter Button (Conditional)
+          if (showFilter)
+            GestureDetector(
+              // Use specific filter callback or default to main tap
+              onTap: onFilterTap ?? onTap,
+              child: Container(
+                width: 56.w,
+                height: double.infinity,
+                decoration: BoxDecoration(
+                  color: colors.whiteColor,
+                  border: const Border(
+                    left: BorderSide(color: Color(0xFFE5E5E5), width: 1),
+                  ),
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(30.r),
+                    bottomRight: Radius.circular(30.r),
+                  ),
                 ),
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(30.r),
-                  bottomRight: Radius.circular(30.r),
-                ),
-              ),
-              child: Center(
-                child: Icon(
-                  Soultrip.filter,
-                  color: colors.primaryBlue,
-                  size: 22.sp,
+                child: Center(
+                  child: Icon(
+                    Soultrip.filter,
+                    color: colors.primaryBlue,
+                    size: 22.sp,
+                  ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     );

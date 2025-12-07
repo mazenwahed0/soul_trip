@@ -15,10 +15,12 @@ class HomeHeaderWidget extends StatelessWidget {
     super.key,
     this.icon = Soultrip.notification,
     this.onTap,
+    this.iconColor,
   });
 
   final IconData icon;
   final VoidCallback? onTap;
+  final Color? iconColor;
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +102,7 @@ class HomeHeaderWidget extends StatelessWidget {
                 size: 44, // 44px closer to Figma than (48px)
                 iconSize: 22, // 22px closer to Figma than (20px)
                 backgroundColor: colors.backgroundLightGray,
-                iconColor: colors.primaryBlue,
+                iconColor: iconColor ?? colors.primaryBlue,
                 onTap: onTap ?? () {},
               ),
             ],
