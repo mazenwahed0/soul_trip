@@ -8,7 +8,8 @@ import 'package:soul_trip/core/routing/routes.dart';
 import 'package:soul_trip/core/theme/colors.dart';
 import 'package:soul_trip/core/theme/soultrip_icons.dart';
 import 'package:soul_trip/core/widgets/custom_text_form_field.dart';
-import 'package:soul_trip/features/experts/data/models/expert_model.dart';
+import 'package:soul_trip/features/experts/data/models/Expert_model.dart';
+
 
 import 'package:soul_trip/features/experts/logic/read_expert_data/expert_cubit.dart';
 import 'package:soul_trip/features/experts/logic/read_expert_data/expert_state.dart';

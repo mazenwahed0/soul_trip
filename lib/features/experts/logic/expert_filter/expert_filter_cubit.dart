@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:soul_trip/features/experts/data/models/ExpertFilter.dart';
-import 'package:soul_trip/features/experts/data/models/expert_model.dart';
+import 'package:soul_trip/features/experts/data/models/Expert_model.dart';
+
 import 'package:soul_trip/features/experts/logic/expert_filter/expert_filter_state.dart';
 
 class ExpertFilterCubit extends Cubit<ExpertFilterState> {

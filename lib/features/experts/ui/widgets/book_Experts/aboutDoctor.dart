@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:soul_trip/core/theme/text_style.dart';
-import 'package:soul_trip/features/experts/data/models/expert_model.dart';
+import 'package:soul_trip/features/experts/data/models/Expert_model.dart';
+
 import 'package:soul_trip/features/experts/ui/widgets/book_Experts/experience_review.dart';
 import 'package:soul_trip/features/experts/ui/widgets/stars_widget.dart';
 

@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:soul_trip/features/experts/data/models/expert_model.dart';
+import 'package:soul_trip/features/experts/data/models/Expert_model.dart';
+
 import 'package:soul_trip/features/experts/data/repo/BookingRepository.dart';
 import 'package:soul_trip/features/experts/data/repo/experts_repository.dart';
 import 'package:soul_trip/features/experts/logic/booking/booking_cubit.dart';
