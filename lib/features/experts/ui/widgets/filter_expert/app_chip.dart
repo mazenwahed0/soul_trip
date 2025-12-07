@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 class AppChip extends StatelessWidget {
@@ -7,11 +5,7 @@ class AppChip extends StatelessWidget {
   final bool selected;
   final VoidCallback onTap;
 
-  AppChip({
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  });
+  AppChip({required this.label, required this.selected, required this.onTap});
 
   @override
   Widget build(BuildContext context) {

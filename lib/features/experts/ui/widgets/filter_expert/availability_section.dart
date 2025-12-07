@@ -37,7 +37,7 @@ class AvailabilitySection extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 30),
+        heightSpace( 30),
       ],
     );
   }

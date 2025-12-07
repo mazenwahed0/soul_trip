@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:soul_trip/core/theme/colors.dart';
+import 'package:soul_trip/features/experts/ui/widgets/widthspace_and%20_heigthspace%20_widget.dart';
 
 class AppRadio extends StatelessWidget {
   final String label;
@@ -34,7 +35,7 @@ class AppRadio extends StatelessWidget {
                   )
                 : null,
           ),
-          SizedBox(width: 6),
+          widthSpace( 6),
           Text(label),
         ],
       ),
