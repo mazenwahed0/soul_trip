@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:soul_trip/core/theme/colors.dart';
 import 'package:soul_trip/core/widgets/common/status_sheet/status_bottom_sheet.dart';
 import 'package:soul_trip/core/widgets/common/buttons/primary_shadow_button.dart';
-import 'package:soul_trip/features/experts/data/models/Expert_model.dart';
+import 'package:soul_trip/features/experts/data/models/expert_model.dart';
 import 'package:soul_trip/features/experts/logic/booking/BookingState.dart';
 import 'package:soul_trip/features/experts/logic/booking/booking_cubit.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:soul_trip/features/experts/data/models/Expert_model.dart';
+import 'package:soul_trip/features/experts/data/models/expert_model.dart';
 
 import 'package:soul_trip/features/experts/logic/cubitDate/cubitdate.dart';
 import 'package:soul_trip/features/experts/logic/cubitDate/date_state.dart';

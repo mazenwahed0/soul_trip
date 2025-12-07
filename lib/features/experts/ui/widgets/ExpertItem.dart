@@ -7,7 +7,7 @@ import 'package:soul_trip/core/theme/colors.dart';
 
 import 'package:soul_trip/core/theme/text_style.dart';
 import 'package:soul_trip/core/widgets/common/buttons/primary_shadow_button.dart';
-import 'package:soul_trip/features/experts/data/models/Expert_model.dart';
+import 'package:soul_trip/features/experts/data/models/expert_model.dart';
 
 import 'package:soul_trip/features/experts/ui/widgets/widthspace_and%20_heigthspace%20_widget.dart';
 import 'package:soul_trip/features/experts/ui/widgets/stars_widget.dart';
@@ -99,6 +99,7 @@ class ExpertItem extends StatelessWidget {
                         ),
                       ),
                     ),
+                    SizedBox(width: 60,),
                     Expanded(
                       child: PrimaryShadowButton(
                         text: "Book Now",

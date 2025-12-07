@@ -15,6 +15,7 @@ class Routes {
   static const String loginView = '/login';
   static const String homeView = '/home';
   static const String expertsView = '/experts';
+  static const String expertsfilterscreen = '/FilterExperts';
   static const String expertsDetailsView = '/details_screen';
   static const String wishlistView = '/wishlist';
   static const String reviewsView = '/reviews';

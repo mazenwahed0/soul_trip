@@ -1,5 +1,5 @@
 class ExpertModel {
-  final String id;            
+  final String id;
   final String name;
   final String specialization;
   final String location;
@@ -9,8 +9,9 @@ class ExpertModel {
   final int price;
   final double rating;
   final int reviewsCount;
-final List<String> availabilityDays;
- final List<String> availableTimes;
+  final List<String> availabilityDays;
+  final List<String> availableTimes;
+  final String sessionType;
   ExpertModel({
     required this.id,
     required this.name,
@@ -21,9 +22,11 @@ final List<String> availabilityDays;
     required this.fees,
     required this.price,
     required this.rating,
-    required this.reviewsCount, required this.availabilityDays, required this.availableTimes,
+    required this.reviewsCount,
+    required this.availabilityDays,
+    required this.availableTimes,
+    required this.sessionType,
   });
-
 
   factory ExpertModel.fromMap(Map<String, dynamic> data, String documentId) {
     return ExpertModel(
@@ -39,6 +42,7 @@ final List<String> availabilityDays;
       reviewsCount: data['reviewsCount'] ?? 0,
       availabilityDays: List<String>.from(data['availabilityDays'] ?? []),
       availableTimes: List<String>.from(data['availableTimes'] ?? []),
+      sessionType: data['sessionType'] ?? 'online',
     );
   }
 }
