@@ -99,6 +99,7 @@ abstract class AppRouter {
           ),
         ],
       ),
+      
     ],
   );
 }
