@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -8,6 +9,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:soul_trip/core/routing/app_router.dart';
 import 'package:soul_trip/core/theme/app_theme.dart';
+import 'package:soul_trip/features/home/data/repositories/trips_likes_repository.dart';
+import 'package:soul_trip/features/home/manager/trips_likes_cubit/trips_likes_cubit.dart';
 import 'core/caching/hive/user_hive_helper.dart';
 import 'core/caching/shared/shared_perf_helper.dart';
 import 'core/dependency_injection/set_up_dependencies.dart';
@@ -21,6 +24,10 @@ import 'features/authentication/logic/auth/auth_cubit.dart';
 import 'features/notification/data/repositories/notification_repository.dart';
 import 'features/profile/data/user/user_repository.dart';
 import 'firebase_options.dart';
+
+// --- Imports for Wishlist ---
+import 'features/wishlist/logic/cubit/wishlist_cubit.dart';
+import 'features/wishlist/data/repository/wishlist_repository.dart';
 
 void main() async {
   // -- Widgets Binding: needed for async main to load widgets first before Firebase
@@ -73,7 +80,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(375, 812), // iPhone X size as reference
+      designSize: Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
@@ -90,7 +97,20 @@ class _MyAppState extends State<MyApp> {
                 getIt<UserRepository>(), // Inject UserRepo
               ),
             ),
+
+            // -- Wishlist
+            BlocProvider(create: (context) => getIt<WishlistCubit>()),
+
+            // -- Trips Likes Provider
+            BlocProvider(
+              create: (context) {
+                final String userId =
+                    FirebaseAuth.instance.currentUser?.uid ?? '';
+                return TripsLikesCubit(getIt<TripsLikesRepository>(), userId);
+              },
+            ),
           ],
+
           child: MaterialApp.router(
             debugShowCheckedModeBanner: false,
             themeMode: ThemeMode.system,

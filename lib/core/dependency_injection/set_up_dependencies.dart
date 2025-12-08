@@ -25,6 +25,8 @@ import '../../features/reviews/logic/post_review/post_review_cubit.dart';
 import '../../features/reviews/logic/write_review/write_review_cubit.dart';
 import '../../features/search/data/repositories/search_repository.dart';
 import '../../features/search/manager/search_cubit/search_cubit.dart';
+import '../../features/wishlist/data/repository/wishlist_repository.dart';
+import '../../features/wishlist/logic/cubit/wishlist_cubit.dart';
 import 'package:soul_trip/core/caching/hive/notification_hive_helper.dart';
 import '../caching/hive/user_hive_helper.dart';
 import '../repositories/storage/cloudinary_service.dart';
@@ -91,6 +93,9 @@ void setupDependencies() async {
     () => ReviewsRepository(getIt<CloudinaryService>()),
   );
 
+  // - Wishlist Repository
+  getIt.registerLazySingleton<WishlistRepository>(() => WishlistRepository());
+
   /// 2. (Factories) - Logic/State (Cubits)
   /// "registerFactory" = so a new Cubit is created every time a screen opens
   /// (Good for Screens like (Login/SignUp) which are destroyed when closed)
@@ -149,5 +154,9 @@ void setupDependencies() async {
 
   getIt.registerFactory<WriteReviewCubit>(
     () => WriteReviewCubit(getIt<ReviewsRepository>()),
+  );
+
+  getIt.registerFactory<WishlistCubit>(
+    () => WishlistCubit(repository: getIt<WishlistRepository>()),
   );
 }
