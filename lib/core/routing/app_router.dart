@@ -1,12 +1,11 @@
-
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:soul_trip/core/routing/routes.dart';
 import 'package:soul_trip/features/experts/data/models/Expert_model.dart';
 import 'package:soul_trip/features/experts/logic/expert_filter/expert_filter_cubit.dart';
 import 'package:soul_trip/features/experts/logic/read_expert_data/expert_cubit.dart';
-import 'package:soul_trip/features/experts/ui/screen/details_screen.dart' show DetailsScreen;
+import 'package:soul_trip/features/experts/ui/screen/details_screen.dart'
+    show DetailsScreen;
 import 'package:soul_trip/features/experts/ui/screen/experts_screen.dart';
 import 'package:soul_trip/features/experts/ui/widgets/filter_expert/widget_filter_experts.dart';
 import 'package:soul_trip/features/home/ui/screen/home_screen.dart';
@@ -41,7 +40,7 @@ import 'go_router_refresh_stream.dart';
 
 abstract class AppRouter {
   static final router = GoRouter(
-    initialLocation: Routes.homeView,
+    initialLocation: Routes.splashView,
     // redirect: AppRouteGuard.guard,
     // refreshListenable: GoRouterRefreshStream(
     //   getIt<AuthenticationRepository>().authStateChanges,
