@@ -73,24 +73,15 @@ class MyApp extends StatelessWidget {
               ),
             ),
 
-            // -- Wishlist Provider
-            BlocProvider(
-              create: (context) =>
-                  WishlistCubit(repository: WishlistRepository()),
-            ),
+            // -- Wishlist
+            BlocProvider(create: (context) => getIt<WishlistCubit>()),
+
             // -- Trips Likes Provider
             BlocProvider(
               create: (context) {
-                // 1. Get the user ID from AuthCubit or any other source
                 final String userId =
                     FirebaseAuth.instance.currentUser?.uid ?? '';
-
-                return TripsLikesCubit(
-                  getIt<
-                    TripsLikesRepository
-                  >(), // 2. Inject the TripsLikesRepository
-                  userId, // 3. The ID we got
-                );
+                return TripsLikesCubit(getIt<TripsLikesRepository>(), userId);
               },
             ),
           ],
