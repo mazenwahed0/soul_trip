@@ -20,7 +20,8 @@ class ColorTheme {
   final Color grayLight = const Color(0xFFB9B6B6);
   final Color grayMedium = const Color(0xFF898989);
   final Color grayVeryLight = const Color(0xFFE4E1E1);
-  final Color grayDark = const Color(0xFF585858);
+  final Color grayDarker = const Color(0xFF585858);
+  final Color grayDark = const Color(0xFF6B6B6B);
 
   // White Shades
   final Color whiteColor = const Color(0xFFFFFFFF);

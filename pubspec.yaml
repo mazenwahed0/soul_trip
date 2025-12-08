@@ -95,7 +95,12 @@ flutter:
 
         - asset: assets/fonts/Poppins-Bold.ttf
           weight: 800
+    - family: Aldrich
+      fonts:
+        - asset: assets/fonts/Aldrich-Regular.ttf
+          weight: 400
 
     - family: Soultrip
       fonts:
         - asset: assets/icons/Soultrip.ttf
+

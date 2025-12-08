@@ -16,6 +16,9 @@ import 'package:soul_trip/features/profile/ui/screen/load_data/load_data_screen.
 import 'package:soul_trip/features/profile/ui/screen/profile/profile_screen.dart';
 import 'package:soul_trip/features/reviews/ui/screen/reviews_screen.dart';
 import 'package:soul_trip/features/wishlist/ui/screen/wishlist_screen.dart';
+import 'package:soul_trip/features/trip_details/screen/trip_details_screen.dart';
+import 'package:soul_trip/features/payment/screens/payments_screen.dart';
+import 'package:soul_trip/features/add_card/screen/add_card_screen.dart';
 import 'package:soul_trip/features/categories_trips/ui/screen/categories_trips_screen.dart';
 import 'package:soul_trip/features/category_trips/ui/screen/category_trips_screen.dart';
 import 'package:soul_trip/features/search/ui/screen/search_filter_screen.dart';
@@ -208,6 +211,17 @@ abstract class AppRouter {
           ),
         ],
       ),
+      GoRoute(path:Routes.tripDetailsScreen,
+        pageBuilder: (context, state) =>
+            fadeTransitionPage(const TripDetailsScreen()),
+      ),
+      GoRoute(path:Routes.paymentScreen,
+        pageBuilder: (context, state) =>
+            fadeTransitionPage(const PaymentScreen()),
+      ),
+      GoRoute(path:Routes.addCardScreen,
+        pageBuilder: (context, state) =>
+            fadeTransitionPage(const AddNewCardScreen()),
       GoRoute(
         path: Routes.expertsDetailsView,
         pageBuilder: (context, state) {

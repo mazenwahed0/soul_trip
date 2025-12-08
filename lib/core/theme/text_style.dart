@@ -6,14 +6,19 @@ class AppTextStyles {
     double size,
     FontWeight weight,
     double min,
-    double max,
-  ) {
+    double max, {
+    String fontFamily = "Poppins",
+  }) {
     return TextStyle(
       fontSize: size.sp.clamp(min, max),
       fontWeight: weight,
-      fontFamily: "Poppins",
+      fontFamily: fontFamily,
     );
   }
+
+  // --------------------------------------------------------------
+  // POPPINS FONTS (DEFAULT)
+  // --------------------------------------------------------------
 
   // -------- 8 sp --------
   static TextStyle regular8() => _style(8, FontWeight.w400, 6, 12);
@@ -170,4 +175,37 @@ class AppTextStyles {
   static TextStyle medium48() => _style(48, FontWeight.w500, 42, 54);
   static TextStyle semiBold48() => _style(48, FontWeight.w600, 42, 54);
   static TextStyle bold48() => _style(48, FontWeight.w700, 42, 54);
+
+
+
+  // --------------------------------------------------------------
+  // ALDRICH FONTS (ALL SIZES)
+  // --------------------------------------------------------------
+  static TextStyle aldrich6() => _style(6, FontWeight.w400, 4, 10, fontFamily: "Aldrich");
+  static TextStyle aldrich8() => _style(8, FontWeight.w400, 6, 12, fontFamily: "Aldrich");
+  static TextStyle aldrich10() => _style(10, FontWeight.w400, 8, 14, fontFamily: "Aldrich");
+  static TextStyle aldrich11() => _style(11, FontWeight.w400, 9, 15, fontFamily: "Aldrich");
+  static TextStyle aldrich12() => _style(12, FontWeight.w400, 10, 16, fontFamily: "Aldrich");
+  static TextStyle aldrich13() => _style(13, FontWeight.w400, 11, 17, fontFamily: "Aldrich");
+  static TextStyle aldrich14() => _style(14, FontWeight.w400, 12, 18, fontFamily: "Aldrich");
+  static TextStyle aldrich15() => _style(15, FontWeight.w400, 13, 18, fontFamily: "Aldrich");
+  static TextStyle aldrich16() => _style(16, FontWeight.w400, 14, 20, fontFamily: "Aldrich");
+  static TextStyle aldrich17() => _style(17, FontWeight.w400, 15, 21, fontFamily: "Aldrich");
+  static TextStyle aldrich18() => _style(18, FontWeight.w400, 16, 22, fontFamily: "Aldrich");
+  static TextStyle aldrich19() => _style(19, FontWeight.w400, 17, 23, fontFamily: "Aldrich");
+  static TextStyle aldrich20() => _style(20, FontWeight.w400, 18, 24, fontFamily: "Aldrich");
+  static TextStyle aldrich21() => _style(21, FontWeight.w400, 19, 27, fontFamily: "Aldrich");
+  static TextStyle aldrich22() => _style(22, FontWeight.w400, 20, 28, fontFamily: "Aldrich");
+  static TextStyle aldrich23() => _style(23, FontWeight.w400, 20, 28, fontFamily: "Aldrich");
+  static TextStyle aldrich24() => _style(24, FontWeight.w400, 22, 30, fontFamily: "Aldrich");
+  static TextStyle aldrich25() => _style(25, FontWeight.w400, 22, 32, fontFamily: "Aldrich");
+  static TextStyle aldrich26() => _style(26, FontWeight.w400, 22, 32, fontFamily: "Aldrich");
+  static TextStyle aldrich27() => _style(27, FontWeight.w400, 23, 33, fontFamily: "Aldrich");
+  static TextStyle aldrich28() => _style(28, FontWeight.w400, 24, 34, fontFamily: "Aldrich");
+  static TextStyle aldrich30() => _style(30, FontWeight.w400, 26, 36, fontFamily: "Aldrich");
+  static TextStyle aldrich32() => _style(32, FontWeight.w400, 28, 38, fontFamily: "Aldrich");
+  static TextStyle aldrich34() => _style(34, FontWeight.w400, 30, 40, fontFamily: "Aldrich");
+  static TextStyle aldrich36() => _style(36, FontWeight.w400, 32, 42, fontFamily: "Aldrich");
+  static TextStyle aldrich40() => _style(40, FontWeight.w400, 36, 46, fontFamily: "Aldrich");
+  static TextStyle aldrich48() => _style(48, FontWeight.w400, 42, 54, fontFamily: "Aldrich");
 }
