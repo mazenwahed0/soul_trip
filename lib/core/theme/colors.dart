@@ -11,6 +11,10 @@ class ColorTheme {
   final Color navyBlue = const Color(0xFF001D3D);
 
   final Color backgroundWhite = const Color(0xFFFFFFFF);
+  final Color backgroundLightGray = const Color(0xFFEBEBEB);
+  final Color offWhite = const Color(0xFFFAFAFA);
+  final Color disabledButton = const Color(0xFFACACAC);
+  final Color otpBG = const Color(0xFFFBFBFB);
 
   // Gray Shades
   final Color grayLight = const Color(0xFFB9B6B6);

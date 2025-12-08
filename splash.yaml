@@ -1,0 +1,12 @@
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: assets/logos/soultrip_splash.png
+  ios_content_mode: scaleAspectFit
+  android_gravity: center
+
+  android_12:
+    color: "#FFFFFF"
+    image: assets/logos/soultrip_splash.png
+    icon_background_color: "#FFFFFF"
+
+  web: false

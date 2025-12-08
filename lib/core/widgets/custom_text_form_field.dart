@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:soul_trip/core/model/text_field_model/text_field_model.dart';
+import 'package:soul_trip/core/models/text_field_model/text_field_model.dart';
 import 'package:soul_trip/core/theme/colors.dart';
 
 class CustomTextFormField extends StatefulWidget {
@@ -98,6 +98,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         focusedBorder: _customOutlineInputBorder(
           isDarkMode ? ColorTheme().whiteColor : ColorTheme().primaryBlue,
         ),
+        
         enabledBorder: _customOutlineInputBorder(borderColor),
         errorBorder: _customOutlineInputBorder(ColorTheme().errorColor),
         focusedErrorBorder: _customOutlineInputBorder(ColorTheme().errorColor),

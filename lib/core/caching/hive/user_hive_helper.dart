@@ -1,6 +1,6 @@
 // hive_helper.dart
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:soul_trip/core/model/user_model/user_model.dart';
+import 'package:soul_trip/core/models/user_model/user_model.dart';
 import 'package:soul_trip/core/utils/constant.dart';
 
 class UserHiveHelper {
@@ -18,7 +18,7 @@ class UserHiveHelper {
     await Hive.initFlutter();
     // تسجيل Adapter لـ UserModel
     if (!Hive.isAdapterRegistered(0)) {
-      //Hive.registerAdapter(UserModelAdapter());
+      Hive.registerAdapter(UserModelAdapter());
     }
     // فتح الصندوق (Box)
     await Hive.openBox<UserModel>(ConstantVariable.userBox);

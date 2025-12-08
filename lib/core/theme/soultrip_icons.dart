@@ -11,12 +11,12 @@ class Soultrip {
     fontFamily: _kFontFam,
     fontPackage: _kFontPkg,
   );
-  static const IconData calendar_bold = IconData(
+  static const IconData calendarBold = IconData(
     0xe807,
     fontFamily: _kFontFam,
     fontPackage: _kFontPkg,
   );
-  static const IconData chat_rounded = IconData(
+  static const IconData chatRounded = IconData(
     0xe808,
     fontFamily: _kFontFam,
     fontPackage: _kFontPkg,
@@ -61,7 +61,7 @@ class Soultrip {
     fontFamily: _kFontFam,
     fontPackage: _kFontPkg,
   );
-  static const IconData fitness_fill = IconData(
+  static const IconData fitnessFill = IconData(
     0xe813,
     fontFamily: _kFontFam,
     fontPackage: _kFontPkg,
@@ -106,7 +106,7 @@ class Soultrip {
     fontFamily: _kFontFam,
     fontPackage: _kFontPkg,
   );
-  static const IconData mdi_meditation = IconData(
+  static const IconData mdiMeditation = IconData(
     0xe820,
     fontFamily: _kFontFam,
     fontPackage: _kFontPkg,
@@ -136,7 +136,7 @@ class Soultrip {
     fontFamily: _kFontFam,
     fontPackage: _kFontPkg,
   );
-  static const IconData photo_plus_solid = IconData(
+  static const IconData photoPlusSolid = IconData(
     0xe827,
     fontFamily: _kFontFam,
     fontPackage: _kFontPkg,
@@ -186,7 +186,7 @@ class Soultrip {
     fontFamily: _kFontFam,
     fontPackage: _kFontPkg,
   );
-  static const IconData spa_rounded = IconData(
+  static const IconData spaRounded = IconData(
     0xe832,
     fontFamily: _kFontFam,
     fontPackage: _kFontPkg,

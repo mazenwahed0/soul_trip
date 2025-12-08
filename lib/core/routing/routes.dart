@@ -15,6 +15,8 @@ class Routes {
   static const String loginView = '/login';
   static const String homeView = '/home';
   static const String expertsView = '/experts';
+  static const String expertsfilterscreen = '/FilterExperts';
+  static const String expertsDetailsView = '/details_screen';
   static const String wishlistView = '/wishlist';
   static const String reviewsView = '/reviews';
   static const String layoutView = '/layout';
@@ -30,9 +32,11 @@ class Routes {
   static const String alThawraArchiveView = '/al-thawra-archive';
   static const String archivePdfView = '/search-pdf';
   static const String profileView = '/profile';
+  static const String loadDataView = '/load-data';
   static const String favoritesView = '/favorites';
-  static const String editInfoView = '/edit-info';
+  static const String accountInfoView = '/account-info';
   static const String splashView = '/splash';
+  static const String onboardingView = '/onboarding';
   static const String drawerSubCategoryContent = '/drawerSubCategoryContent';
   static const String aboutUsView = '/about-us';
   static const String privacyPolicyView = '/privacy-policy';
@@ -46,4 +50,7 @@ class Routes {
   static const String tripDetailsScreen = '/trip-details';
   static const String paymentScreen = '/payment';
   static const String addCardScreen = '/add-card';
+  static const String categoriesTripsView = '/categories-trips';
+  static const String categoryTripsView = '/category-trips';
+  static const String notificationView = '/notifications';
 }

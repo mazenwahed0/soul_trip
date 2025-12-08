@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:solar_icon_pack/solar_icon_pack.dart';
 import 'package:soul_trip/core/routing/routes.dart';
 import 'package:soul_trip/core/theme/soultrip_icons.dart';
@@ -6,15 +5,19 @@ import 'package:soul_trip/features/layout/data/models/navigation_item_model.dart
 
 /// Constants and configurations for the layout feature
 abstract class LayoutConstants {
-  // Navigation Bar Dimensions
-  static const double navigationBarHeight = 60.0;
-  static const double navigationBarTopRadius = 10.0;
+  // Dimensions
+  static const double navigationBarHeight = 72.0;
+  static const double navigationBarTopRadius = 15.0;
 
-  // Navigation Item Sizes
+  // Item Sizes
+  static const double navigationItemWidth = 56.0;
+  static const double navigationItemHeight = 56.0;
+  static const double navigationItemRadius = 35.0;
+
   static const double activeIconSize = 26.0;
-  static const double inactiveIconSize = 24.0;
-  static const double iconLabelSpacing = 3.0;
-  static const double labelFontSize = 11.0;
+  static const double inactiveIconSize = 26.0;
+  static const double iconLabelSpacing = 8.0;
+  static const double labelFontSize = 13.0;
 
   // Animation Durations
   static const Duration itemTransitionDuration = Duration(milliseconds: 300);
@@ -38,7 +41,7 @@ abstract class LayoutConstants {
       route: Routes.wishlistView,
     ),
     NavigationItemModel(
-      icon: CupertinoIcons.ellipses_bubble_fill,
+      svgPath: "assets/icons/Community.svg",
       label: 'Reviews',
       route: Routes.reviewsView,
     ),
