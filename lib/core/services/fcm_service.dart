@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:soul_trip/features/notification/data/repositories/notification_repository.dart';
 
 /// Background message handler - must be top-level function
 @pragma('vm:entry-point')
@@ -19,8 +20,14 @@ class FCMService {
   final FlutterLocalNotificationsPlugin _localNotifications =
       FlutterLocalNotificationsPlugin();
 
+  NotificationRepository? _notificationRepository;
   String? _fcmToken;
   String? get fcmToken => _fcmToken;
+
+  /// Set notification repository after DI setup
+  void setNotificationRepository(NotificationRepository repository) {
+    _notificationRepository = repository;
+  }
 
   /// Initialize FCM service
   Future<void> initialize() async {
@@ -120,6 +127,8 @@ class FCMService {
   /// Handle foreground messages
   Future<void> _handleForegroundMessage(RemoteMessage message) async {
     debugPrint('Foreground message received: ${message.messageId}');
+    debugPrint('Title: ${message.notification?.title}');
+    debugPrint('Body: ${message.notification?.body}');
 
     final notification = message.notification;
     if (notification != null) {
@@ -130,13 +139,23 @@ class FCMService {
       );
     }
 
-    // Store notification in Firestore
-    await _storeNotification(message);
+    // Save notification to local Hive storage via repository
+    if (_notificationRepository != null) {
+      await _notificationRepository!.saveNotificationFromFCM(message);
+      debugPrint('Notification saved to Hive via repository');
+    } else {
+      debugPrint('Warning: NotificationRepository not set!');
+    }
   }
 
   /// Handle message tap (background or terminated)
-  void _handleMessageTap(RemoteMessage message) {
+  void _handleMessageTap(RemoteMessage message) async {
     debugPrint('Message tapped: ${message.messageId}');
+
+    // Save notification if not already saved
+    if (_notificationRepository != null) {
+      await _notificationRepository!.saveNotificationFromFCM(message);
+    }
 
     // TODO: Navigate to trip details if tripId exists
     final tripId = message.data['tripId'];
@@ -185,17 +204,6 @@ class FCMService {
       notificationDetails,
       payload: payload,
     );
-  }
-
-  /// Store notification in Firestore
-  Future<void> _storeNotification(RemoteMessage message) async {
-    try {
-      // This will be called when notification is received
-      // The actual storage logic will be in NotificationRepository
-      debugPrint('Storing notification: ${message.messageId}');
-    } catch (e) {
-      debugPrint('Error storing notification: $e');
-    }
   }
 
   /// Save FCM token to Firestore for a user

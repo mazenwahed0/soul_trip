@@ -15,6 +15,8 @@ class Routes {
   static const String loginView = '/login';
   static const String homeView = '/home';
   static const String expertsView = '/experts';
+  static const String expertsfilterscreen = '/FilterExperts';
+  static const String expertsDetailsView = '/details_screen';
   static const String wishlistView = '/wishlist';
   static const String reviewsView = '/reviews';
   static const String layoutView = '/layout';
@@ -45,6 +47,10 @@ class Routes {
   static const String audioPlayerView = '/audio-player';
   static const String authorProfileView = '/author-profile';
   static const String galleriesArticlesWidget = '/galleries-articles-widget';
+  static const String tripDetailsScreen =
+      '/trip-details'; // Base path, use with /:tripId
+  static const String paymentScreen = '/payment';
+  static const String addCardScreen = '/add-card';
   static const String categoriesTripsView = '/categories-trips';
   static const String categoryTripsView = '/category-trips';
   static const String notificationView = '/notifications';

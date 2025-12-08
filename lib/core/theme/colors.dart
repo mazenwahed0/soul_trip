@@ -14,12 +14,14 @@ class ColorTheme {
   final Color backgroundLightGray = const Color(0xFFEBEBEB);
   final Color offWhite = const Color(0xFFFAFAFA);
   final Color disabledButton = const Color(0xFFACACAC);
+  final Color otpBG = const Color(0xFFFBFBFB);
 
   // Gray Shades
   final Color grayLight = const Color(0xFFB9B6B6);
   final Color grayMedium = const Color(0xFF898989);
   final Color grayVeryLight = const Color(0xFFE4E1E1);
-  final Color grayDark = const Color(0xFF585858);
+  final Color grayDarker = const Color(0xFF585858);
+  final Color grayDark = const Color(0xFF6B6B6B);
 
   // White Shades
   final Color whiteColor = const Color(0xFFFFFFFF);
