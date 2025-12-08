@@ -41,7 +41,7 @@ abstract class LayoutConstants {
       route: Routes.wishlistView,
     ),
     NavigationItemModel(
-      svgPath: "assets/icons/Community.svg",
+      svgPath: "assets/icons/community.svg",
       label: 'Reviews',
       route: Routes.reviewsView,
     ),
