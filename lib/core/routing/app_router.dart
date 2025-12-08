@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:soul_trip/core/models/home_trip_model.dart';
 import 'package:soul_trip/core/routing/routes.dart';
 import 'package:soul_trip/features/experts/data/models/Expert_model.dart';
 import 'package:soul_trip/features/experts/logic/expert_filter/expert_filter_cubit.dart';
@@ -25,21 +26,15 @@ import 'package:soul_trip/features/search/ui/screen/search_filter_screen.dart';
 import 'package:soul_trip/features/search/ui/screen/search_results_screen.dart';
 import 'package:soul_trip/features/search/manager/search_cubit/search_cubit.dart';
 
-import '../../features/authentication/data/authentication_repository.dart';
 import '../../features/authentication/ui/forget_password/forget_password_view.dart';
 import '../../features/authentication/ui/login/login_view.dart';
 import '../../features/authentication/ui/signup/signup_view.dart';
 import '../../features/onboarding/ui/onboarding_view.dart';
 import '../../features/reviews/logic/post_review/post_review_cubit.dart';
 import '../../features/reviews/logic/write_review/write_review_cubit.dart';
-import '../../features/search/manager/search_cubit/search_cubit.dart';
-import '../../features/search/ui/screen/search_filter_screen.dart';
-import '../../features/search/ui/screen/search_results_screen.dart';
 import '../../features/splash/ui/splash_view.dart';
 import '../dependency_injection/set_up_dependencies.dart';
 import 'animation_route.dart';
-import 'app_route_guard.dart';
-import 'go_router_refresh_stream.dart';
 
 abstract class AppRouter {
   static final router = GoRouter(
@@ -211,17 +206,23 @@ abstract class AppRouter {
           ),
         ],
       ),
-      GoRoute(path:Routes.tripDetailsScreen,
-        pageBuilder: (context, state) =>
-            fadeTransitionPage(const TripDetailsScreen()),
+      GoRoute(
+        path: Routes.tripDetailsScreen,
+        pageBuilder: (context, state) {
+          final trip = state.extra as HomeTripModel;
+          return fadeTransitionPage(TripDetailsScreen(trip: trip));
+        },
       ),
-      GoRoute(path:Routes.paymentScreen,
+      GoRoute(
+        path: Routes.paymentScreen,
         pageBuilder: (context, state) =>
             fadeTransitionPage(const PaymentScreen()),
       ),
-      GoRoute(path:Routes.addCardScreen,
+      GoRoute(
+        path: Routes.addCardScreen,
         pageBuilder: (context, state) =>
             fadeTransitionPage(const AddNewCardScreen()),
+      ),
       GoRoute(
         path: Routes.expertsDetailsView,
         pageBuilder: (context, state) {

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:soul_trip/core/models/home_trip_model.dart';
+import 'package:soul_trip/core/routing/routes.dart';
 import 'package:soul_trip/core/theme/colors.dart';
 import 'package:soul_trip/core/theme/text_style.dart';
 import 'package:soul_trip/core/theme/soultrip_icons.dart';
@@ -19,33 +21,36 @@ class HomeTripsCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = ColorTheme();
 
-    return Container(
-      width: 160.w,
-      margin: EdgeInsets.only(right: 4.w),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.12),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(24.r),
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            // Background image (network or placeholder)
-            _buildBackgroundImage(colors),
-
-            // Gradient overlay at bottom
-            _buildGradientOverlay(),
-
-            // Content
-            _buildContent(colors),
+    return GestureDetector(
+      onTap: () => context.push(Routes.tripDetailsScreen, extra: trip),
+      child: Container(
+        width: 160.w,
+        margin: EdgeInsets.only(right: 4.w),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(24.r),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.12),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
           ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(24.r),
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              // Background image (network or placeholder)
+              _buildBackgroundImage(colors),
+
+              // Gradient overlay at bottom
+              _buildGradientOverlay(),
+
+              // Content
+              _buildContent(colors),
+            ],
+          ),
         ),
       ),
     );

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:soul_trip/core/routing/routes.dart';
 import 'package:soul_trip/core/theme/text_style.dart';
 import 'package:soul_trip/features/add_card/widgets/credit_card_widget.dart';
 import 'package:soul_trip/core/widgets/common/buttons/primary_shadow_button.dart';
@@ -40,7 +39,7 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
         backgroundColor: Colors.white,
         centerTitle: true,
         leading: GestureDetector(
-          onTap: () => context.go(Routes.paymentScreen),
+          onTap: () => context.pop(),
           child: const CircleAvatar(
             radius: 20,
             backgroundColor: Color(0xffF0F0F0),
@@ -142,7 +141,7 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
     required String label,
     required String hint,
     required String icon,
-    
+
     TextInputType keyboard = TextInputType.text,
   }) {
     return Column(
@@ -166,8 +165,7 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
             keyboardType: keyboard,
             decoration: InputDecoration(
               prefixIcon: Padding(
-
-                padding: const EdgeInsets.only( right: 8.0),
+                padding: const EdgeInsets.only(right: 8.0),
                 child: Image.asset(icon, color: ColorTheme().grayDark),
               ),
               prefixIconConstraints: BoxConstraints(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:soul_trip/core/routing/routes.dart';
 import 'package:soul_trip/core/theme/colors.dart';
 import 'package:soul_trip/core/theme/text_style.dart';
 import 'package:soul_trip/features/category_trips/ui/widgets/category_trip_item_card_widget.dart';
@@ -97,6 +98,10 @@ class SearchResultsScreen extends StatelessWidget {
                           final trip = trips[index];
                           return CategoryTripItemCardWidget(
                             trip: trip,
+                            onTap: () => context.push(
+                              Routes.tripDetailsScreen,
+                              extra: trip,
+                            ),
                             favoriteButton: SearchTripFavoriteButton(
                               tripId: trip.id,
                             ),

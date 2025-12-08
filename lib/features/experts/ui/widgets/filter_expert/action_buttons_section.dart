@@ -7,6 +7,8 @@ import 'package:soul_trip/features/experts/logic/read_expert_data/expert_state.d
 import 'package:soul_trip/features/experts/ui/widgets/widthspace_and%20_heigthspace%20_widget.dart';
 
 class ActionButtonsSection extends StatelessWidget {
+  const ActionButtonsSection({super.key});
+
   @override
   Widget build(BuildContext context) {
     final expertCubit = context.read<ExpertCubit>();

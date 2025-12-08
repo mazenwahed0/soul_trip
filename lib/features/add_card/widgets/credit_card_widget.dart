@@ -97,9 +97,9 @@ class _CreditCardWidgetState extends State<CreditCardWidget> {
   static const String _cardLayer2 = '${_basePath}cardLayer2.png';
   static const String _cardChip = '${_basePath}cardChip.png';
 
-   String _formatCardNumber(String text) {
+  String _formatCardNumber(String text) {
     if (text.isEmpty) return "1235 2569 9548 9276";
-    
+
     final clean = text.replaceAll(" ", "");
     final buffer = StringBuffer();
 
@@ -111,7 +111,6 @@ class _CreditCardWidgetState extends State<CreditCardWidget> {
     }
     return buffer.toString();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -151,9 +150,10 @@ class _CreditCardWidgetState extends State<CreditCardWidget> {
                   ),
 
                   Padding(
-                    padding: EdgeInsets.all(24.sp),
+                    padding: EdgeInsets.all(20.sp),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         /// VISA CARD label
                         Text(
@@ -164,17 +164,17 @@ class _CreditCardWidgetState extends State<CreditCardWidget> {
                           ),
                         ),
 
-                        SizedBox(height: 22.h),
+                        SizedBox(height: 18.h),
 
                         /// CHIP
                         Image.asset(
                           _cardChip,
                           width: 50.w,
-                          height: 30.h,
+                          height: 28.h,
                           errorBuilder: (context, error, stackTrace) =>
                               Container(
                                 width: 50.w,
-                                height: 30.h,
+                                height: 28.h,
                                 decoration: BoxDecoration(
                                   color: Colors.amber,
                                   borderRadius: BorderRadius.circular(4),
@@ -182,7 +182,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget> {
                               ),
                         ),
 
-                        SizedBox(height: 18.h),
+                        SizedBox(height: 14.h),
 
                         /// CARD NUMBER
                         Text(
@@ -193,7 +193,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget> {
                           ),
                         ),
 
-                       // SizedBox(height:2.h),
+                        // SizedBox(height:2.h),
 
                         /// NAME AND EXPIRY
                         Row(
@@ -218,7 +218,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget> {
                                     color: Colors.white,
                                     letterSpacing: 0,
                                     fontWeight: FontWeight.w400,
-                                    fontSize: 7.sp
+                                    fontSize: 7.sp,
                                   ),
                                 ),
                               ],
@@ -226,46 +226,51 @@ class _CreditCardWidgetState extends State<CreditCardWidget> {
 
                             /// Expiry column
                             Padding(
-                              padding: const EdgeInsets.only(right: 12.0,top: 12.0 ),
+                              padding: const EdgeInsets.only(
+                                right: 12.0,
+                                top: 12.0,
+                              ),
                               child: Row(
                                 children: [
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
-                                       Text(
+                                      Text(
                                         "VALID",
-                                        style: AppTextStyles.aldrich6().copyWith(
-                                          color: Colors.white,
-                                          
-                                          letterSpacing: 0.5,
-                                        ),
+                                        style: AppTextStyles.aldrich6()
+                                            .copyWith(
+                                              color: Colors.white,
+
+                                              letterSpacing: 0.5,
+                                            ),
                                       ),
-                                       Text(
+                                      Text(
                                         "THRU",
-                                        style: AppTextStyles.aldrich6().copyWith(
-                                          color: Colors.white,
-                                         
-                                          letterSpacing: 0.5,
-                                        ),
+                                        style: AppTextStyles.aldrich6()
+                                            .copyWith(
+                                              color: Colors.white,
+
+                                              letterSpacing: 0.5,
+                                            ),
                                       ),
-                                      
-                                      
                                     ],
                                   ),
                                   SizedBox(width: 2.w),
                                   Image.asset(
-                                        'assets/icons/rightArrow.png',
-                                        width: 4.w,
-                                        height: 4.h,
-                                        fit: BoxFit.contain,
-                                        errorBuilder: (context, error, stackTrace) => const SizedBox.shrink(),
-                                      ),
+                                    'assets/icons/rightArrow.png',
+                                    width: 4.w,
+                                    height: 4.h,
+                                    fit: BoxFit.contain,
+                                    errorBuilder:
+                                        (context, error, stackTrace) =>
+                                            const SizedBox.shrink(),
+                                  ),
                                   SizedBox(width: 2.w),
                                   Text(
                                     widget.validThru,
                                     style: AppTextStyles.aldrich10().copyWith(
                                       color: Colors.white,
-                              
+
                                       fontWeight: FontWeight.w400,
                                     ),
                                   ),

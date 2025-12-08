@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:soul_trip/core/models/home_trip_model.dart';
 import 'package:soul_trip/core/theme/colors.dart';
 import 'package:soul_trip/core/theme/text_style.dart';
 import 'package:soul_trip/features/trip_details/widgets/trip_header.dart';
@@ -11,11 +12,11 @@ import 'package:soul_trip/features/trip_details/widgets/experts_tap.dart';
 import 'package:soul_trip/features/trip_details/widgets/review_tap.dart';
 import 'package:soul_trip/core/routing/routes.dart';
 import 'package:soul_trip/core/widgets/common/buttons/primary_shadow_button.dart';
-import 'package:go_router/go_router.dart';
-import 'package:soul_trip/core/routing/routes.dart';
 
 class TripDetailsScreen extends StatefulWidget {
-  const TripDetailsScreen({super.key});
+  final HomeTripModel trip;
+
+  const TripDetailsScreen({super.key, required this.trip});
 
   @override
   State<TripDetailsScreen> createState() => _TripDetailsScreenState();
@@ -37,6 +38,13 @@ class _TripDetailsScreenState extends State<TripDetailsScreen>
     super.dispose();
   }
 
+  String _formatDate(DateTime? date) {
+    if (date == null) return '';
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return '${date.day} ${months[date.month - 1]}';
+  }
+
   Widget _buildTabContent() {
     switch (_tabController.index) {
       case 0:
@@ -44,7 +52,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen>
       case 1:
         return ExpertsTap();
       case 2:
-        return ReviewsTab(overallRating: 4.8);
+        return ReviewsTab(overallRating: widget.trip.rate.toDouble());
       default:
         return AboutTap();
     }
@@ -53,6 +61,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen>
   @override
   Widget build(BuildContext context) {
     final double bottomPadding = MediaQuery.of(context).padding.bottom;
+    final trip = widget.trip;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -64,30 +73,31 @@ class _TripDetailsScreenState extends State<TripDetailsScreen>
               clipBehavior: Clip.none,
               children: [
                 TripHeader(
-                  imageUrl: [
-                    "https://res.cloudinary.com/da5c5nstz/image/upload/v1764205879/unsplash_tnRb6IwpJAE_zij5xd.png",
-                  ],
-                  onTapBack: () => context.go(Routes.homeView),
-                  title: "Healing Journey in the Oasis",
-                  location: "Oasis, Egypt",
-                  date: "25 Nov",
+                  imageUrl: trip.image != null ? [trip.image!] : [],
+                  onTapBack: () => context.pop(),
+                  title: trip.title,
+                  location: trip.location,
+                  date: _formatDate(trip.date),
                 ),
 
                 /// PRICE BADGE
                 Positioned(
                   bottom: -32.h,
                   right: 16.w,
-                  child: CardContent(price: "\$ 700", rating: 4),
+                  child: CardContent(
+                    price: "\$ ${trip.price.toStringAsFixed(0)}",
+                    rating: trip.rate.toInt(),
+                  ),
                 ),
               ],
             ),
-            
+
             SizedBox(height: 48.h),
-            
+
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Text(
-                "A natural recovery experience designed to ease joint pain and restore mobility through Egypt's healing springs, mineral sands, and expert-guided therapy.",
+                "Discover ${trip.title} - a unique wellness experience in ${trip.location}.",
                 style: AppTextStyles.regular14().copyWith(
                   color: ColorTheme().grayMedium,
                 ),
@@ -113,7 +123,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen>
                 return _buildTabContent();
               },
             ),
-            
+
             // Extra space for bottom button
             SizedBox(height: 16.h),
           ],
@@ -131,7 +141,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen>
         child: PrimaryShadowButton(
           text: "Book Now",
           onPressed: () {
-             context.go(Routes.paymentScreen);
+            context.push(Routes.paymentScreen);
           },
         ),
       ),

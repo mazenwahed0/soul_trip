@@ -105,7 +105,7 @@ class PaymentScreen extends StatelessWidget {
                         // ADD NEW CARD BUTTON (Centered)
                         Center(
                           child: AddNewCardButton(
-                            onTap:() => context.go(Routes.addCardScreen),
+                            onTap: () => context.push(Routes.addCardScreen),
                           ),
                         ),
                         SizedBox(height: 20.h),
@@ -127,7 +127,10 @@ class PaymentScreen extends StatelessWidget {
           bottom: 16 + bottomPadding,
           top: 6,
         ),
-        child: PrimaryShadowButton(text: "Proceed to Payment", onPressed: () {}),
+        child: PrimaryShadowButton(
+          text: "Proceed to Payment",
+          onPressed: () {},
+        ),
       ),
     );
   }
