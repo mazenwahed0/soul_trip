@@ -1,5 +1,4 @@
-
-import 'package:soul_trip/features/experts/data/models/Expert_model.dart';
+import 'package:soul_trip/features/experts/data/models/expert_model.dart';
 
 abstract class ExpertState {
   const ExpertState();

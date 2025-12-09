@@ -28,6 +28,12 @@ class BottomNavigationWidget extends StatelessWidget {
           // Handle side effects if needed
         },
         builder: (context, state) {
+          final cubit = context.read<LayoutCubit>();
+          if (cubit.getCurrentRoute() != location) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              cubit.updateCurrentRoute(location);
+            });
+          }
           return Scaffold(
             body: child,
             backgroundColor: backgroundColor,

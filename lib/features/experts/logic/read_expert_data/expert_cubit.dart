@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:soul_trip/features/experts/data/models/Expert_model.dart';
+import 'package:soul_trip/features/experts/data/models/expert_model.dart';
 
 import 'package:soul_trip/features/experts/data/repo/experts_repository.dart';
 import 'package:soul_trip/features/experts/logic/read_expert_data/expert_state.dart';
@@ -10,6 +10,10 @@ class ExpertCubit extends Cubit<ExpertState> {
   List<ExpertModel> allExperts = [];
 
   ExpertCubit({required this.repo}) : super(ExpertInitial());
+
+  void updateExpertsList(List<ExpertModel> newExperts) {
+    emit(ExpertLoaded(expert: newExperts));
+  }
 
   void listenToexpert() {
     emit(ExpertLoading());
@@ -56,6 +60,4 @@ class ExpertCubit extends Cubit<ExpertState> {
     }).toList();
     emit(ExpertLoaded(expert: filtered));
   }
-
 }
-

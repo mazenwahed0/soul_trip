@@ -11,10 +11,14 @@ class PrimaryShadowButton extends StatelessWidget {
     this.width = 343,
     this.height = 56,
     this.backgroundColor,
+    this.radius,
+    this.textStyle,
     this.isLoading = false,
   });
 
   final String text;
+  final TextStyle? textStyle;
+  final double? radius;
   final VoidCallback onPressed;
   final double width;
   final Color? backgroundColor;
@@ -30,9 +34,7 @@ class PrimaryShadowButton extends StatelessWidget {
       width: width.w,
       height: height.h,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(
-          25,
-        ), // 25px matches Figma more than Radius: 20px
+        borderRadius: BorderRadius.circular(radius ?? 20), // Radius: 20px
         color: colorTheme.primaryBlue, // Background: #003566
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -79,7 +81,9 @@ class PrimaryShadowButton extends StatelessWidget {
               )
             : Text(
                 text,
-                style: AppTextStyles.semiBold16().copyWith(color: Colors.white),
+                style:
+                    textStyle ??
+                    AppTextStyles.semiBold16().copyWith(color: Colors.white),
               ),
       ),
     );

@@ -152,10 +152,83 @@ lib/
 | 2025-12-07 | Safwa Ibrahim  | Completed Add Card Screen UI                                                 |
 | 2025-12-08 | Mina Yasser    | Update V0.1.8 (Merged Experts Integration & Trip Details)                    |
 | 2025-12-09 | Mazen Wahed    | Update V0.1.9 (Merged Wishlist Feature)                                      |
+| 2025-12-09 | Mazen Wahed    | Update V0.2 (Expert Details UX & Bug Fixes)                                  |
+| 2025-12-09 | Mazen Wahed    | Update V0.2.1 (Filter Module UX & Bug Fixes)                                 |
 
 ---
 
 ### 2. Version History (Changelog)
+
+#### V0.2.1 (Experts Filter Module & UI Polish)
+
+This update brings the Experts Module to production-level fidelity, standardizes trip cards across the app, and unifies feedback mechanisms using the new Bottom Sheet system.
+
+**Experts Module:**
+
+- **Search Integration:** Refactored `HomeSearchBarWidget` to be reusable, allowing the Experts screen to use specific White/Grey styling and custom shadows distinct from the Home screen.
+
+**Filter Screen Refactor:**
+
+- **UI Polish:** Updated filter chips to use the "Choice Chip" style (Grey default / Blue selected) with conditional logic to display Star Icons only on rating chips.
+
+- **Horizontal Scrolling:** Converted the "Location" filter from a static wrap to a scrollable horizontal list.
+
+- **Logic Fixes:** Fixed the "Reset All" button state (now disabled when no filters are active) and resolved navigation crashes by properly injecting `ExpertFilterCubit` via `AppRouter`.
+
+**Home & Categories**
+
+- **Card Standardization:**
+
+  - **Home Trips:** Rebuilt `HomeTripsCardWidget` to match the "Trip Details 4" Figma spec (Horizontal layout, floating heart icon, specific shadows).
+
+  - **Category Trips:** Updated `CategoryTripItemCardWidget` to share the exact same modern UI as Home cards for consistency.
+
+**Profile & UX**
+
+- **Account Info:** Replaced standard loaders/snackbars with the `StatusBottomSheet` for success states.
+
+**Bug Fixes & Clean Code**
+
+- **Routing Safety:** Fixed a critical `Null Check Operator` crash in `FilterExpertsScreen` by removing unsafe arguments and relying on Dependency Injection in `AppRouter`.
+
+---
+
+#### V0.2 (Experts Module & Booking System)
+
+This update significantly refactors the Expert Details UI to match high-fidelity Figma designs, cleans up the codebase by removing redundant legacy files, and fixes critical scrolling/layout bugs across the app.
+
+**Experts Module:**
+
+- **Visual Redesign:** Completely rebuilt `ExpertdetailsView` to match Figma specifications.
+
+  - **Glassmorphism:** Implemented gradient overlays and glass-style cards for the doctor's info.
+  - **Sticky Booking Action:** pinned the "Book Appointment" button to the bottom while content scrolls behind it.
+  - **Typography:** Updated fonts to `Poppins` with precise weights (SemiBold, Medium) and colors (`#262626`,` #898989`).
+  - **Heavy Borders:** Enhanced AboutDoctor card with distinct `#EBEBEB` borders.
+
+- **Custom Booking System (New):**
+
+  - **Custom Calendar:** Replaced the native date picker with a fully custom-built Calendar UI (`CalendarGrid`, `CalendarHeader`) matching the design language.
+  - **Logic Integration:** Connected the "Book Appointment" button to `BookingCubit` to handle real API calls.
+  - **Success Feedback:** Integrated `StatusBottomSheet` to display a "Booking Successful" confirmation with navigation logic back to Home.
+
+- **Date & Time Logic:** Refactored `TimeSelector` and `DateSelector` to support a cohesive vertical layout with horizontal scrolling chips for time slots.
+- **Image Handling:** Optimized ExpertImage scaling (`420h`) and alignment (`topCenter`) to ensure subjects are perfectly visible.
+- **State Management:** Cleanup: Deleted redundant files and folders (`widgets/filter_expert, expertBody.dart, etc.`) to streamline the project structure.
+
+**UI/UX Polish & Bug Fixes:**
+
+- **Material 3 Fix:** Fixed the "Bluish Tint" issue on `CustomAppBar` by forcing `surfaceTintColor: Colors.transparent.`
+- **Scroll Visibility:** Resolved the "Hidden Last Item" bug by adding dynamic bottom padding (`100.h`) to `Wishlist`, `Profile`, and `Reviews screens`, ensuring content clears the transparent Bottom Navigation Bar.
+- **Layout Safety:** Fixed `RenderFlex` overflow errors in `FilterExperts` and `AboutDoctor` widgets by replacing rigid columns/rows with flexible layouts (`Wrap`, `Expanded`).
+- **Navigation Sync:** Fixed issue where the Bottom Navigation Bar state did not update when navigating programmatically via `GoRouter`.
+
+- **Bug Fixes & Clean Code**
+
+  - **Refactoring:** Enforced strict `snake_case` file naming conventions (renamed `ExpertDetailsView widget.dart ` -> `expert_details_view.dart`).
+  - **Cleanup:** Deleted redundant files and folders (e.g., duplicate `StarsWidget`) to streamline the project structure.
+
+---
 
 #### V0.1.9 (Wishlist Implementation)
 

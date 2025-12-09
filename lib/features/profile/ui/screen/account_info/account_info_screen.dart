@@ -13,6 +13,7 @@ import '../../../../../core/validation/validation.dart';
 import '../../../../../core/widgets/common/appbar/custom_app_bar.dart';
 import '../../../../../core/widgets/common/buttons/primary_shadow_button.dart';
 
+import '../../../../../core/widgets/common/status_sheet/status_bottom_sheet.dart';
 import '../../../../authentication/logic/auth/auth_cubit.dart';
 import '../../../logic/user/user_cubit.dart';
 import '../../../logic/user/user_state.dart';
@@ -124,7 +125,12 @@ class _AccountInfoBodyState extends State<_AccountInfoBody> {
       body: BlocListener<UserCubit, UserState>(
         listener: (context, state) {
           if (state is UserSuccess) {
-            Loaders.success(context, title: "Success", message: state.message);
+            showModalBottomSheet(
+              context: context,
+              builder: (context) =>
+                  StatusBottomSheet(title: "Changes Saved Successfully"),
+            );
+
             context.read<AuthCubit>().refreshUserData();
 
             // -- Update initial values after successful save

@@ -1,8 +1,5 @@
-
-
-
-import 'package:soul_trip/features/experts/data/models/ExpertFilter.dart';
-import 'package:soul_trip/features/experts/data/models/Expert_model.dart';
+import 'package:soul_trip/features/experts/data/models/expert_filter_model.dart';
+import 'package:soul_trip/features/experts/data/models/expert_model.dart';
 
 abstract class ExpertFilterState {}
 

@@ -13,6 +13,11 @@ class HomeSearchBarWidget extends StatelessWidget {
   final bool showFilter;
   final bool autofocus;
 
+  // Color Customization
+  final Color? searchBackgroundColor;
+  final Color? filterIconColor;
+  final List<BoxShadow>? boxShadow;
+
   const HomeSearchBarWidget({
     super.key,
     this.onTap,
@@ -22,25 +27,33 @@ class HomeSearchBarWidget extends StatelessWidget {
     this.hintText = "Search",
     this.showFilter = true,
     this.autofocus = false,
+    this.searchBackgroundColor,
+    this.filterIconColor,
+    this.boxShadow,
   });
 
   @override
   Widget build(BuildContext context) {
     final colors = ColorTheme();
 
+    final bgColor = searchBackgroundColor ?? colors.offWhite;
+    final iconColor = filterIconColor ?? colors.primaryBlue;
+
     return Container(
       width: 343.w,
       height: 48.h,
       decoration: BoxDecoration(
-        color: colors.offWhite, // Main background (Off-White)
+        color: bgColor, // Main background (Off-White)
         borderRadius: BorderRadius.circular(30.r), // Pill Shape
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08), // Shadow
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        boxShadow:
+            boxShadow ??
+            [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.08), // Shadow
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
       ),
       child: Row(
         children: [
@@ -110,11 +123,7 @@ class HomeSearchBarWidget extends StatelessWidget {
                   ),
                 ),
                 child: Center(
-                  child: Icon(
-                    Soultrip.filter,
-                    color: colors.primaryBlue,
-                    size: 22.sp,
-                  ),
+                  child: Icon(Soultrip.filter, color: iconColor, size: 22.sp),
                 ),
               ),
             ),
