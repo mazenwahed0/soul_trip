@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:soul_trip/features/experts/data/models/Expert_model.dart';
-
-
+import 'package:soul_trip/features/experts/data/models/expert_model.dart';
 
 class ExpertsRepository {
   final FirebaseFirestore firestore;
@@ -24,8 +22,6 @@ class ExpertsRepository {
         .collection('experts')
         .doc(expertId)
         .snapshots()
-        .map(
-          (doc) => ExpertModel.fromMap(doc.data()!, doc.id),
-        );
+        .map((doc) => ExpertModel.fromMap(doc.data()!, doc.id));
   }
 }

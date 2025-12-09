@@ -1,14 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:soul_trip/features/experts/data/repo/BookingRepository.dart';
-import 'package:soul_trip/features/experts/logic/booking/BookingState.dart';
+import 'package:soul_trip/features/experts/data/repo/booking_repository.dart';
+import 'package:soul_trip/features/experts/logic/booking/booking_state.dart';
 
 class BookingCubit extends Cubit<BookingState> {
   final BookingRepository bookingRepository;
 
   BookingCubit(this.bookingRepository) : super(BookingInitial());
 
-  /// check booking availability    
+  /// check booking availability
   Future<void> checkBooking({
     required String expertId,
     required DateTime date,
