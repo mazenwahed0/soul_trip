@@ -170,6 +170,8 @@ This update finalizes the "Saved Trips" functionality, allowing users to view an
 - **Empty State Handling:** Created a polished EmptyWishlist widget with a call-to-action button redirecting users to the Home screen when they have no saved trips.
 - **State Management:** Handled loading, loaded (list populated), and error states to ensure a smooth user experience.
 
+---
+
 #### V0.1.8 (Experts Module & Trip Details Integration)
 
 This update integrates the "Experts" feature and Trip Details logic, finalizing the core browsing and booking flows.
@@ -191,6 +193,8 @@ This update integrates the "Experts" feature and Trip Details logic, finalizing 
 
 - **Layout Constants:** Updated `layout_constants.dart` to support new navigation routes.
 
+---
+
 #### V0.1.7 (Engagement & Real-time Interaction)
 
 This update introduces a robust notification center powered by Firebase Cloud Messaging (FCM) and refactors the "Favorites" logic into a scalable, real-time architecture.
@@ -205,6 +209,8 @@ This update introduces a robust notification center powered by Firebase Cloud Me
 
 - **Dedicated Cubits:** Migrated from ad-hoc state management to specific Cubits (`TripsLikesCubit`, `SearchLikesCubit`) for handling likes across different features.
 - **Optimistic UI:** Implemented immediate visual feedback (heart turns red instantly) while Firestore writes occur in the background.
+
+---
 
 #### V0.1.6 (Custom OTP Backend & Advanced Auth Refactoring)
 
@@ -235,6 +241,8 @@ This update introduces a fully custom serverless backend to handle secure passwo
 - **Utility Extraction:** Created `format_timer.dart` for reusable time formatting logic.
 - **State Management Fixes:** Solved a state-looping bug in `ForgetPasswordCubit` where the success Snackbar would trigger repeatedly during the timer countdown.
 
+---
+
 #### V0.1.5 (Likes & Notifications Features)
 
 This update focuses on user engagement, introducing a fully synchronized **Favorites System** across the app and a robust **Notification Center** powered by FCM.
@@ -259,6 +267,8 @@ This update focuses on user engagement, introducing a fully synchronized **Favor
 
 - **Refactored Cards:** Updated `BannerCardWidget`, `CategoryTripItemCardWidget`, and `SearchTripFavoriteButton` to consume the new Likes Cubits.
 - **Assets:** Added new icons and assets to support the notification and empty state UIs.
+
+---
 
 #### V0.1.4b (Refactoring & Stability Polish)
 
@@ -289,6 +299,8 @@ This patch focuses on architectural cleanup, bug fixes, and unifying the UI cons
 - **Header Cleanup:** Removed redundant background attributes from `HomeHeaderWidget` for a cleaner look.
 - **Dependency Injection:** Finalized dependencies and routing configurations for the Reviews and Search features.
 
+---
+
 #### V0.1.4 (Reviews & Social Community)
 
 This update introduces the community aspect of Soul Trip, allowing users to share their experiences and interact with others.
@@ -314,6 +326,8 @@ This update introduces the community aspect of Soul Trip, allowing users to shar
 
 - **Dynamic Header:** Integrated the reusable `HomeHeaderWidget` into the Reviews screen, featuring a toggleable Search bar.
 - **Action Items:** Created reusable `ActionItem`, `FavCircleButton`, and `SaveCircleButton` widgets to standardize social interaction buttons.
+
+---
 
 #### V0.1.3 (Home, Search & Auth Integration)
 
