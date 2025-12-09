@@ -26,6 +26,7 @@ import 'package:soul_trip/features/search/ui/screen/search_filter_screen.dart';
 import 'package:soul_trip/features/search/ui/screen/search_results_screen.dart';
 import 'package:soul_trip/features/search/manager/search_cubit/search_cubit.dart';
 
+import '../../features/authentication/data/authentication_repository.dart';
 import '../../features/authentication/ui/forget_password/forget_password_view.dart';
 import '../../features/authentication/ui/login/login_view.dart';
 import '../../features/authentication/ui/signup/signup_view.dart';
@@ -35,14 +36,16 @@ import '../../features/reviews/logic/write_review/write_review_cubit.dart';
 import '../../features/splash/ui/splash_view.dart';
 import '../dependency_injection/set_up_dependencies.dart';
 import 'animation_route.dart';
+import 'app_route_guard.dart';
+import 'go_router_refresh_stream.dart';
 
 abstract class AppRouter {
   static final router = GoRouter(
     initialLocation: Routes.splashView,
-    // redirect: AppRouteGuard.guard,
-    // refreshListenable: GoRouterRefreshStream(
-    //   getIt<AuthenticationRepository>().authStateChanges,
-    // ),
+    redirect: AppRouteGuard.guard,
+    refreshListenable: GoRouterRefreshStream(
+      getIt<AuthenticationRepository>().authStateChanges,
+    ),
     routes: [
       // -- Splash View
       GoRoute(
