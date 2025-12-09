@@ -125,11 +125,19 @@ lib/
 | 2025-11-21 | Mazen Wahed    | Update V0.1 (Added Assets & Reusable Widgets)                                |
 | 2025-11-22 | Mina Yasser    | Added Home Header & Search UI Structure                                      |
 | 2025-11-23 | Mazen Wahed    | Update V0.1.1 (Authentication Firebase + Added New Files)                    |
+| 2025-11-23 | Mariam Naeem   | Added Static Expert & Booking Screens                                        |
 | 2025-11-24 | Mina Yasser    | Implemented Banners, Categories & Most Popular Sections                      |
+| 2025-11-25 | Mariam Naeem   | Fetched Experts Data from Firebase & Implemented Search                      |
 | 2025-11-26 | Mazen Wahed    | Update V0.1.2 (Profile, Race Condition Fix, Dev Tools)                       |
 | 2025-11-26 | Mina Yasser    | Created Search Filter & Results Screens                                      |
+| 2025-11-27 | Safwa Ibrahim  | Implemented Trip Details Widgets                                             |
 | 2025-11-28 | Mazen Wahed    | Update V0.1.3 (Merge Auth, Home/Search Features & UI Enhancements)           |
+| 2025-11-29 | Safwa Ibrahim  | Finalized Trip Details Screen UI                                             |
+| 2025-11-29 | Mariam Naeem   | Expert Screen Updates & Internet Connection Check                            |
+| 2025-11-30 | Mariam Naeem   | Implemented Booking Validation (Prevent Double Booking)                      |
+| 2025-11-30 | Safwa Ibrahim  | Fixed Trip Details Scroll Issue                                              |
 | 2025-11-30 | Mina Yasser    | Finish Like in Home (Banner and Trips of Categories)                         |
+| 2025-12-01 | Safwa Ibrahim  | Created Payment Screen UI                                                    |
 | 2025-12-01 | Mina Yasser    | Implement Notifications Screen                                               |
 | 2025-12-02 | Mina Yasser    | Implement Favorite Like in Category & Search Result View                     |
 | 2025-12-03 | Mazen Wahed    | Update Readme & Adding New Assets                                            |
@@ -138,10 +146,65 @@ lib/
 | 2025-12-05 | Mina Yasser    | Update V0.1.5 (Implemented Notification Screen & Likes Logic (Cubits/Repos)) |
 | 2025-12-05 | Mazen Wahed    | Merged Reviews, Search, and Notification Features                            |
 | 2025-12-05 | Mazen Wahed    | Update V0.1.6 (OTP Forgot Password)                                          |
+| 2025-12-06 | Mina Yasser    | Update V0.1.7 (Notification System Overhaul & Likes Architecture)            |
+| 2025-12-06 | Youssef Hesham | Implemented Wishlist Feature                                                 |
+| 2025-12-07 | Mariam Naeem   | Implemented Expert Filter Screen & Solved UI Issues                          |
+| 2025-12-07 | Safwa Ibrahim  | Completed Add Card Screen UI                                                 |
+| 2025-12-08 | Mina Yasser    | Update V0.1.8 (Merged Experts Integration & Trip Details)                    |
+| 2025-12-09 | Mazen Wahed    | Update V0.1.9 (Merged Wishlist Feature)                                      |
 
 ---
 
 ### 2. Version History (Changelog)
+
+#### V0.1.9 (Wishlist Implementation)
+
+This update finalizes the "Saved Trips" functionality, allowing users to view and manage their favorite destinations in a dedicated screen.
+
+**Wishlist Module:**
+
+- **Wishlist Screen:** Added `WishlistScreen` to display the user's liked trips.
+- **Data Fetching Logic:** Implemented `WishlistCubit` to:
+  - Fetch the list of Liked IDs from `Users/{uid}/likes`.
+  - Retrieve the full `HomeTripModel` details for each ID from the `HomeTrips` collection.
+- **Empty State Handling:** Created a polished EmptyWishlist widget with a call-to-action button redirecting users to the Home screen when they have no saved trips.
+- **State Management:** Handled loading, loaded (list populated), and error states to ensure a smooth user experience.
+
+#### V0.1.8 (Experts Module & Trip Details Integration)
+
+This update integrates the "Experts" feature and Trip Details logic, finalizing the core browsing and booking flows.
+
+**Experts Directory & Filtering:**
+
+- **Experts Screen:** Merged `feature/expert-screens` (PR #7). Implemented `ExpertsScreen` using `BlocProvider` to inject `ExpertCubit` and `ExpertsRepository`.
+- **Advanced Filtering:** Added `FilterExperts` screen allowing users to filter professionals by Category, Availability, Rating, and Budget.
+- **Booking Validation:** Implemented logic to prevent double booking of appointments.
+- **Data Layer:** Created `ExpertsRepository` to fetch and stream expert data from the `experts` Firestore collection.
+
+**Trip Details & Payment Flow:**
+
+- **Trip Details Screen:** Fully implemented the `TripDetailsScreen` with custom widgets for pricing, reviews, and expert information.
+- **Payment UI:** Added `PaymentScreen` and `AddCardScreen` to handle the checkout process for booking trips.
+- **Scroll Handling:** Optimized scrolling behavior within the Trip Details view.
+
+**Refactoring:**
+
+- **Layout Constants:** Updated `layout_constants.dart` to support new navigation routes.
+
+#### V0.1.7 (Engagement & Real-time Interaction)
+
+This update introduces a robust notification center powered by Firebase Cloud Messaging (FCM) and refactors the "Favorites" logic into a scalable, real-time architecture.
+
+**Notification System:**
+
+- **FCM Service Integration:** Implemented `FCMService` to handle foreground/background messaging and token syncing.
+- **Notification UI:** Added fully functional `NotificationScreen` that gates access based on authentication state and groups alerts by time (Today, Yesterday, Older).
+- **Logic:** Created `NotificationCubit` and `NotificationRepository` to stream user-specific notifications from Firestore.
+
+**Centralized Likes Architecture:**
+
+- **Dedicated Cubits:** Migrated from ad-hoc state management to specific Cubits (`TripsLikesCubit`, `SearchLikesCubit`) for handling likes across different features.
+- **Optimistic UI:** Implemented immediate visual feedback (heart turns red instantly) while Firestore writes occur in the background.
 
 #### V0.1.6 (Custom OTP Backend & Advanced Auth Refactoring)
 

@@ -24,10 +24,7 @@ import 'features/authentication/logic/auth/auth_cubit.dart';
 import 'features/notification/data/repositories/notification_repository.dart';
 import 'features/profile/data/user/user_repository.dart';
 import 'firebase_options.dart';
-
-// --- Imports for Wishlist ---
 import 'features/wishlist/logic/cubit/wishlist_cubit.dart';
-import 'features/wishlist/data/repository/wishlist_repository.dart';
 
 void main() async {
   // -- Widgets Binding: needed for async main to load widgets first before Firebase
