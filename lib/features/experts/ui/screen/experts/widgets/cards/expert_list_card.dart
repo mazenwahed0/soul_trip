@@ -55,7 +55,7 @@ class ExpertListCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // --- TOP SECTION (Height ~84px) ---
+            // -- TOP SECTION (Height ~84px)
             SizedBox(
               height: 84.h,
               child: Row(
@@ -64,7 +64,7 @@ class ExpertListCard extends StatelessWidget {
                   // Avatar
                   ClipRRect(
                     borderRadius: BorderRadius.circular(
-                      20.r,
+                      30.r,
                     ), // Rounded Rect per visual
                     child: CachedNetworkImage(
                       imageUrl: imageUrl,
@@ -172,7 +172,7 @@ class ExpertListCard extends StatelessWidget {
               ),
             ),
 
-            // --- BOTTOM SECTION (Height ~40px) ---
+            // -- BOTTOM SECTION (Height ~40px)
             Container(
               height: 38.h,
               margin: EdgeInsets.symmetric(vertical: 2.h),

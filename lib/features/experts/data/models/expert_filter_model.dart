@@ -34,5 +34,13 @@ class ExpertFilterModel {
   }
 
   static ExpertFilterModel empty() => ExpertFilterModel();
-}
 
+  bool get hasActiveFilters {
+    return sessionType != null ||
+        location != null ||
+        specialization != null ||
+        (minRating != null && minRating! > 0) ||
+        maxPrice != null ||
+        availabilityDays != null;
+  }
+}

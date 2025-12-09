@@ -48,9 +48,9 @@ class ExpertImage extends StatelessWidget {
                 colors: [
                   const Color(0xFFF6F6F6).withOpacity(0.0),
                   const Color(0xFFF6F6F6).withOpacity(0.0),
-                  const Color(0xFFF2F2F2).withOpacity(0.5),
+                  const Color(0xFFF2F2F2).withOpacity(0.8),
                 ],
-                stops: const [0.0, 0.43, 1.0],
+                stops: const [0.0, 0.25, 1.0],
               ),
             ),
           ),

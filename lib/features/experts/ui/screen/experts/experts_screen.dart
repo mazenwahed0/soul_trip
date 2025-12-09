@@ -49,6 +49,15 @@ class _ExpertsScreenBody extends StatelessWidget {
             child: Builder(
               builder: (context) {
                 return HomeSearchBarWidget(
+                  searchBackgroundColor: const Color(0xFFFAFAFA),
+                  filterIconColor: const Color(0xFF151515),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0x66000000), // #00000040 (40% opacity)
+                      blurRadius: 3,
+                      offset: const Offset(0, 0),
+                    ),
+                  ],
                   hintText: "Search",
                   onChanged: (value) {
                     context.read<ExpertCubit>().searchExperts(value);
@@ -64,8 +73,8 @@ class _ExpertsScreenBody extends StatelessWidget {
                       },
                     );
 
-                    if (result != null && context.mounted) {
-                      ExpertLoaded(expert: result);
+                    if (result != null) {
+                      expertCubit.updateExpertsList(result);
                     }
                   },
                 );

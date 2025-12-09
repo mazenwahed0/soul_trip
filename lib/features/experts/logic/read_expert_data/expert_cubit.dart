@@ -11,6 +11,10 @@ class ExpertCubit extends Cubit<ExpertState> {
 
   ExpertCubit({required this.repo}) : super(ExpertInitial());
 
+  void updateExpertsList(List<ExpertModel> newExperts) {
+    emit(ExpertLoaded(expert: newExperts));
+  }
+
   void listenToexpert() {
     emit(ExpertLoading());
 

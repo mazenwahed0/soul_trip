@@ -27,13 +27,13 @@ class FilterExpertsScreen extends StatelessWidget {
         builder: (context, state) {
           final cubit = context.read<ExpertFilterCubit>();
           final filter = cubit.filter;
+          final bool hasFilters = filter.hasActiveFilters;
 
           return Column(
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  // FIX: Changed padding to 16.w to match Figma width (343px)
-                  // This gives enough space for the "Availability" row to fit.
+                  // Changed padding to 16.w to match Figma width (343px)
                   padding: EdgeInsets.only(
                     top: 16.h,
                     left: 16.w,
@@ -46,14 +46,14 @@ class FilterExpertsScreen extends StatelessWidget {
                       // 1. Session Type
                       _buildSectionTitle("Session Type"),
                       Row(
+                        spacing: 100.w,
                         children: [
-                          CustomRadioButton(
+                          _buildSessionRadio(
                             label: "Online",
                             isSelected: filter.sessionType == "online",
                             onTap: () => cubit.setSessionType("online"),
                           ),
-                          SizedBox(width: 24.w),
-                          CustomRadioButton(
+                          _buildSessionRadio(
                             label: "In Person",
                             isSelected: filter.sessionType == "offline",
                             onTap: () => cubit.setSessionType("offline"),
@@ -64,16 +64,20 @@ class FilterExpertsScreen extends StatelessWidget {
 
                       // 2. Location
                       _buildSectionTitle("Location"),
-                      Wrap(
-                        spacing: 8.w,
-                        runSpacing: 8.h,
-                        children: ["Cairo", "Giza", "Aswan", "Siwa"].map((loc) {
-                          return SelectionChip(
-                            label: loc,
-                            isSelected: filter.location == loc,
-                            onTap: () => cubit.setLocation(loc),
-                          );
-                        }).toList(),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          spacing: 12.w,
+                          children: ["Cairo", "Giza", "Aswan", "Siwa"].map((
+                            loc,
+                          ) {
+                            return SelectionChip(
+                              label: loc,
+                              isSelected: filter.location == loc,
+                              onTap: () => cubit.setLocation(loc),
+                            );
+                          }).toList(),
+                        ),
                       ),
                       SizedBox(height: 24.h),
 
@@ -91,7 +95,7 @@ class FilterExpertsScreen extends StatelessWidget {
                               "Physical Therapist",
                               "Spa Therapist",
                             ].map((cat) {
-                              return SelectionChip(
+                              return _buildFilterChip(
                                 label: cat,
                                 isSelected: filter.specialization == cat,
                                 onTap: () => cubit.setSpecialization(cat),
@@ -136,22 +140,24 @@ class FilterExpertsScreen extends StatelessWidget {
                       Wrap(
                         spacing: 8.w,
                         children: [
-                          SelectionChip(
+                          _buildFilterChip(
                             label: "All Rating",
                             isSelected:
-                                filter.minRating == null ||
-                                filter.minRating == 0,
+                                (filter.minRating == null ||
+                                filter.minRating == 0),
                             onTap: () => cubit.setRating(0),
                           ),
-                          SelectionChip(
+                          _buildFilterChip(
                             label: "4 and above",
                             isSelected: filter.minRating == 4,
                             onTap: () => cubit.setRating(4),
+                            showStar: true,
                           ),
-                          SelectionChip(
+                          _buildFilterChip(
                             label: "4.5 and above",
                             isSelected: filter.minRating == 4.5,
                             onTap: () => cubit.setRating(4.5),
+                            showStar: true,
                           ),
                         ],
                       ),
@@ -161,7 +167,7 @@ class FilterExpertsScreen extends StatelessWidget {
                       _buildSectionTitle("Availability"),
                       Row(
                         children: [
-                          CustomRadioButton(
+                          _buildSessionRadio(
                             label: "Available Today",
                             isSelected: (filter.availabilityDays ?? [])
                                 .contains(_getDayName(DateTime.now().weekday)),
@@ -187,7 +193,6 @@ class FilterExpertsScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 24.h),
                     ],
                   ),
                 ),
@@ -201,9 +206,7 @@ class FilterExpertsScreen extends StatelessWidget {
                     Expanded(
                       child: SecondaryButton(
                         text: "Reset All",
-                        onPressed: () {
-                          cubit.reset();
-                        },
+                        onPressed: hasFilters ? () => cubit.reset() : null,
                       ),
                     ),
                     SizedBox(width: 12.w),
@@ -232,7 +235,7 @@ class FilterExpertsScreen extends StatelessWidget {
       padding: EdgeInsets.only(bottom: 12.h),
       child: Text(
         title,
-        style: AppTextStyles.semiBold16().copyWith(
+        style: AppTextStyles.medium16().copyWith(
           color: const Color(0xFF000814),
         ),
       ),
@@ -250,5 +253,92 @@ class FilterExpertsScreen extends StatelessWidget {
       "Sunday",
     ];
     return days[weekday - 1];
+  }
+
+  Widget _buildFilterChip({
+    required String label,
+    required bool isSelected,
+    required VoidCallback onTap,
+    bool showStar = false,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 34.h,
+        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? ColorTheme().primaryBlue
+              : const Color(0xFFF2F2F2),
+          borderRadius: BorderRadius.circular(20.r),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (showStar) ...[
+              Icon(
+                Icons.star_rounded,
+                color: const Color(0xFFFFC107), // Gold Star
+                size: 16.sp,
+              ),
+              SizedBox(width: 4.w),
+            ],
+            Text(
+              label,
+              style: AppTextStyles.medium12().copyWith(
+                color: isSelected ? Colors.white : const Color(0xFF262626),
+                height: 1.0,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Reusing the Session Type visual from ModeSelectorWidget
+  Widget _buildSessionRadio({
+    required String label,
+    required bool isSelected,
+    required VoidCallback onTap,
+  }) {
+    final primaryBlue = ColorTheme().primaryBlue;
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 24.w,
+            height: 24.w,
+            padding: EdgeInsets.all(5.w),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+              border: Border.all(
+                color: isSelected ? primaryBlue : const Color(0xFFD9D9D9),
+                width: 1.w,
+              ),
+            ),
+            child: isSelected
+                ? Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: primaryBlue,
+                    ),
+                  )
+                : null,
+          ),
+          SizedBox(width: 8.w),
+          Text(
+            label,
+            style: AppTextStyles.regular14().copyWith(
+              color: const Color(0xFF000814),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
