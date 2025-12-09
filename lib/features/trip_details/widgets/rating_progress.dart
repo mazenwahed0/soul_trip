@@ -3,17 +3,20 @@ import 'package:flutter/widget_previews.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:soul_trip/core/theme/colors.dart';
 import 'package:soul_trip/core/theme/text_style.dart';
-import 'package:soul_trip/features/trip_details/widgets/review_item.dart';
 
 class RatingProgressItem extends StatelessWidget {
   final String label;
   final double rating;
 
-  const RatingProgressItem({super.key, required this.label, required this.rating});
+  const RatingProgressItem({
+    super.key,
+    required this.label,
+    required this.rating,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final double progressValue = rating / 5.0; 
+    final double progressValue = rating / 5.0;
 
     return Padding(
       padding: EdgeInsets.only(bottom: 8.h),
@@ -24,9 +27,7 @@ class RatingProgressItem extends StatelessWidget {
             width: 60.w,
             child: Text(
               label,
-              style: AppTextStyles.medium12().copyWith(
-                color: Colors.black,
-              ),
+              style: AppTextStyles.medium12().copyWith(color: Colors.black),
             ),
           ),
           SizedBox(width: 12.w),
@@ -54,7 +55,7 @@ class RatingProgressItem extends StatelessWidget {
             child: Text(
               rating.toStringAsFixed(1),
               textAlign: TextAlign.end,
-              style: AppTextStyles.medium12().copyWith( color: Colors.black87),
+              style: AppTextStyles.medium12().copyWith(color: Colors.black87),
             ),
           ),
         ],
@@ -70,31 +71,15 @@ Widget ratingProgressItemPreview() {
     color: Colors.white,
     child: Column(
       children: [
-        RatingProgressItem(
-          label: 'Excellent',
-          rating: 4.5,
-        ),
-        RatingProgressItem(
-          label: 'Very Good',
-          rating: 3.8,
-        ),
-        RatingProgressItem(
-          label: 'Average',
-          rating: 2.9,
-        ),
-        RatingProgressItem(
-          label: 'Poor',
-          rating: 1.5,
-        ),
-        RatingProgressItem(
-          label: 'Terrible',
-          rating: 0.8,
-        ),
+        RatingProgressItem(label: 'Excellent', rating: 4.5),
+        RatingProgressItem(label: 'Very Good', rating: 3.8),
+        RatingProgressItem(label: 'Average', rating: 2.9),
+        RatingProgressItem(label: 'Poor', rating: 1.5),
+        RatingProgressItem(label: 'Terrible', rating: 0.8),
       ],
     ),
   );
-}   
-
+}
 
 //Star Clipping
 
@@ -142,11 +127,8 @@ class ClippedStar extends StatelessWidget {
               height: size,
               color: color,
               // Fallback for image asset loading failure
-              errorBuilder: (context, error, stackTrace) => Icon(
-                Icons.star,
-                color: color,
-                size: size,
-              ),
+              errorBuilder: (context, error, stackTrace) =>
+                  Icon(Icons.star, color: color, size: size),
             ),
           ),
         ],
@@ -154,4 +136,3 @@ class ClippedStar extends StatelessWidget {
     );
   }
 }
-

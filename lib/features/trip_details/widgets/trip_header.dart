@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widget_previews.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:soul_trip/core/theme/colors.dart';
 import 'package:soul_trip/core/theme/text_style.dart';
@@ -67,10 +66,7 @@ class TripHeader extends StatelessWidget {
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
-                        colors: [
-                          Colors.transparent,
-                          Colors.black,
-                        ],
+                        colors: [Colors.transparent, Colors.black],
                       ),
                     ),
                   ),
@@ -125,55 +121,52 @@ class TripHeader extends StatelessWidget {
           Positioned(
             bottom: 40,
             left: 16,
-            child:Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                  Text(
-                    title,
-                    style: AppTextStyles.bold20().copyWith(
-                      color: Colors.white,
+                Text(
+                  title,
+                  style: AppTextStyles.bold20().copyWith(color: Colors.white),
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Image.asset(
+                      'assets/icons/location.png',
+                      width: 14.w,
+                      height: 14.h,
+                      color: ColorTheme().whiteColor,
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      Image.asset(
-                        'assets/icons/location.png',
-                        width: 14.w,
-                        height: 14.h,
+                    const SizedBox(width: 8),
+                    Text(
+                      location,
+                      style: AppTextStyles.medium14().copyWith(
                         color: ColorTheme().whiteColor,
                       ),
-                      const SizedBox(width: 8),
-                      Text(
-                        location,
-                        style: AppTextStyles.medium14().copyWith(
-                          color: ColorTheme().whiteColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      Image.asset(  
-                        'assets/icons/solar_calendar-bold.png',
-                        width: 22.w,
-                        height: 22.h,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Image.asset(
+                      'assets/icons/solar_calendar-bold.png',
+                      width: 22.w,
+                      height: 22.h,
+                      color: ColorTheme().whiteColor,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      date,
+                      style: AppTextStyles.medium14().copyWith(
                         color: ColorTheme().whiteColor,
                       ),
-                      const SizedBox(width: 8),
-                      Text(
-                        date,
-                        style: AppTextStyles.medium14().copyWith(
-                          color: ColorTheme().whiteColor,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
+                ),
               ],
             ),
-
-          )
+          ),
         ],
       ),
     );

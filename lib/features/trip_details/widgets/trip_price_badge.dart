@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '/core/theme/colors.dart';
-import 'package:flutter/widget_previews.dart';
 import '/core/theme/text_style.dart';
 
 class TripPriceBadge extends StatelessWidget {
@@ -45,14 +44,12 @@ class RatingRaw extends StatelessWidget {
   const RatingRaw({super.key, required this.rating});
   @override
   Widget build(BuildContext context) {
-    
-
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         ...List.generate(rating, (index) {
           const String starAssetPath = 'assets/icons/StarIcon.png';
-           Color starColor = ColorTheme().primaryYellow; 
+          Color starColor = ColorTheme().primaryYellow;
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 2.w),
             child: Image.asset(
@@ -64,10 +61,7 @@ class RatingRaw extends StatelessWidget {
           );
         }),
         SizedBox(width: 4.w),
-        Text(
-          rating.toStringAsFixed(1),
-          style: AppTextStyles.regular16(),
-        ),
+        Text(rating.toStringAsFixed(1), style: AppTextStyles.regular16()),
       ],
     );
   }
@@ -87,12 +81,7 @@ class CardContent extends StatelessWidget {
       child: Stack(
         alignment: AlignmentDirectional.center,
         children: [
-          Positioned(
-            left: 0,
-            bottom: 0,
-            child: 
-           RatingRaw(rating: rating),
-          ),
+          Positioned(left: 0, bottom: 0, child: RatingRaw(rating: rating)),
           Positioned(
             right: 0,
             top: 0,
