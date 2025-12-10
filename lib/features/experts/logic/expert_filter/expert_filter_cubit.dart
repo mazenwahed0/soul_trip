@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:soul_trip/features/experts/data/models/expert_filter_model.dart';
+import 'package:soul_trip/features/experts/data/models/ExpertFilter.dart';
 import 'package:soul_trip/features/experts/data/models/expert_model.dart';
-
 import 'package:soul_trip/features/experts/logic/expert_filter/expert_filter_state.dart';
 
 class ExpertFilterCubit extends Cubit<ExpertFilterState> {
@@ -46,21 +45,15 @@ class ExpertFilterCubit extends Cubit<ExpertFilterState> {
     List<ExpertModel> result = allExperts;
 
     if (filter.sessionType != null) {
-      result = result
-          .where((e) => e.sessionType == filter.sessionType)
-          .toList();
+      result = result.where((e) => e.sessionType == filter.sessionType).toList();
     }
 
     if (filter.location != null) {
-      result = result
-          .where((e) => e.location.contains(filter.location!))
-          .toList();
+      result = result.where((e) => e.location.contains(filter.location!)).toList();
     }
 
     if (filter.specialization != null) {
-      result = result
-          .where((e) => e.specialization == filter.specialization)
-          .toList();
+      result = result.where((e) => e.specialization == filter.specialization).toList();
     }
 
     if (filter.minRating != null) {
@@ -73,9 +66,8 @@ class ExpertFilterCubit extends Cubit<ExpertFilterState> {
 
     if (filter.availabilityDays != null) {
       result = result.where((e) {
-        return e.availabilityDays.any(
-          (day) => filter.availabilityDays!.contains(day),
-        );
+        return e.availabilityDays
+            .any((day) => filter.availabilityDays!.contains(day));
       }).toList();
     }
 
@@ -89,3 +81,4 @@ class ExpertFilterCubit extends Cubit<ExpertFilterState> {
     emit(ExpertFilterUpdated(filter));
   }
 }
+
