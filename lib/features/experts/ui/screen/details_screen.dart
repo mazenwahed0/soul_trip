@@ -41,9 +41,7 @@ class DetailsScreen extends StatelessWidget {
                     create: (_) => BookingCubit(BookingRepository()),
                   ),
                 ],
-                child: CustomScrollView(
-                  slivers: [ExpertdetailsView(expert: expert)],
-                ),
+                child: ExpertdetailsView(expert: expert),
               );
             }
 

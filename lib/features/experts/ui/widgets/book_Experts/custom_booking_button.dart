@@ -71,7 +71,7 @@ class BookingButton extends StatelessWidget {
               date: selectedDate,
               time: selectedTime,
             );
-
+            
             if (state is BookingAvailable) {
               context.read<BookingCubit>().confirmBooking(
                 expertId: expert.id,

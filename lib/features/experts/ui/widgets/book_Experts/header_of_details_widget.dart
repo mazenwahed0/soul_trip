@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:soul_trip/core/theme/colors.dart';
 import 'package:soul_trip/core/theme/soultrip_icons.dart';
@@ -13,20 +14,36 @@ class HeaderOfDetails extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+       
           Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              color: ColorTheme().grayVeryLight,
+              shape: BoxShape.circle,
+            ),
             child: IconButton(
-              icon: Icon(Icons.arrow_back),
+              padding: EdgeInsets.zero,
+              iconSize: 28,
+              icon: const Icon(Icons.arrow_back),
               onPressed: () {
                 Navigator.pop(context);
               },
             ),
+          ),
+
+          Text("Expert Details", style: AppTextStyles.semiBold20()),
+
+         
+          Container(
+            width: 50,
+            height: 50,
             decoration: BoxDecoration(
               color: ColorTheme().grayVeryLight,
-              borderRadius: BorderRadius.circular(14),
+              shape: BoxShape.circle,
             ),
+            child: const Center(child: Icon(Soultrip.chatRounded, size: 28)),
           ),
-          Text("Expert Details", style: AppTextStyles.semiBold20()),
-          Container(child: Icon(Soultrip.chatRounded)),
         ],
       ),
     );

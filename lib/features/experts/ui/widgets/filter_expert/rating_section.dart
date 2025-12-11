@@ -24,20 +24,31 @@ class RatingSection extends StatelessWidget {
               label: "All Rating",
               selected: filter.minRating == 0 || filter.minRating == null,
               onTap: () => cubit.setRating(0),
+              selectedColor: Color(0xFF0D2C5E),
+              backgroundColor: Colors.grey.shade200,
+              textColor: filter.minRating == 0 ? Colors.white : Colors.black87,
             ),
             AppChip(
-              label: "4 and above",
+              label: "4 and above ⭐",
               selected: filter.minRating == 4,
               onTap: () => cubit.setRating(4),
+              selectedColor: Color(0xFF0D2C5E),
+              backgroundColor: Colors.grey.shade200,
+              textColor: filter.minRating == 4 ? Colors.white : Colors.black87,
             ),
             AppChip(
-              label: "4.5 and above",
+              label: "4.5 and above ⭐",
               selected: filter.minRating == 4.5,
               onTap: () => cubit.setRating(4.5),
+              selectedColor: Color(0xFF0D2C5E),
+              backgroundColor: Colors.grey.shade200,
+              textColor: filter.minRating == 4.5
+                  ? Colors.white
+                  : Colors.black87,
             ),
           ],
         ),
-        heightSpace( 20),
+        heightSpace(20),
       ],
     );
   }

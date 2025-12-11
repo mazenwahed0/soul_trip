@@ -17,6 +17,7 @@ class BudgetSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         sectionTitle("Budget"),
+
         SliderTheme(
           data: SliderTheme.of(context).copyWith(
             activeTrackColor: ColorTheme().primaryYellow,
@@ -31,7 +32,22 @@ class BudgetSection extends StatelessWidget {
             onChanged: cubit.setPrice,
           ),
         ),
-        heightSpace( 20),
+
+        SizedBox(height: 6),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("100 \$", style: TextStyle(fontSize: 11)),
+            Text(
+              "${filter.maxPrice?.toInt() ?? 100} \$",
+              style: TextStyle(fontSize: 11),
+            ),
+            Text("200 \$", style: TextStyle(fontSize: 11)),
+          ],
+        ),
+
+        heightSpace(20),
       ],
     );
   }

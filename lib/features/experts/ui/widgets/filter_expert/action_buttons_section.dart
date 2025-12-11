@@ -16,22 +16,29 @@ class ActionButtonsSection extends StatelessWidget {
       children: [
         Expanded(
           child: OutlinedButton(
+            style: OutlinedButton.styleFrom(
+              side: BorderSide(color: Color(0xFF0D2C5E)),
+            ),
             onPressed: () {
               filterCubit.reset();
               expertCubit.emit(ExpertLoaded(expert: expertCubit.allExperts));
               Navigator.pop(context, expertCubit.allExperts);
             },
-            child: Text("Reset All"),
+            child: Text(
+              "Reset All",
+              style: TextStyle(color: Color(0xFF0D2C5E)),
+            ),
           ),
         ),
         widthSpace(16),
         Expanded(
           child: ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Color(0xFF0D2C5E)),
             onPressed: () {
               final filtered = filterCubit.applyFilter();
               Navigator.pop(context, filtered);
             },
-            child: Text("Apply"),
+            child: Text("Apply", style: TextStyle(color: Colors.white)),
           ),
         ),
       ],

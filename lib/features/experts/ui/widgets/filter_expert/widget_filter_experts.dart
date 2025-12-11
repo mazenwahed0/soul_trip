@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:soul_trip/core/theme/colors.dart';
 import 'package:soul_trip/features/experts/logic/expert_filter/expert_filter_cubit.dart';
 import 'package:soul_trip/features/experts/logic/expert_filter/expert_filter_state.dart';
 
@@ -15,7 +16,13 @@ class FilterExpertsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Filter Experts"), elevation: 1),
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.black),
+
+        title: Text("Filter Experts", style: TextStyle(color: Colors.black)),
+        elevation: 0.5,
+        backgroundColor: ColorTheme().whiteColor,
+      ),
       body: BlocBuilder<ExpertFilterCubit, ExpertFilterState>(
         builder: (context, state) {
           final cubit = context.read<ExpertFilterCubit>();

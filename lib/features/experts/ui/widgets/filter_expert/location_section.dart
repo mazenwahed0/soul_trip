@@ -25,11 +25,17 @@ class LocationSection extends StatelessWidget {
                   label: loc,
                   selected: filter.location == loc,
                   onTap: () => cubit.setLocation(loc),
+                  selectedColor: Color(0xFF0D2C5E),
+                  backgroundColor: Colors.white,
+                  borderColor: Colors.grey.shade300,
+                  textColor: filter.location == loc
+                      ? Colors.white
+                      : Colors.black87,
                 ),
               )
               .toList(),
         ),
-        heightSpace( 20),
+        heightSpace(20),
       ],
     );
   }

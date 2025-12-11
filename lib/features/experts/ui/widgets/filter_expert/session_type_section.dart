@@ -23,16 +23,18 @@ class SessionTypeSection extends StatelessWidget {
               label: "Online",
               selected: filter.sessionType == "online",
               onTap: () => cubit.setSessionType("online"),
+              size: 22,
             ),
-            SizedBox(width: 16),
+            SizedBox(width: 20),
             AppRadio(
               label: "In Person",
               selected: filter.sessionType == "offline",
               onTap: () => cubit.setSessionType("offline"),
+              size: 22,
             ),
           ],
         ),
-        heightSpace( 20),
+        heightSpace(20),
       ],
     );
   }

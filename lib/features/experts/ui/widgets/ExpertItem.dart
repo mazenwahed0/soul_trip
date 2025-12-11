@@ -26,6 +26,7 @@ class ExpertItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Card(
+          color: ColorTheme().otpBG,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(28),
           ),
@@ -99,10 +100,13 @@ class ExpertItem extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(width: 60,),
+                    SizedBox(width: 60),
                     Expanded(
                       child: PrimaryShadowButton(
                         text: "Book Now",
+                        width: 100,
+                        height: 40,
+
                         onPressed: () {
                           GoRouter.of(context).push(
                             '${Routes.expertsDetailsView}?id=${expertModel.id}',

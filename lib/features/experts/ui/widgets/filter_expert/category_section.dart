@@ -16,9 +16,9 @@ class CategorySection extends StatelessWidget {
     final categories = [
       "wellnessCoach",
       "Relaxation Expert",
-      "Yoga Instructor",
-      "Psychologist",
-      "Physical Therapist",
+      "Orthopedist",
+      "physiotherapist",
+      "Yoga Instractor",
       "Spa Therapist",
     ];
 
@@ -34,11 +34,16 @@ class CategorySection extends StatelessWidget {
                   label: c,
                   selected: filter.specialization == c,
                   onTap: () => cubit.setSpecialization(c),
+                  selectedColor: Color(0xFF0D2C5E),
+                  backgroundColor: Colors.grey.shade200,
+                  textColor: filter.specialization == c
+                      ? Colors.white
+                      : Colors.black87,
                 ),
               )
               .toList(),
         ),
-        heightSpace( 20),
+        heightSpace(20),
       ],
     );
   }

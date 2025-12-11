@@ -20,7 +20,7 @@ class Aboutdoctor extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
 
-              color: Colors.white.withOpacity(0.7),
+              color: Colors.white.withOpacity(0.2),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
