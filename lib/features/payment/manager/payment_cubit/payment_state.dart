@@ -10,7 +10,7 @@ class PaymentState {
   final String errorMessage;
 
   PaymentState({
-    this.selectedPaymentMethodIndex = 0,
+    this.selectedPaymentMethodIndex = 1,
     this.savedCards = const [],
     this.selectedCard,
     this.status = PaymentStatus.initial,

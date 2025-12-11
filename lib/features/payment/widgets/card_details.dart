@@ -27,9 +27,6 @@ class CardDetails extends StatelessWidget {
     // Masking logic
     String maskedNumber = cardNumber;
     if (cardNumber.length >= 16) {
-      // Standard 16 digits: 1234 5678 1234 5678
-      // We want 1234 **** **** 5678
-      // If formatting is unknown, simplest is to just show first 4 and last 4.
       String cleaned = cardNumber.replaceAll(RegExp(r'[^0-9]'), '');
       if (cleaned.length >= 12) {
         maskedNumber =
@@ -74,21 +71,21 @@ class CardDetails extends StatelessWidget {
               showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: const Text('Delete Card'),
-                  content: const Text('Do you want to delete this card?'),
+                  title:  Text('Delete Card',style: AppTextStyles.bold16(),),
+                  content:  Text('Do you want to delete this card?',style: AppTextStyles.medium14(),),
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.pop(context),
-                      child: const Text('Cancel'),
+                      child:  Text('Cancel',style: AppTextStyles.medium14(),),
                     ),
                     TextButton(
                       onPressed: () {
                         Navigator.pop(context);
                         if (onDelete != null) onDelete!();
                       },
-                      child: const Text(
+                      child:  Text(
                         'Delete',
-                        style: TextStyle(color: Colors.red),
+                        style: AppTextStyles.medium14().copyWith(color: Colors.red),
                       ),
                     ),
                   ],
