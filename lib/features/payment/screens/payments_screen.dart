@@ -18,6 +18,8 @@ import 'package:soul_trip/core/widgets/common/status_sheet/status_bottom_sheet.d
 import 'package:soul_trip/features/payment/widgets/payment_header.dart';
 import 'package:soul_trip/features/payment/widgets/payment_option.dart';
 
+import '../../../core/utils/snackbars/loaders.dart';
+
 class PaymentScreen extends StatelessWidget {
   final HomeTripModel trip;
   const PaymentScreen({super.key, required this.trip});
@@ -86,7 +88,7 @@ class _PaymentContent extends StatelessWidget {
                         SizedBox(height: 16.h),
 
                         TripDetailsCard(
-                          image: trip.image ?? '',
+                          image: trip.image ?? "https://placehold.co/600x400",
                           title: trip.title,
                           rating: trip.rate.toDouble(),
                           location: trip.location,
@@ -306,16 +308,10 @@ class _PaymentContent extends StatelessWidget {
                 });
 
                 if (!hasValidCard) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        "Please add a card for this payment method",
-                        style: AppTextStyles.medium14().copyWith(
-                          color: Colors.white,
-                        ),
-                      ),
-                      backgroundColor: Colors.red,
-                    ),
+                  Loaders.error(
+                    context,
+                    title: "Credit Card is Required!",
+                    message: "Please add a card for this payment method",
                   );
                   return;
                 }

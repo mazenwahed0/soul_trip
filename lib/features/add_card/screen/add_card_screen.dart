@@ -12,6 +12,8 @@ import 'package:soul_trip/features/add_card/widgets/credit_card_widget.dart';
 import 'package:soul_trip/features/authentication/logic/auth/auth_cubit.dart';
 import 'package:soul_trip/features/payment/data/repository/payment_repository.dart';
 
+import '../../../core/utils/snackbars/loaders.dart';
+
 class AddNewCardScreen extends StatelessWidget {
   const AddNewCardScreen({super.key});
 
@@ -63,12 +65,7 @@ class _AddNewCardContentState extends State<_AddNewCardContent> {
         if (state.status == AddCardStatus.success) {
           context.pop(true); // Return true to indicate card added
         } else if (state.status == AddCardStatus.failure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.errorMessage),
-              backgroundColor: Colors.red,
-            ),
-          );
+          Loaders.error(context, title: "Oops!", message: state.errorMessage);
         }
       },
       child: Scaffold(

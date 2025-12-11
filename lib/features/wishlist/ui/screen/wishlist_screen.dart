@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:go_router/go_router.dart';
 import 'package:soul_trip/features/home/manager/trips_likes_cubit/trips_likes_cubit.dart';
 import 'package:soul_trip/features/home/manager/trips_likes_cubit/trips_likes_state.dart';
 import 'package:soul_trip/features/wishlist/logic/cubit/wishlist_cubit.dart';
@@ -9,6 +10,8 @@ import 'package:soul_trip/core/models/home_trip_model.dart' as core;
 import 'package:soul_trip/features/category_trips/ui/widgets/category_trip_item_card_widget.dart';
 import 'package:soul_trip/features/wishlist/ui/widgets/trip_favorite_button.dart';
 import 'package:soul_trip/core/widgets/common/appbar/custom_app_bar.dart';
+
+import '../../../../core/routing/routes.dart';
 
 class WishlistScreen extends StatefulWidget {
   const WishlistScreen({super.key});
@@ -86,7 +89,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                       // Passing the favorite button specific to wishlist
                       favoriteButton: TripFavoriteButton(trip: trip),
                       onTap: () {
-                        // context.pushNamed(Routes.tripDetails, extra: trip);
+                        context.push(Routes.tripDetailsScreen, extra: trip);
                       },
                     );
                   },
