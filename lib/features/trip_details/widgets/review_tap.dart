@@ -10,8 +10,6 @@ class ReviewsTab extends StatelessWidget {
   final double _overallRating;
   const ReviewsTab({super.key, required double overallRating}) : _overallRating = overallRating;
 
-  static const String _starIconPath = 'assets/icons/StarIcon.png';
-  static const double _starSize = 28.0;
 
   
   @override

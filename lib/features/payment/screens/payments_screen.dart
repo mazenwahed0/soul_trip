@@ -13,8 +13,15 @@ import 'package:soul_trip/core/widgets/common/buttons/primary_shadow_button.dart
 import 'package:soul_trip/core/routing/routes.dart';
 import 'package:go_router/go_router.dart';
 
-class PaymentScreen extends StatelessWidget {
+class PaymentScreen extends StatefulWidget {
   const PaymentScreen({super.key});
+
+  @override
+  State<PaymentScreen> createState() => _PaymentScreenState();
+}
+
+class _PaymentScreenState extends State<PaymentScreen> {
+  int _selectedOptionIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -71,17 +78,32 @@ class PaymentScreen extends StatelessWidget {
                         PaymentOption(
                           title: 'Apple Pay',
                           icon: 'assets/icons/Apple.png',
-                          selected: true,
+                          selected: _selectedOptionIndex == 0,
+                          onTap: () {
+                            setState(() {
+                              _selectedOptionIndex = 0;
+                            });
+                          },
                         ),
                         PaymentOption(
                           title: 'Visa Card',
                           icon: 'assets/icons/visa.png',
-                          selected: false,
+                          selected: _selectedOptionIndex == 1,
+                          onTap: () {
+                            setState(() {
+                              _selectedOptionIndex = 1;
+                            });
+                          },
                         ),
                         PaymentOption(
                           title: 'Master Card',
                           icon: 'assets/icons/mastercard.png',
-                          selected: false,
+                          selected: _selectedOptionIndex == 2,
+                          onTap: () {
+                            setState(() {
+                              _selectedOptionIndex = 2;
+                            });
+                          },
                         ),
 
                         SizedBox(height: 24.h),
