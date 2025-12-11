@@ -234,7 +234,7 @@ class _TripDetailsContentState extends State<_TripDetailsContent>
             child: PrimaryShadowButton(
               text: "Book Now",
               onPressed: () {
-                context.push(Routes.paymentScreen);
+                context.push(Routes.paymentScreen, extra: trip);
               },
             ),
           ),
