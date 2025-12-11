@@ -1,3 +1,5 @@
+import 'package:soul_trip/core/models/home_trip_model.dart';
+
 abstract class TripDetailsState {}
 
 class TripDetailsInitial extends TripDetailsState {}
@@ -5,9 +7,17 @@ class TripDetailsInitial extends TripDetailsState {}
 class TripDetailsLoading extends TripDetailsState {}
 
 class TripDetailsLoaded extends TripDetailsState {
-  final Map<String, dynamic> tripData;
+  final HomeTripModel trip;
+  final int selectedTabIndex;
 
-  TripDetailsLoaded({required this.tripData});
+  TripDetailsLoaded({required this.trip, this.selectedTabIndex = 0});
+
+  TripDetailsLoaded copyWith({HomeTripModel? trip, int? selectedTabIndex}) {
+    return TripDetailsLoaded(
+      trip: trip ?? this.trip,
+      selectedTabIndex: selectedTabIndex ?? this.selectedTabIndex,
+    );
+  }
 }
 
 class TripDetailsError extends TripDetailsState {
@@ -15,5 +25,3 @@ class TripDetailsError extends TripDetailsState {
 
   TripDetailsError({required this.message});
 }
-
-class TripDetailsNoInternet extends TripDetailsState {}

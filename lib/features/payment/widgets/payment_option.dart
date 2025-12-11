@@ -8,39 +8,44 @@ class PaymentOption extends StatelessWidget {
   final String title;
   final String icon;
   final bool selected;
+  final VoidCallback? onTap;
 
   const PaymentOption({
     super.key,
     required this.title,
     required this.icon,
     this.selected = false,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-            color:  Colors.grey.shade300, width: 1),
-      ),
-      child: Row(
-        children: [
-          Image.asset(icon, width: 20.w, height: 20.h),
-          const SizedBox(width: 14),
-          Text(
-            title, 
-            style: AppTextStyles.semiBold14().copyWith(
-              color: ColorTheme().grayDarker,)
-          ),
-          const Spacer(),
-          Icon(
-            selected ? Icons.radio_button_checked : Icons.circle_outlined,
-            color: selected ?ColorTheme().primaryBlue : Colors.grey,
-          )
-        ],
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.grey.shade300, width: 1),
+        ),
+        child: Row(
+          children: [
+            Image.asset(icon, width: 20.w, height: 20.h),
+            const SizedBox(width: 14),
+            Text(
+              title,
+              style: AppTextStyles.semiBold14().copyWith(
+                color: ColorTheme().grayDarker,
+              ),
+            ),
+            const Spacer(),
+            Icon(
+              selected ? Icons.radio_button_checked : Icons.circle_outlined,
+              color: selected ? ColorTheme().primaryBlue : Colors.grey,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -48,9 +53,9 @@ class PaymentOption extends StatelessWidget {
 
 @Preview()
 Widget paymentOptionPreview() {
-  return MaterialApp( 
+  return MaterialApp(
     debugShowCheckedModeBanner: false,
-    themeMode: ThemeMode.light, 
+    themeMode: ThemeMode.light,
     home: Scaffold(
       body: ScreenUtilInit(
         child: Padding(

@@ -182,7 +182,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget> {
                               ),
                         ),
 
-                        SizedBox(height: 14.h),
+                        SizedBox(height: 18.h),
 
                         /// CARD NUMBER
                         Text(

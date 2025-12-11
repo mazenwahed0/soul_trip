@@ -217,8 +217,10 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: Routes.paymentScreen,
-        pageBuilder: (context, state) =>
-            fadeTransitionPage(const PaymentScreen()),
+        pageBuilder: (context, state) {
+          final trip = state.extra as HomeTripModel;
+          return fadeTransitionPage(PaymentScreen(trip: trip));
+        },
       ),
       GoRoute(
         path: Routes.addCardScreen,

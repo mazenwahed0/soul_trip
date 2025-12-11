@@ -9,6 +9,8 @@ class TripHeader extends StatelessWidget {
   final String title;
   final String location;
   final String date;
+  final bool isLiked;
+  final VoidCallback? onLike;
 
   const TripHeader({
     super.key,
@@ -17,6 +19,8 @@ class TripHeader extends StatelessWidget {
     required this.title,
     required this.location,
     required this.date,
+    required this.isLiked,
+    this.onLike,
   });
 
   @override
@@ -93,8 +97,11 @@ class TripHeader extends StatelessWidget {
               backgroundColor: Colors.white,
               child: IconButton(
                 padding: EdgeInsets.zero,
-                icon: const Icon(Icons.favorite, color: Colors.redAccent),
-                onPressed: () {},
+                icon: Icon(
+                  isLiked ? Icons.favorite : Icons.favorite_border,
+                  color: isLiked ? Colors.redAccent : Colors.grey,
+                ),
+                onPressed: onLike,
               ),
             ),
           ),
